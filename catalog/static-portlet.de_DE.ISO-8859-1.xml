@@ -9,7 +9,7 @@
   <msg key="lt_Delete_element_pretty">%element_pretty_name% &quot;%pretty_name%&quot; löschen</msg>
   <msg key="lt_Editing_element_prett">%element_pretty_name% &quot;%pretty_name%&quot; bearbeiten</msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Hinweis&lt;/strong&gt;: Sie können für den Inhalt einfaches Textformat oder HTML verwenden.</msg>
-  <msg key="lt_Use_this_form_to_crea">Mit diesem Formular kann ein neues %element_pretty_name% erstellt werden. Es wird automatisch auf der ersten Seite des Portals &quot;%portal_name%&quot; platziert. Um es zu verschieben, gehen Sie unter '%control_panel_text%' auf 'Layout des Portals anpassen'.</msg>
+  <msg key="lt_Use_this_form_to_crea">Mit diesem Formular kann ein neues %element_pretty_name% erstellt werden. Es wird automatisch auf der ersten Seite des Portals &quot;%portal_name%&quot; platziert. Um es zu verschieben, gehen Sie unter '%control_panel_text%' auf 'Layout des Gruppenportals anpassen'.</msg>
   <msg key="Name">Name</msg>
   <msg key="New">Neu</msg>
   <msg key="new_static_admin_portlet">Neues %element_pretty_name% erstellen</msg>

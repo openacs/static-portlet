@@ -2,14 +2,14 @@
 <message_catalog package_key="static-portlet" package_version="0.2a" locale="nl_NL" charset="ISO-8859-1">
 
   <msg key="admin_portlet_element_pretty_name">Portlet op maat</msg>
-  <msg key="admin_portlet_pretty_name">Beheer van Portlet Op Maat</msg>
+  <msg key="admin_portlet_pretty_name">Portlet Op Maat administratie</msg>
   <msg key="Content">Inhoud</msg>
-  <msg key="Control_Panel">Bedieningspaneel</msg>
-  <msg key="Edit_content_element">Wijzig inhoud element</msg>
-  <msg key="lt_Delete_element_pretty">Verwijder %element_pretty_name% %pretty_name% </msg>
-  <msg key="lt_Editing_element_prett">Wijzig %element_pretty_name% %pretty_name% </msg>
+  <msg key="Control_Panel">Mijn instellingen</msg>
+  <msg key="Edit_content_element">Inhoud element bewerken</msg>
+  <msg key="lt_Delete_element_pretty">%element_pretty_name% %pretty_name% verwijderen</msg>
+  <msg key="lt_Editing_element_prett">%element_pretty_name% %pretty_name% bewerken</msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Bericht&lt;/strong&gt;: U kunt platte tekst of HTML gebruiken bij het schrijven van uw tekst.</msg>
-  <msg key="lt_Use_this_form_to_crea">Gebruik dit formulier om een nieuw %element_pretty_name% aan te maken. %element_pretty_name% zal automatisch worden toegevoegd aan de eerste pagina van het %portal_name% portaal. Ga naar %control_panel_text% en selecteer Wijzig Indeling om %element_pretty_name% te verplaatsen.</msg>
+  <msg key="lt_Use_this_form_to_crea">Gebruik dit formulier om een nieuw %element_pretty_name% aan te maken. %element_pretty_name% zal automatisch worden toegevoegd aan de eerste pagina van het %portal_name% portaal. Ga naar %control_panel_text% en selecteer Paginaindeling wijzigen om %element_pretty_name% te verplaatsen.</msg>
   <msg key="Name">Naam</msg>
   <msg key="New">Nieuw</msg>
   <msg key="new_static_admin_portlet">Nieuw %element_pretty_name% </msg>
