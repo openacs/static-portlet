@@ -33,10 +33,7 @@ namespace eval static_admin_portlet {
 
     ad_proc -public get_pretty_name {
     } {
-	return [oacs_util::parameter \
-                -package_key [my_package_key] \
-                -key "static_admin_portlet_pretty_name"
-        ]
+        return [parameter::get_from_package_key -package_key [my_package_key] -parameter static_admin_portlet_pretty_name]
     }
 
     ad_proc -private my_package_key {
