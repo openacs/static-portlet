@@ -59,7 +59,7 @@ if {[lsearch $templates $type] >= 0} {
     set elements [list \
 		      [list {enforce_portlet:text(select)} [list label [_ static-portlet.lt_Enforce_this_applet_t]] \
 			   [list help_text [_ static-portlet.lt_Enforce_True_means_th]] \
-			   [list options [list [_ static-portlet.True] 1] [list [_ static-portlet.False_0]]] \
+			   [list options [list [list [_ static-portlet.True] 1] [list [_ static-portlet.False_0] 0]]] \
 			   [list value 0]]]    
     ad_form -extend -name static_element -form $elements
 }

@@ -9,7 +9,7 @@
   <msg key="Create_a_new">Create a new %element_pretty_name%</msg>
   <msg key="Edit">Edit</msg>
   <msg key="Edit_content_element">Edit content element</msg>
-  <msg key="False_0">False 0</msg>
+  <msg key="False_0">False</msg>
   <msg key="File">File</msg>
   <msg key="lt_Delete_element_pretty">Delete %element_pretty_name% %pretty_name%</msg>
   <msg key="lt_Editing_element_prett">Editing %element_pretty_name% %pretty_name%</msg>
