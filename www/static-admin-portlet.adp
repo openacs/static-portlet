@@ -24,10 +24,14 @@
 <else>
 <ul>
 <multiple name="content">
-<li> <a href=./static/element?portal_id=@template_portal_id@&content_id=@content.content_id@>@content.pretty_name@</a>
-[<a href=./static/element-delete?portal_id=@template_portal_id@&content_id=@content.content_id@>delete</a>]
+<li> <a href=@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@>@content.pretty_name@</a>
+<!-- aks disallowing deletion static portlets for now, since they can't add them as well
+  [<a href=@applet_url@/element-delete?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@>delete</a>]
+ -->
 </multiple>
 </ul>
 </else>
 <p>
-<a href=./static/element-new?portal_id=@template_portal_id@>New @element_pretty_name@</a>
+<!-- aks disallowing new static portlets for now - there some weirdness in new-portal
+  <a href=@applet_url@/element-new?portal_id=@template_portal_id@&referer=@referer@>New @element_pretty_name@</a>
+ -->

@@ -21,7 +21,7 @@ ad_page_contract {
     @creation-date 2001-12-03
     @version $Id$
 } -query {
-    {referer "../one-community-admin"}
+    referer:notnull
     portal_id:integer,notnull
 } -properties {
     title:onevalue
@@ -52,13 +52,17 @@ element create new_static_element portal_id \
     -widget hidden \
     -value $portal_id
 
+element create new_static_element referer \
+    -label "referer" \
+    -datatype text \
+    -widget hidden \
+    -value $referer
+
 if {[form is_valid new_static_element]} {
     form get_values new_static_element \
-        pretty_name content portal_id
+        pretty_name content portal_id referer
 
     # insert the new content item
-    # ad_return_complaint 1 "$pretty_name, $content, $instance_id, $referer"
-
     db_transaction {
         set item_id [static_portal_content::new \
                 -instance_id $instance_id \

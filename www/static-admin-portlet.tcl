@@ -39,4 +39,5 @@ from static_portal_content
 where instance_id = :instance_id"
 
 set template_portal_id [dotlrn_community::get_portal_template_id [dotlrn_community::get_community_id]]
-# set url [dotlrn_community::get_url_from_package_id -package_id $instance_id]
+set applet_url "[dotlrn_applet::get_url]/[static_portlet::my_package_key]"
+set referer [ad_conn url]

@@ -59,7 +59,12 @@ namespace eval static_portal_content {
     } {
         db_transaction {
             # Generate the element
-            set element_id [portal::add_element -pretty_name [get_pretty_name -content_id $content_id] -force_region 1 $portal_id [static_portlet::my_name]]
+            set element_id [portal::add_element \
+                    -pretty_name [get_pretty_name -content_id $content_id] \
+                    -force_region 1 \
+                    $portal_id \
+                    [static_portlet::my_name]
+            ]
 
             # Set the parameter
             portal::set_element_param $element_id content_id $content_id

@@ -32,11 +32,8 @@ create table static_portal_content (
                                 references acs_objects(object_id)
                                 constraint static_p_c_pk
                                 primary key,
-    instance_id                 constraint static_p_c_instance_id_nn
-                                not null
-                                constraint static_p_c_instance_id_fk
-                                references apm_packages (package_id)
-                                on delete cascade,
+    instance_id                 integer
+                                not null,
     pretty_name                 varchar2(100) 
                                 constraint static_p_c_pretty_name_nn
                                 not null,                            
