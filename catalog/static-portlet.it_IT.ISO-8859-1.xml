@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="static-portlet" package_version="2.0.3" locale="it_IT" charset="ISO-8859-1">
+<message_catalog package_key="static-portlet" package_version="2.1.0b1" locale="it_IT" charset="ISO-8859-1">
 
   <msg key="admin_portlet_element_pretty_name">Portlet personale</msg>
   <msg key="admin_portlet_pretty_name">Amministrazione portlet personale</msg>
@@ -10,7 +10,7 @@
   <msg key="lt_Editing_element_prett">Modifica %element_pretty_name% %pretty_name% </msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Nota&lt;/strong&gt;: Puoi usare testo semplice o HTML nella textarea.</msg>
   <msg key="lt_Use_this_form_to_crea">Usa questa form per creare un nuovo %element_pretty_name%.
-Il nuovo %element_pretty_name% sar&amp;agrave; creato e posto automaticamente sulla prima pagina del protale %portal_name%. Vai al %control_panel_text% e seleziona &amp;quot;Personalizza l'Impaginazione&amp;quot; per disporre questo %element_pretty_name%. </msg>
+Il nuovo %element_pretty_name% sarà creato e posto automaticamente sulla prima pagina del protale %portal_name%. Vai al %control_panel_text% e seleziona &amp;quot;Personalizza l'Impaginazione&amp;quot; per disporre questo %element_pretty_name%. </msg>
   <msg key="Name">Nome</msg>
   <msg key="New">Nuovo</msg>
   <msg key="new_static_admin_portlet">Nuovo %element_pretty_name%</msg>

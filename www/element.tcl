@@ -28,6 +28,7 @@ ad_page_contract {
     title:onevalue
 }
 
+set control_panel_text [_ "dotlrn.control_panel"]
 set element_pretty_name [parameter::get -localize -parameter static_admin_portlet_element_pretty_name]
 if { ![exists_and_not_null content_id] || [ad_form_new_p -key content_id] } {
   set title "[_ static-portlet.New] $element_pretty_name"
@@ -40,13 +41,37 @@ if { ![exists_and_not_null content_id] || [ad_form_new_p -key content_id] } {
 set community_id $package_id
 set portal_name [portal::get_name $portal_id]
 
+if [info exist content_id] {
+    set element_content_id $content_id
+    set file_content_id $content_id
+}
+
+
+set type [db_string get_type { select type from dotlrn_portal_types_map where portal_id = :portal_id } -default ""]
+set templates [list user dotlrn_class_instance dotlrn_club dotlrn_community]
+
 ad_form -name static_element -form {
-    content_id:key
+    element_content_id:key
     {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
-    {content:text(textarea)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80 wrap soft}}}
+    {content:richtext(richtext)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80 wrap soft}} {htmlarea_p 1}}
+}
+
+if {[lsearch $templates $type] >= 0} {
+    set elements [list \
+		      [list {enforce_portlet:text(select)} [list label [_ static-portlet.lt_Enforce_this_applet_t]] \
+			   [list help_text [_ static-portlet.lt_Enforce_True_means_th]] \
+			   [list options [list [list [_ static-portlet.True] 1] [list [_ static-portlet.False_0] 0]]] \
+			   [list value 0]]]    
+    ad_form -extend -name static_element -form $elements
+}
+
+ad_form -extend -name static_element -form {
     {portal_id:text(hidden)     {value $portal_id}}
     {package_id:text(hidden)    {value $package_id}}
     {referer:text(hidden)       {value $referer}}
+} -edit_request {
+  db_1row get_content_element ""
+  ad_set_form_values pretty_name
 } -new_data {
     db_transaction {
         set item_id [static_portal_content::new \
@@ -55,26 +80,146 @@ ad_form -name static_element -form {
                          -pretty_name $pretty_name
         ]
 
-        static_portal_content::add_to_portal \
-            -portal_id $portal_id \
-            -package_id $package_id \
-            -content_id $item_id
+        set old_element_id [static_portal_content::add_to_portal \
+				-portal_id $portal_id \
+				-package_id $package_id \
+				-content_id $item_id]
+
+
+
     }
+
+    # support for templates & already created portals for users,
+    # classes, etc. (roc)
+
+    switch $type {
+	user { 
+	    set query  "select portal_id as target_portal_id from dotlrn_users" 
+	    set community_id $package_id
+	    set new_content_id $item_id
+	}
+	dotlrn_class_instance { set query "select portal_id as target_portal_id, community_id from dotlrn_class_instances_full" }
+	dotlrn_club { set query "select portal_id as target_portal_id,	community_id from dotlrn_clubs_full" }
+	dotlrn_community { set query "select portal_id as target_portal_id, community_id from dotlrn_communities_full" }
+	default {
+	    ad_returnredirect $referer
+	    ad_script_abort
+	}
+    }
+
+   
+    db_foreach dotlrn_type_portals "$query" {
+
+	if {$type != "user" } {
+	    # clone the template's content
+	    set new_content_id [static_portal_content::new \
+				    -package_id $community_id \
+				    -content $content \
+				    -pretty_name $pretty_name ]
+	}
+	
+
+	set new_element_id [ static_portal_content::add_to_portal \
+				 -portal_id $target_portal_id \
+				 -package_id $community_id \
+				 -content_id $new_content_id]
+
+	portal::set_element_param $new_element_id "package_id" $community_id
+	portal::set_element_param $new_element_id "content_id" $new_content_id
+
+	if {$enforce_portlet == 0} {
+	    db_dml hide_portlet { update portal_element_map set state = 'hidden' where element_id = :new_element_id }
+	}
+
+    }
+
 
     # redirect and abort
     ad_returnredirect $referer
     ad_script_abort
-} -edit_request {
-  db_1row get_content_element ""
-  ad_set_form_values pretty_name
 } -edit_data {
+
     db_transaction {
+
         static_portal_content::update \
                 -portal_id $portal_id \
-                -content_id $content_id \
+                -content_id $element_content_id \
                 -pretty_name $pretty_name \
                 -content $content
+
     }
+
+
+    switch $type {
+	user { 
+	    set query  "select portal_id as target_portal_id from dotlrn_users" 
+            set community_id $package_id
+	}
+	dotlrn_class_instance { set query "select portal_id as target_portal_id, community_id from dotlrn_class_instances_full" }
+	dotlrn_club { set query "select portal_id as target_portal_id,	community_id from dotlrn_clubs_full" }
+	dotlrn_community { set query "select portal_id as target_portal_id, community_id from dotlrn_communities_full" }
+	default {
+	    ad_returnredirect $referer
+	    ad_script_abort
+	}
+    }
+
+    db_foreach dotlrn_type_portals "$query" {
+
+	if { ($type != "user") } {
+	    catch {
+		set element_content_id [db_string get_content_id {
+		    select content_id
+		    from static_portal_content
+		    where package_id = :community_id
+		    and pretty_name = :pretty_name
+		}] 
+	    } errmsg2
+	}
+
+	set no_portlet [catch {set element_id [portal::get_element_id_from_unique_param  -portal_id $target_portal_id  -key content_id  -value $element_content_id]} errmsg]
+
+	if { $no_portlet } {
+
+	    # if we are here, means that the portlet do not exists
+	    # for given portal_id, then intead of update, we'll
+	    # create it
+
+	    if {$type != "user" } {
+		# clone the template's content
+		set element_content_id [static_portal_content::new \
+					    -package_id $community_id \
+					    -content $content \
+					    -pretty_name $pretty_name ]
+	    }
+
+	    set new_element_id [ static_portal_content::add_to_portal \
+				     -portal_id $target_portal_id \
+				     -package_id $community_id \
+				     -content_id $element_content_id]
+
+	    portal::set_element_param $new_element_id "package_id" $community_id
+	    portal::set_element_param $new_element_id "content_id" $element_content_id
+	    set element_id $element_content_id
+
+
+	} else {
+	    
+	    static_portal_content::update \
+		-portal_id $target_portal_id \
+		-content_id $element_content_id \
+		-pretty_name $pretty_name \
+		-content $content
+	}
+
+	if {$enforce_portlet == 0} {
+	    db_dml hide_portlet { update portal_element_map set state = 'hidden' where element_id = :element_id }
+	} else {
+	    db_dml hide_portlet { update portal_element_map set state = 'full' where element_id = :element_id }
+	}
+
+    }
+    
 
     # redirect and abort
     ad_returnredirect $referer
@@ -82,13 +227,29 @@ ad_form -name static_element -form {
 }
 
 
+
 ad_form -name static_file -html {enctype multipart/form-data} -form {
-    content_id:key
+    file_content_id:key
     {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
     {upload_file:file           {label "[_ static-portlet.File]"}}
+}
+
+if {[lsearch $templates $type] >= 0} {
+    set elements [list \
+		      [list {enforce_portlet:text(select)} [list label [_ static-portlet.lt_Enforce_this_applet_t]] \
+			   [list help_text [_ static-portlet.lt_Enforce_True_means_th]] \
+			   [list options [list [list [_ static-portlet.True] 1] [list [_ static-portlet.False_0] 0]]] \
+			   [list value 0]]]    
+    ad_form -extend -name static_file -form $elements
+}
+
+ad_form -extend -name static_file -form {
     {portal_id:text(hidden)     {value $portal_id}}
     {package_id:text(hidden)    {value $package_id}}
     {referer:text(hidden)       {value $referer}}
+} -edit_request {
+  db_1row get_content_element ""
+  ad_set_form_values pretty_name
 } -new_data {
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
@@ -109,18 +270,62 @@ ad_form -name static_file -html {enctype multipart/form-data} -form {
                          -content $content \
                          -pretty_name $pretty_name
         ]
+
         static_portal_content::add_to_portal \
             -portal_id $portal_id \
             -package_id $package_id \
             -content_id $item_id
+
     }
+
+    # support for templates & already created portals for users,
+    # classes, etc. (roc)
+
+    switch $type {
+	user { 
+	    set query  "select portal_id as target_portal_id from dotlrn_users" 
+	    set community_id $package_id
+	    set new_content_id $item_id
+	}
+	dotlrn_class_instance { set query "select portal_id as target_portal_id, community_id from dotlrn_class_instances_full" }
+	dotlrn_club { set query "select portal_id as target_portal_id,	community_id from dotlrn_clubs_full" }
+	dotlrn_community { set query "select portal_id as target_portal_id, community_id from dotlrn_communities_full" }
+	default {
+	    ad_returnredirect $referer
+	    ad_script_abort
+	}
+    }
+
+   
+    db_foreach dotlrn_type_portals "$query" {
+
+	if {$type != "user" } {
+	    # clone the template's content
+	    set new_content_id [static_portal_content::new \
+				    -package_id $community_id \
+				    -content $content \
+				    -pretty_name $pretty_name ]
+	}
+
+
+	set new_element_id [ static_portal_content::add_to_portal \
+				 -portal_id $target_portal_id \
+				 -package_id $community_id \
+				 -content_id $new_content_id]
+
+	portal::set_element_param $new_element_id "package_id" $community_id
+	portal::set_element_param $new_element_id "content_id" $new_content_id
+
+	if {$enforce_portlet == 0} {
+	    db_dml hide_portlet { update portal_element_map set state = 'hidden' where element_id = :new_element_id }
+	}
+	
+    }
+
 
     # redirect and abort
     ad_returnredirect $referer
     ad_script_abort
-} -edit_request {
-  db_1row get_content_element ""
-  ad_set_form_values pretty_name
 } -edit_data {
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
@@ -137,11 +342,82 @@ ad_form -name static_file -html {enctype multipart/form-data} -form {
     db_transaction {
         static_portal_content::update \
                 -portal_id $portal_id \
-                -content_id $content_id \
+                -content_id $file_content_id \
                 -pretty_name $pretty_name \
                 -content $content
     }
 
+    switch $type {
+	user { 
+	    set query  "select portal_id as target_portal_id from dotlrn_users" 
+            set community_id $package_id
+	}
+	dotlrn_class_instance { set query "select portal_id as target_portal_id, community_id from dotlrn_class_instances_full" }
+	dotlrn_club { set query "select portal_id as target_portal_id,	community_id from dotlrn_clubs_full" }
+	dotlrn_community { set query "select portal_id as target_portal_id, community_id from dotlrn_communities_full" }
+	default {
+	    ad_returnredirect $referer
+	    ad_script_abort
+	}
+    }
+    
+    db_foreach dotlrn_type_portals "$query" {
+
+	 if {$type != "user" } {
+	    catch {
+		set file_content_id [db_string get_content_id {
+		    select content_id
+		    from static_portal_content
+		    where package_id = :community_id
+		    and pretty_name = :pretty_name
+		}]
+	    } errmsg2
+	 }
+
+
+	set no_portlet [catch {set element_id [portal::get_element_id_from_unique_param  -portal_id $target_portal_id  -key content_id  -value $file_content_id]} errmsg]
+
+	if { $no_portlet } {
+
+	    # if we are here, means that the portlet do not exists
+	    # for given portal_id, then intead of update, we'll
+	    # create it
+
+	    if {$type != "user" } {
+		# clone the template's content
+		set file_content_id [static_portal_content::new \
+					    -package_id $community_id \
+					    -content $content \
+					    -pretty_name $pretty_name ]
+	    }
+
+	    set new_element_id [ static_portal_content::add_to_portal \
+				     -portal_id $target_portal_id \
+				     -package_id $community_id \
+				     -content_id $file_content_id]
+
+	    portal::set_element_param $new_element_id "package_id" $community_id
+	    portal::set_element_param $new_element_id "content_id" $file_content_id
+	    set element_id $file_content_id
+
+
+	} else {
+	    
+	    static_portal_content::update \
+		-portal_id $target_portal_id \
+		-content_id $file_content_id \
+		-pretty_name $pretty_name \
+		-content $content
+	}
+
+	if {$enforce_portlet == 0} {
+	    db_dml hide_portlet { update portal_element_map set state = 'hidden' where element_id = :element_id }
+	} else {
+	    db_dml hide_portlet { update portal_element_map set state = 'full' where element_id = :element_id }
+	}
+
+     }
+    
     # redirect and abort
     ad_returnredirect $referer
     ad_script_abort

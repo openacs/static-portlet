@@ -22,7 +22,7 @@ ad_page_contract {
     @cvs_id $Id$
 } 
 
-array set config $cf	
+array set config $cf    
 
 # one piece of content only per portlet
 set content_id $config(content_id)
@@ -38,3 +38,9 @@ set success_p [db_0or1row select_content {
 # The pretty_name can be a message catalog key
 set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
 set pretty_name [lang::util::localize $pretty_name]
+
+
+if { [regexp {^\{(.*)\} text/html$} $content match elhtml] } {
+  set content $elhtml
+  }
+

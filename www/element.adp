@@ -21,6 +21,12 @@
 <master>
 <property name="title">@title@</property>
 
+<p>
+<blockquote>
+#static-portlet.Back_to# <a href=@referer@>@portal_name@</a>
+<br>
+<br>
+
 <if @new_p@>
 <big><strong>#static-portlet.Create_a_new#</strong></big>
 </if>
@@ -56,4 +62,5 @@
 <p>
 
 <formtemplate id="static_file"></formtemplate>
+
 
