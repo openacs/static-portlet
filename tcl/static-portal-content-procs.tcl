@@ -57,7 +57,7 @@ namespace eval static_portal_content {
         {-content_id ""}
         {-template_id ""}
     } {
-        This is a bit different from add_self_to_page procs. 
+        This is a bit different from other add_self_to_page procs. 
     } {
 
         if {![empty_string_p $template_id]} {
@@ -109,9 +109,48 @@ namespace eval static_portal_content {
                                        -package_key "static-portlet"]
             ]
             
-            portal::set_element_param $element_id "pacakge_id"  $package_id 
-            portal::set_element_param $element_id "content_id"  $content_id
+            portal::set_element_param $element_id package_id $package_id 
+            portal::set_element_param $element_id content_id $content_id
         }
+    }
+
+    ad_proc -public clone {
+        {-portal_id:required}
+        {-package_id:required}
+    } {
+        A helper proc for cloning. There could be multiple static portlets
+        that need to be cloned. Make a deep copy of all the static portal
+        content and update the all the corresponding element's pointers
+    } {
+        set ds_id [portal::get_datasource_id [static_portlet::get_my_name]]
+
+        set element_list [db_list get_element_list {
+            select pem.element_id as element_id
+            from portal_element_map pem, portal_pages pp
+            where pp.portal_id= :portal_id 
+            and pp.page_id = pem.page_id
+            and pem.datasource_id= :ds_id
+        }] 
+
+      foreach element_id $element_list {
+          set old_content_id [db_string select_element_id {
+              select value 
+              from portal_element_parameters
+              where element_id = :element_id
+              and key = 'content_id'}
+          ]
+
+          # make a new static content item from this item
+          set new_content_id [new \
+              -package_id $package_id \
+              -content [get_content -content_id $old_content_id] \
+              -pretty_name [get_pretty_name -content_id $old_content_id] 
+          ]
+
+          # update the portal element's pointers
+          portal::set_element_param $element_id package_id $package_id 
+          portal::set_element_param $element_id content_id $new_content_id
+      }
     }
 
     ad_proc -public remove_from_portal {

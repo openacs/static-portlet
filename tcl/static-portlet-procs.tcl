@@ -16,7 +16,9 @@
 
 ad_library {
 
-    Procedures to supports static portlets
+    Procedures to supports static portlets. Much of 
+    the work for static portlets is done in the 
+    static_portal_content file. 
 
     @author arjun@openforce.net
     @cvs-id $Id$
@@ -50,16 +52,8 @@ namespace eval static_portlet {
     } {
 	Adds a static PE to the given page
     } {
-        # there is no aggregation, so use:
-        set element_id [portal::add_element \
-            -portal_id $portal_id \
-            -portlet_name [get_my_name]
-        ]
-
-        # Set the instace of "static-portlet" that this PE will know
-        portal::set_element_param $element_id package_id $package_id
-
-	return $element_id
+        ns_log notice "static_portlet::add_self_to_page - Don't call me. Use static_portal_content:: instead"
+        error
     }
 
     ad_proc -public remove_self_from_page {
@@ -76,11 +70,9 @@ namespace eval static_portlet {
 	cf
     } {
     } {
-
         portal::show_proc_helper \
             -package_key [my_package_key] \
             -config_list $cf \
             -template_src "static-portlet"
     }
-
 }

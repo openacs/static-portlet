@@ -52,21 +52,12 @@ namespace eval static_admin_portlet {
     } {
 	Adds a static admin PE to the given portal
     } {
-        # we don't care if there are other instaces of the
-        # static portlet in this portal since this PE only has one
-        # and only one instace_id. i.e. There is no aggregation
-        # unlike bboard-portlet
-
-        # there is only one static admin portlet per portal so use:
-        set element_id [portal::add_element \
+        return [portal::add_element_parameters \
             -portal_id $portal_id \
-            -portlet_name [get_my_name]
+            -portlet_name [get_my_name] \
+            -key package_id \
+            -value $package_id
         ]
-
-        # Set the instace of "static" that this PE will know
-        portal::set_element_param $element_id package_id $package_id
-
-	return $element_id
     }
 
     ad_proc -public remove_self_from_page {
