@@ -14,18 +14,16 @@
 #  details.
 #
 
-# /packages/static-portlet/tcl/static-portal-content-procs.tcl
 ad_library {
 
-The procs for manipulating static portal content. Akin to the "bboard"
-package being included in it's own "bboard-portlet" package
+    The procs for manipulating static portal content. This is like having
+    the "bboard" included in it's own "bboard-portlet" package.
 
-Copyright Openforce, Inc.
-Licensed under GNU GPL v2 
+    Copyright Openforce, Inc.
+    Licensed under GNU GPL v2 
 
-@author arjun@openforce.net 
-@cvs-id $Id$
-
+    @author arjun@openforce.net 
+    @cvs-id $Id$
 }
 
 namespace eval static_portal_content {
@@ -60,13 +58,13 @@ namespace eval static_portal_content {
         db_transaction {
             # Generate the element
             set element_id [portal::add_element \
+                    -portal_id $portal_id \
+                    -portlet_name [static_portlet::get_my_name] \
                     -pretty_name [get_pretty_name -content_id $content_id] \
-                    -force_region 1 \
-                    $portal_id \
-                    [static_portlet::my_name]
+                    -force_region [ad_parameter "static_portal_content_force_region" static-portlet]
             ]
 
-            # Set the parameter
+            # Set the parameter for the newly created element
             portal::set_element_param $element_id content_id $content_id
         }
     }

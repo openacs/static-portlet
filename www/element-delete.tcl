@@ -27,7 +27,7 @@ ad_page_contract {
     title:onevalue
 }
 
-set ds_name [static_portlet::my_name]
+set ds_name [static_portlet::get_my_name]
 set pretty_name [static_portal_content::get_pretty_name -content_id $content_id]
 
 # THIS NEEDS TO BE GENERALIZED (FIXME - ben)
