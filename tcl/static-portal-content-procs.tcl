@@ -151,15 +151,29 @@ namespace eval static_portal_content {
     }
 
     ad_proc -public update {
+        {-portal_id:required}
         {-content_id:required}
         {-content:required}
         {-pretty_name:required}
     } {
         updates the content item
     } {
-        return [db_dml update_content_item {}]
-    }
+        db_transaction {
+            # update the content item
+            db_dml update_content_item {}
+            
+            # update the title of the portal element
+            set element_id [portal::get_element_id_from_unique_param \
+                -portal_id $portal_id \
+                -key content_id \
+                -value $content_id
+            ]
 
+            portal::set_pretty_name \
+                -element_id $element_id \
+                -pretty_name $pretty_name
+        }
+    }
 
     ad_proc -public delete {
         {-content_id:required}
