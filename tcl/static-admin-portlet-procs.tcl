@@ -73,7 +73,7 @@ namespace eval static_admin_portlet {
     }
 
     ad_proc -public remove_self_from_page {
-	portal_id
+	{-portal_id:required}
     } {
 	Removes static PE from the given page
     } {

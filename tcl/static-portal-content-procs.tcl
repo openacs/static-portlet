@@ -69,6 +69,25 @@ namespace eval static_portal_content {
         }
     }
 
+    ad_proc -public remove_from_portal {
+        {-content_id:required}
+        {-portal_id:required}
+    } {
+        ad_return_complaint 1 "static_portal_content::remove_from_portal not implimented"
+    }
+
+    ad_proc -public remove_all_from_portal {
+        {-portal_id:required}
+    } {
+        db_transaction {
+            # should remove all of 'em
+            set element_id [portal::remove_element \
+                    -portal_id $portal_id \
+                    -portlet_name [static_portlet::get_my_name]
+            ]
+        }
+    }
+
     ad_proc -public update { 
         {-content_id:required}
         {-content:required}
