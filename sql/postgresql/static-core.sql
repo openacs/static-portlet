@@ -70,7 +70,7 @@ create table static_portal_content (
     pretty_name                 varchar(100)
                                 constraint static_p_c_pretty_name_nn
                                 not null,
-    content                     varchar(4000)
+    body                        text
 );
 
 
@@ -139,7 +139,7 @@ begin
 
     insert
     into static_portal_content
-    (content_id, package_id, pretty_name, content)
+    (content_id, package_id, pretty_name, body)
     values
     (v_content_id, p_package_id, p_pretty_name, p_content);
 
