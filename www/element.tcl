@@ -20,81 +20,126 @@ ad_page_contract {
     @author arjun (arjun@openforce)
     @cvs_id $Id$
 } -query {
-    {content_id ""}
+    content_id:optional
     referer:notnull
     portal_id:integer,notnull
+    {package_id:integer ""}
 }  -properties {
     title:onevalue
 }
 
-set title "[_ static-portlet.Edit_content_element]"
 set element_pretty_name [parameter::get -localize -parameter static_admin_portlet_element_pretty_name]
-
-db_1row get_content_element {
-    select content, pretty_name
-    from static_portal_content
-    where content_id = :content_id
+if { ![exists_and_not_null content_id] || [ad_form_new_p -key content_id] } {
+  set title "[_ static-portlet.New] $element_pretty_name"
+  set new_p 1
+} else {
+  set title "[_ static-portlet.Edit] $element_pretty_name"
+  set new_p 0
 }
 
-set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
-set org_pretty_name $pretty_name
-set pretty_name [lang::util::localize $org_pretty_name]
+set community_id $package_id
+set portal_name [portal::get_name $portal_id]
 
-form create static_element
+ad_form -name static_element -form {
+    content_id:key
+    {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
+    {content:text(textarea)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80 wrap soft}}}
+    {portal_id:text(hidden)     {value $portal_id}}
+    {package_id:text(hidden)    {value $package_id}}
+    {referer:text(hidden)       {value $referer}}
+} -new_data {
+    db_transaction {
+        set item_id [static_portal_content::new \
+                         -package_id $package_id  \
+                         -content $content \
+                         -pretty_name $pretty_name
+        ]
 
-element create static_element pretty_name \
-    -label "[_ static-portlet.Name]" \
-    -datatype text \
-    -widget text \
-    -html {size 60} \
-    -value $pretty_name
-
-element create static_element content \
-    -label "[_ static-portlet.Content]" \
-    -datatype text \
-    -widget textarea \
-    -html {rows 15 cols 80 wrap soft} \
-    -value $content
-
-element create static_element content_id \
-    -label "content_id" \
-    -datatype integer \
-    -widget hidden \
-    -value $content_id
-
-element create static_element portal_id \
-    -label "portal_id" \
-    -datatype integer \
-    -widget hidden \
-    -value $portal_id
-
-element create static_element referer \
-    -label "referer" \
-    -datatype text \
-    -widget hidden \
-    -value $referer
-
-if {[form is_valid static_element]} {
-    form get_values static_element \
-        pretty_name content content_id portal_id referer
-
-    # They didn't change the pretty-name, so use the original version
-    # The reason is that we show the pretty-name in localized form,
-    # but behind the scenes it contains a message key. We don't want to loose that message key
-    # unless we have to
-    if { [string equal $pretty_name [lang::util::localize $org_pretty_name]] } {
-        set pretty_name $org_pretty_name
+        static_portal_content::add_to_portal \
+            -portal_id $portal_id \
+            -package_id $package_id \
+            -content_id $item_id
     }
-    
+
+    # redirect and abort
+    ad_returnredirect $referer
+    ad_script_abort
+} -edit_request {
+  db_1row get_content_element ""
+  ad_set_form_values pretty_name
+} -edit_data {
     db_transaction {
         static_portal_content::update \
-		-portal_id $portal_id \
+                -portal_id $portal_id \
                 -content_id $content_id \
                 -pretty_name $pretty_name \
                 -content $content
-        
-        # Must update portal element title
-        # db_dml update_element_pretty_name "update portal_element_map set pretty_name= :pretty_name where element_id= :element_id"
+    }
+
+    # redirect and abort
+    ad_returnredirect $referer
+    ad_script_abort
+}
+
+
+ad_form -name static_file -html {enctype multipart/form-data} -form {
+    content_id:key
+    {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
+    {upload_file:file           {label "[_ static-portlet.File]"}}
+    {portal_id:text(hidden)     {value $portal_id}}
+    {package_id:text(hidden)    {value $package_id}}
+    {referer:text(hidden)       {value $referer}}
+} -new_data {
+    set filename [template::util::file::get_property filename $upload_file]
+    set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
+    set mime_type [template::util::file::get_property mime_type $upload_file]
+    if { [string equal -length 4 "text" $mime_type] || [string length $mime_type] == 0 } {
+      # it's a text file, we can do something with this
+      set fd [open $tmp_filename "r"]
+      set content [read $fd]
+      close $fd
+    } else {
+      # they probably wanted to attach this file, but we can't do that.
+      set content [_ static-portlet.Binary_file_uploaded]
+    }
+
+    db_transaction {
+        set item_id [static_portal_content::new \
+                         -package_id $package_id  \
+                         -content $content \
+                         -pretty_name $pretty_name
+        ]
+        static_portal_content::add_to_portal \
+            -portal_id $portal_id \
+            -package_id $package_id \
+            -content_id $item_id
+    }
+
+    # redirect and abort
+    ad_returnredirect $referer
+    ad_script_abort
+} -edit_request {
+  db_1row get_content_element ""
+  ad_set_form_values pretty_name
+} -edit_data {
+    set filename [template::util::file::get_property filename $upload_file]
+    set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
+    set mime_type [template::util::file::get_property mime_type $upload_file]
+    if { [string equal -length 4 "text" $mime_type] || [string length $mime_type] == 0 } {
+      # it's a text file, we can do something with this
+      set fd [open $tmp_filename "r"]
+      set content [read $fd]
+      close $fd
+    } else {
+      # they probably wanted to attach this file, but we can't do that.
+      set content [_ static-portlet.Binary_file_uploaded]
+    }
+    db_transaction {
+        static_portal_content::update \
+                -portal_id $portal_id \
+                -content_id $content_id \
+                -pretty_name $pretty_name \
+                -content $content
     }
 
     # redirect and abort

@@ -24,7 +24,7 @@
     <fullquery name="static_portal_content::update.update_content_item">
         <querytext>
             update static_portal_content set
-            content = :content, pretty_name = :pretty_name
+            body = :content, pretty_name = :pretty_name
             where content_id = :content_id
         </querytext>
     </fullquery>
@@ -40,6 +40,14 @@
     <fullquery name="static_portal_content::get_package_id.select">
         <querytext>
             select package_id
+            from static_portal_content
+            where content_id = :content_id
+        </querytext>
+    </fullquery>
+
+    <fullquery name="static_portal_content::get_content.get_content.select">
+        <querytext>
+            select body
             from static_portal_content
             where content_id = :content_id
         </querytext>
