@@ -49,12 +49,14 @@ namespace eval static_admin_portlet {
     } {
 	Adds a static admin PE to the given portal
     } {
+	ns_log notice "portal id is $portal_id. package id is $package_id. portlet name is [get_my_name]"
         return [portal::add_element_parameters \
             -portal_id $portal_id \
             -portlet_name [get_my_name] \
             -key package_id \
             -value $package_id
         ]
+	ns_log notice "end of add_self_to_page"
     }
 
     ad_proc -public remove_self_from_page {

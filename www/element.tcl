@@ -74,12 +74,18 @@ if {[form is_valid static_element]} {
     form get_values static_element \
         pretty_name content content_id portal_id referer
     
-    static_portal_content::update \
-        -portal_id $portal_id \
-        -content_id $content_id \
-        -pretty_name $pretty_name \
-        -content $content
-    
+    db_transaction {
+        static_portal_content::update \
+		-portal_id $portal_id \
+                -content_id $content_id \
+                -pretty_name $pretty_name \
+                -content $content
+        
+        # Must update portal element title
+        # db_dml update_element_pretty_name "update portal_element_map set pretty_name= :pretty_name where element_id= :element_id"
+    }
+
+    # redirect and abort
     ad_returnredirect $referer
     ad_script_abort
 }
