@@ -58,6 +58,7 @@ if { ![string equal $package_id ""] } {
         from static_portal_content
         where package_id = :package_id
     } {
+        set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
         set pretty_name [lang::util::localize $pretty_name]
     }
 

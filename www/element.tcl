@@ -36,6 +36,7 @@ db_1row get_content_element {
     where content_id = :content_id
 }
 
+set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
 set org_pretty_name $pretty_name
 set pretty_name [lang::util::localize $org_pretty_name]
 
