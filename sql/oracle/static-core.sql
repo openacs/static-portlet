@@ -74,7 +74,7 @@ as
         context_id      in acs_objects.context_id%TYPE default null
     ) return acs_objects.object_id%TYPE;
 
-    procedure delete (
+    procedure del (
         content_id      in static_portal_content.content_id%TYPE
     );
 
@@ -113,15 +113,15 @@ as
         return v_content_id;        
     end new;
 
-    procedure delete (
+    procedure del (
         content_id    in static_portal_content.content_id%TYPE
     )        
     is
     begin 
         delete from static_portal_content where content_id = content_id;
 
-        acs_object.delete(content_id);
-    end delete;
+        acs_object.del(content_id);
+    end del;
 
 end static_portal_content_item;
 /
