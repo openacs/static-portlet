@@ -18,6 +18,10 @@
 
 %>
 
+<if @package_id@ eq "">
+  <small>No community specified</small>
+</if>
+<else>
 <ul>
 <multiple name="content">
   <li>
@@ -29,4 +33,4 @@
     <a href="@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@">#static-portlet.new_static_admin_portlet#</a>
   </li>
 </ul>
-
+</else>

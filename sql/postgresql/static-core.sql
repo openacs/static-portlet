@@ -104,7 +104,7 @@ create function static_portal_content_item__new (
     varchar,                        -- pretty_name in static_portal_content.pretty_name%TYPE default null,
     varchar,                        -- content in static_portal_content.content%TYPE default null,
     varchar,                        -- object_type in acs_objects.object_type%TYPE default [static_portal_content],
-    timestamp,                      -- creation_date in acs_objects.creation_date%TYPE default sysdate,
+    timestamptz,                    -- creation_date in acs_objects.creation_date%TYPE default sysdate,
     integer,                        -- creation_user in acs_objects.creation_user%TYPE default null,
     varchar,                        -- creation_ip in acs_objects.creation_ip%TYPE default null,
     integer                         -- context_id in acs_objects.context_id%TYPE default null

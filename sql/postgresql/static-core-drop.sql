@@ -81,7 +81,7 @@ drop function inline_1();
 -- 
 
 drop function static_portal_content_item__new (
-        	integer,	varchar, 	varchar, varchar,	timestamp, 	integer,varchar,	integer	
+        	integer,	varchar, 	varchar, varchar,	timestamptz, 	integer,varchar,	integer	
     	) ;
 drop  function static_portal_content_item__delete ( 	integer);
 
