@@ -29,7 +29,7 @@ ad_library {
 namespace eval static_portal_content {
 
     ad_proc -public new { 
-        {-instance_id:required}
+        {-package_id:required}
         {-content:required}
         {-pretty_name:required}
     } {
@@ -40,7 +40,7 @@ namespace eval static_portal_content {
         declare
         begin
         :1 := static_portal_content_item.new(
-        instance_id => :instance_id,
+        package_id => :package_id,
         content => :content,
         pretty_name => :pretty_name
         );
@@ -119,13 +119,13 @@ namespace eval static_portal_content {
         }]
     }
 
-    ad_proc -public get_instance_id { 
+    ad_proc -public get_package_id { 
         {-content_id:required}
     } {
-        Get the instance_id of the item
+        Get the package_id of the item
     } {
-        return [db_string get_instance_id.select {
-            select instance_id
+        return [db_string get_package_id.select {
+            select package_id
             from static_portal_content 
             where content_id = :content_id
         }]

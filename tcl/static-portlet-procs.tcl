@@ -18,17 +18,17 @@ ad_library {
 
     Procedures to supports static portlets
 
-    @author arjun@openforce.net 
+    @author arjun@openforce.net
     @cvs-id $Id$
 }
 
 namespace eval static_portlet {
-    
+
     ad_proc -private get_my_name {
     } {
 	return "static_portlet"
     }
-    
+
     ad_proc -public get_pretty_name {
     } {
 	return ""
@@ -43,45 +43,44 @@ namespace eval static_portlet {
     } {
 	return ""
     }
-    
-    ad_proc -public add_self_to_page { 
-	portal_id 
-	instance_id 
+
+    ad_proc -public add_self_to_page {
+	{-portal_id:required}
+	{-package_id:required}
     } {
 	Adds a static PE to the given page
     } {
         # there is no aggregation, so use:
         set element_id [portal::add_element \
-                -portal_id $portal_id \
-                -portlet_name [get_my_name]
+            -portal_id $portal_id \
+            -portlet_name [get_my_name]
         ]
 
         # Set the instace of "static-portlet" that this PE will know
-        portal::set_element_param $element_id instance_id $instance_id
+        portal::set_element_param $element_id package_id $package_id
 
 	return $element_id
     }
-    
-    ad_proc -public remove_self_from_page { 
-	portal_id 
-	element_id 
+
+    ad_proc -public remove_self_from_page {
+	portal_id
+	element_id
     } {
-	Removes static PE from the given page 
+	Removes static PE from the given page
     } {
         # This is easy since there's one and only one instace_id
         portal::remove_element $element_id
     }
 
-    ad_proc -public show { 
-	cf 
+    ad_proc -public show {
+	cf
     } {
     } {
-        
-        portal::show_proc_helper \
-                -package_key [my_package_key] \
-                -config_list $cf \
-                -template_src "static-portlet"
-    }   
-}
- 
 
+        portal::show_proc_helper \
+            -package_key [my_package_key] \
+            -config_list $cf \
+            -template_src "static-portlet"
+    }
+
+}

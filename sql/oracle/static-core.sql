@@ -32,7 +32,7 @@ create table static_portal_content (
                                 references acs_objects(object_id)
                                 constraint static_p_c_pk
                                 primary key,
-    instance_id                 integer
+    package_id                  integer
                                 not null,
     pretty_name                 varchar2(100) 
                                 constraint static_p_c_pretty_name_nn
@@ -64,7 +64,7 @@ show errors
 create or replace package static_portal_content_item 
 as
     function new (
-        instance_id     in static_portal_content.instance_id%TYPE default null,
+        package_id     in static_portal_content.package_id%TYPE default null,
         pretty_name     in static_portal_content.pretty_name%TYPE default null,
         content         in static_portal_content.content%TYPE default null,
         object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
@@ -85,7 +85,7 @@ show errors
 create or replace package body static_portal_content_item
 as
     function new (
-        instance_id     in static_portal_content.instance_id%TYPE default null,
+        package_id     in static_portal_content.package_id%TYPE default null,
         pretty_name     in static_portal_content.pretty_name%TYPE default null,
         content         in static_portal_content.content%TYPE default null,
         object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
@@ -106,9 +106,9 @@ as
 	);
 
         insert into static_portal_content
-        (content_id, instance_id, pretty_name, content)
+        (content_id, package_id, pretty_name, content)
         values
-        (v_content_id, new.instance_id, new.pretty_name, new.content);
+        (v_content_id, new.package_id, new.pretty_name, new.content);
 
         return v_content_id;        
     end new;

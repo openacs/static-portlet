@@ -30,7 +30,7 @@ ad_page_contract {
 set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
 
 set title "New $element_pretty_name"
-set instance_id [ad_conn package_id]
+set package_id [ad_conn package_id]
 
 form create new_static_element
 
@@ -65,7 +65,7 @@ if {[form is_valid new_static_element]} {
     # insert the new content item
     db_transaction {
         set item_id [static_portal_content::new \
-                -instance_id $instance_id \
+                -package_id $package_id \
                 -content $content \
                 -pretty_name $pretty_name]
 
