@@ -18,16 +18,14 @@
 
 %>
 
-<if @content:rowcount@ eq 0>
-  <i>No @element_pretty_plural@</i>
-</if>
-<else>
-  <ul>
-    <multiple name="content">
-      <li> <a href=@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@>@content.pretty_name@</a>
-    </multiple>
-  </ul>
-</else>
-
-<p>
-<a href=@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@>New @element_pretty_name@</a>
+<ul>
+<multiple name="content">
+  <li>
+    <a href="@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@">@content.pretty_name@</a>
+  </li>
+</multiple>
+  <br>
+  <li>
+    <a href="@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@">New @element_pretty_name@</a>
+  </li>
+</ul>
