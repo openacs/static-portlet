@@ -40,13 +40,21 @@ if { ![exists_and_not_null content_id] || [ad_form_new_p -key content_id] } {
 set community_id $package_id
 set portal_name [portal::get_name $portal_id]
 
+if [info exist content_id] {
+    set element_content_id $content_id
+    set file_content_id $content_id
+}
+
 ad_form -name static_element -form {
-    content_id:key
+    element_content_id:key
     {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
     {content:text(textarea)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80 wrap soft}}}
     {portal_id:text(hidden)     {value $portal_id}}
     {package_id:text(hidden)    {value $package_id}}
     {referer:text(hidden)       {value $referer}}
+} -edit_request {
+  db_1row get_content_element ""
+  ad_set_form_values pretty_name
 } -new_data {
     db_transaction {
         set item_id [static_portal_content::new \
@@ -64,14 +72,11 @@ ad_form -name static_element -form {
     # redirect and abort
     ad_returnredirect $referer
     ad_script_abort
-} -edit_request {
-  db_1row get_content_element ""
-  ad_set_form_values pretty_name
 } -edit_data {
     db_transaction {
         static_portal_content::update \
                 -portal_id $portal_id \
-                -content_id $content_id \
+                -content_id $element_content_id \
                 -pretty_name $pretty_name \
                 -content $content
     }
@@ -83,12 +88,15 @@ ad_form -name static_element -form {
 
 
 ad_form -name static_file -html {enctype multipart/form-data} -form {
-    content_id:key
+    file_content_id:key
     {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
     {upload_file:file           {label "[_ static-portlet.File]"}}
     {portal_id:text(hidden)     {value $portal_id}}
     {package_id:text(hidden)    {value $package_id}}
     {referer:text(hidden)       {value $referer}}
+} -edit_request {
+  db_1row get_content_element ""
+  ad_set_form_values pretty_name
 } -new_data {
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
@@ -118,9 +126,6 @@ ad_form -name static_file -html {enctype multipart/form-data} -form {
     # redirect and abort
     ad_returnredirect $referer
     ad_script_abort
-} -edit_request {
-  db_1row get_content_element ""
-  ad_set_form_values pretty_name
 } -edit_data {
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
@@ -137,7 +142,7 @@ ad_form -name static_file -html {enctype multipart/form-data} -form {
     db_transaction {
         static_portal_content::update \
                 -portal_id $portal_id \
-                -content_id $content_id \
+                -content_id $file_content_id \
                 -pretty_name $pretty_name \
                 -content $content
     }
