@@ -3,6 +3,7 @@
 
   <msg key="admin_portlet_element_pretty_name">Custom Portlet</msg>
   <msg key="admin_portlet_pretty_name">Custom Portlet Administration</msg>
+  <msg key="Back_to">Back to</msg>
   <msg key="Binary_file_uploaded">Binary file %filename% was uploaded, but we only support text files here.</msg>
   <msg key="Content">Content</msg>
   <msg key="Control_Panel">Control Panel</msg>
