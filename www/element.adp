@@ -21,7 +21,12 @@
 <master>
 <property name="title">@title@</property>
 
-Edit an existing @element_pretty_name@:
+<big><strong>Editing @element_pretty_name@ @pretty_name@</strong></big>
+
+<P>
+<P>
+
+[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>Delete @element_pretty_name@ @pretty_name@</strong></a>]
 
 <P>
 

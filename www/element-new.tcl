@@ -23,6 +23,7 @@ ad_page_contract {
 } -query {
     referer:notnull
     portal_id:integer,notnull
+    package_id:integer,notnull
 } -properties {
     title:onevalue
 }
@@ -30,7 +31,6 @@ ad_page_contract {
 set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
 
 set title "New $element_pretty_name"
-set package_id [ad_conn package_id]
 
 form create new_static_element
 
@@ -58,18 +58,27 @@ element create new_static_element referer \
     -widget hidden \
     -value $referer
 
+element create new_static_element package_id \
+    -label "package_id" \
+    -datatype text \
+    -widget hidden \
+    -value $package_id
+
 if {[form is_valid new_static_element]} {
     form get_values new_static_element \
-        pretty_name content portal_id referer
+        pretty_name content portal_id referer package_id
 
-    # insert the new content item
     db_transaction {
         set item_id [static_portal_content::new \
-                -package_id $package_id \
-                -content $content \
-                -pretty_name $pretty_name]
+                         -package_id $package_id  \
+                         -content $content \
+                         -pretty_name $pretty_name
+        ]
 
-        static_portal_content::add_to_portal -content_id $item_id -portal_id $portal_id
+        static_portal_content::add_to_portal \
+            -portal_id $portal_id \
+            -package_id $package_id \
+            -content_id $item_id
     }
         
     # redirect and abort

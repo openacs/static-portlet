@@ -37,5 +37,6 @@ db_multirow content select_content {
 }
 
 set template_portal_id [dotlrn_community::get_portal_id]
+set pacakge_id [dotlrn_community::get_community_id]
 set applet_url "[dotlrn_applet::get_url]/[static_portlet::my_package_key]"
 set referer [ad_conn url]

@@ -19,19 +19,15 @@
 %>
 
 <if @content:rowcount@ eq 0>
-<i>No @element_pretty_plural@</i>
+  <i>No @element_pretty_plural@</i>
 </if>
 <else>
-<ul>
-<multiple name="content">
-<li> <a href=@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@>@content.pretty_name@</a>
-<!-- aks disallowing deletion static portlets for now, since they can't add them as well
-  [<a href=@applet_url@/element-delete?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@>delete</a>]
- -->
-</multiple>
-</ul>
+  <ul>
+    <multiple name="content">
+      <li> <a href=@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@>@content.pretty_name@</a>
+    </multiple>
+  </ul>
 </else>
+
 <p>
-<!-- aks disallowing new static portlets for now - there some weirdness in new-portal
-  <a href=@applet_url@/element-new?portal_id=@template_portal_id@&referer=@referer@>New @element_pretty_name@</a>
- -->
+<a href=@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@>New @element_pretty_name@</a>

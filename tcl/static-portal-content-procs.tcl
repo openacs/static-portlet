@@ -52,26 +52,71 @@ namespace eval static_portal_content {
     }
 
     ad_proc -public add_to_portal {
-        {-content_id:required}
         {-portal_id:required}
+        {-package_id:required}
+        {-content_id ""}
+        {-template_id ""}
     } {
+        This is a bit different from add_self_to_page procs. 
+    } {
+
+        if {![empty_string_p $template_id]} {
+            # we got a template_id, so we know that (1) that we are
+            # being called from add_applet_to_community. That means that
+            # we have a static portlet copied from our template, 
+            # but the pointer to the _content_ of the portlet still
+            # _template's content_. Therefore we need to clone the 
+            # _template's content_ and update the pointer
+            # (2) that there's only one static portlet on the page.
+
+            set old_element_id [portal::get_element_ids_by_ds \
+                                    $template_id \
+                                    [static_portlet::get_my_name]
+            ]
+            set old_content_id [portal::get_element_param $old_element_id content_id]
+
+            # clone the template's content
+            set new_content_id [static_portal_content::new \
+                                    -package_id $package_id \
+                                    -content [get_content -content_id $old_content_id] \
+                                    -pretty_name [get_pretty_name -content_id $old_content_id]
+            ]
+            
+            # update the new static portlet's params, and return
+            set new_element_id [portal::get_element_ids_by_ds \
+                                    $portal_id \
+                                    [static_portlet::get_my_name]
+            ]
+            portal::set_element_param $new_element_id "package_id" $package_id
+            portal::set_element_param $new_element_id "content_id" $new_content_id
+            
+            # we use the return value to create the portlet on the non-member
+            # page, which is linked to the same content as on the main comm page
+            return $new_content_id
+        }
+
         db_transaction {
-            # Generate the element
+            # Generate the element, don't use add_element_parameters here, 
+            # since it dosen't do the right thing for multiple elements with
+            # the same datasource on a page. so we just use the more low level
+            # portal::add_element
             set element_id [portal::add_element \
                     -portal_id $portal_id \
                     -portlet_name [static_portlet::get_my_name] \
                     -pretty_name [get_pretty_name -content_id $content_id] \
-                    -force_region [ad_parameter "static_portal_content_force_region" static-portlet]
+                    -force_region [parameter::get_from_package_key \
+                                       -parameter "static_portal_content_force_region" \
+                                       -package_key "static-portlet"]
             ]
-
-            # Set the parameter for the newly created element
-            portal::set_element_param $element_id content_id $content_id
+            
+            portal::set_element_param $element_id "pacakge_id"  $package_id 
+            portal::set_element_param $element_id "content_id"  $content_id
         }
     }
 
     ad_proc -public remove_from_portal {
-        {-content_id:required}
         {-portal_id:required}
+        {-content_id:required}
     } {
         ad_return_complaint 1 "static_portal_content::remove_from_portal not implimented"
     }

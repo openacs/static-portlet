@@ -20,8 +20,8 @@ ad_page_contract {
     @author arjun (arjun@openforce)
     @cvs_id $Id$
 } -query {
-    {content_id ""}
-    {referer "../one-community-admin"}
+    {content_id:integer,notnull}
+    {referer:notnull}
     portal_id:integer,notnull
 }  -properties {
     title:onevalue
@@ -31,16 +31,21 @@ set ds_name [static_portlet::get_my_name]
 set pretty_name [static_portal_content::get_pretty_name -content_id $content_id]
 
 # THIS NEEDS TO BE GENERALIZED (FIXME - ben)
-# FIXME : this might not be unique
 set element_id [db_string select_element_id "
-select portal_element_map.element_id from portal_element_map, portal_pages
-where portal_pages.portal_id= :portal_id
-and portal_pages.page_id = portal_element_map.page_id
-and portal_element_map.pretty_name= :pretty_name"]
+select pep.element_id
+from portal_element_parameters pep, 
+     portal_pages pp,
+     portal_element_map pem
+where pp.portal_id= :portal_id
+and pp.page_id = pem.page_id
+and pem.element_id = pep.element_id
+and pep.key = 'content_id' 
+and pep.value = :content_id
+"]
 
 db_transaction {
     # Remove element
-    portal::remove_element $element_id
+    portal::remove_element -element_id $element_id
 
     # do the deed
     static_portal_content::delete -content_id $content_id
