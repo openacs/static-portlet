@@ -43,10 +43,8 @@ if {![exists_and_not_null referer]} {
     set referer [ad_conn url]
 }
 
-set element_pretty_name [ad_parameter -localize static_admin_portlet_element_pretty_name static-portlet]
-set element_pretty_plural [ad_parameter -localize static_admin_portlet_element_pretty_plural static-portlet]
+set element_pretty_name [parameter::get_from_package_key -localize -package_key static-portlet -parameter static_admin_portlet_element_pretty_name]
 
-ns_log notice "package_id = $package_id"
 db_multirow content select_content {
     select content_id,
            pretty_name
@@ -58,7 +56,3 @@ db_multirow content select_content {
 
 
 set applet_url "[dotlrn_applet::get_url]/[static_portlet::my_package_key]"
-
-
-
-
