@@ -21,16 +21,34 @@ namespace eval static_portal_content {
     } {
         Calls the pl/sql to create the new content item
     } {
-        return [db_exec_plsql new_content_item {
-            declare
-              begin
-              :1 := static_portal_content_item.new(
-                instance_id => :instance_id,
-                content => :content,
-                pretty_name => :pretty_name
-              );
-            end;
-        }]
+        # Create the content item
+        set content_id [db_exec_plsql new_content_item "
+        declare
+        begin
+        :1 := static_portal_content_item.new(
+        instance_id => :instance_id,
+        content => :content,
+        pretty_name => :pretty_name
+        );
+        end;
+        "]
+     
+        # Ben's style only cause he was editing here and then changed things back
+        return $content_id
+    }
+
+    ad_proc -public add_to_portal {
+        {-content_id:required}
+        {-portal_id:required}
+    } {
+        db_transaction {
+            # Generate the element
+            set element_id [portal::add_element -pretty_name [get_pretty_name -content_id $content_id] \
+                    $portal_id [static_portlet::my_name]]
+
+            # Set the parameter
+            portal::set_element_param $element_id content_id $content_id
+        }
     }
 
     ad_proc -public update { 

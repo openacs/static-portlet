@@ -10,4 +10,4 @@
 </ul>
 </else>
 <p>
-<a href=./static/element-new?instance_id=@instance_id@>New static element</a>
+<a href=./static/element-new?portal_id=@template_portal_id@>New static element</a>

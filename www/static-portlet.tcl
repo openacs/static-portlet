@@ -8,10 +8,13 @@ ad_page_contract {
 
 array set config $cf	
 
-set instance_id $config(instance_id)
+# one piece of content only per portlet
+set content_id $config(content_id)
 
-db_multirow content_multi select_content {
+if {[catch {set success_p [db_0or1row select_content {
   select content, pretty_name
   from static_portal_content
-  where instance_id = :instance_id
-} 
+  where content_id = :content_id
+}]} errmsg]} {
+    set success_p 0
+}
