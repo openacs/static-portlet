@@ -48,14 +48,17 @@ if { ![string equal $package_id ""] } {
         set referer [ad_conn url]
     }
 
-    set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
-    set element_pretty_plural [ad_parameter static_admin_portlet_element_pretty_plural static-portlet "Custom Portlets"]
+    set element_pretty_name [parameter::get \
+                                 -parameter static_admin_portlet_element_pretty_name \
+                                 -default [_ static-portlet.admin_portlet_element_pretty_name]]
 
     db_multirow content select_content {
         select content_id,
                pretty_name
         from static_portal_content
         where package_id = :package_id
+    } {
+        set pretty_name [lang::util::localize $pretty_name]
     }
 
     set applet_url "[dotlrn_applet::get_url]/[static_portlet::my_package_key]"
