@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message_catalog package_key="static-portlet" package_version="2.0.3" locale="nn_NO" charset="ISO-8859-1">
+
+  <msg key="admin_portlet_element_pretty_name">Spesialtilpassa modul</msg>
+  <msg key="admin_portlet_pretty_name">Administrasjon for spesialtilpassa modul</msg>
+  <msg key="Content">Innhald</msg>
+  <msg key="Control_Panel">Kontrollpanel</msg>
+  <msg key="Edit_content_element">Rediger innhaldselement</msg>
+  <msg key="lt_Delete_element_pretty">Slett %element_pretty_name% %pretty_name% </msg>
+  <msg key="lt_Editing_element_prett">Slettar %element_pretty_name% %pretty_name% </msg>
+  <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Merk&lt;/strong&gt;: Du kan bruke enkel tekst eller HTML i innhaldsruta.</msg>
+  <msg key="lt_Use_this_form_to_crea">Bruk dette skjemaet for å lage eit nytt %element_pretty_name%. %element_pretty_name% vil bli lagt inn og automatisk plassert på første sida av %portal_name% portalen. Gå til %control_panel_text% og velg Skredddarsy portalen for å flytte denne %element_pretty_name%. </msg>
+  <msg key="Name">Navn</msg>
+  <msg key="New">Ny</msg>
+  <msg key="new_static_admin_portlet">Ny %element_pretty_name%</msg>
+</message_catalog>
