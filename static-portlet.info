@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
 
-    <version name="0.1a" url="http://software.openforce.net/static-portlet-0.1a.apm">
+    <version name="1.0" url="http://software.openforce.net/static-portlet-1.0.apm">
     <database-support>
         <database>oracle</database>
         <database>postgresql</database>
@@ -15,7 +15,7 @@
         <owner url="mailto:arjun@openforce.net">Arjun Sanyal</owner>
         <vendor url="http://openforce.net/">OpenForce, Inc.</vendor>
 
-        <provides url="static-portlet" version="0.1a"/>
+        <provides url="static-portlet" version="1.0"/>
         <requires url="dotlrn" version="1.0"/>
         <requires url="new-portal" version="0.1a"/>
 

@@ -205,11 +205,7 @@ namespace eval static_portal_content {
     } {
         Get the content of the item
     } {
-        return [db_string get_content.select {
-            select content
-            from static_portal_content
-            where content_id = :content_id
-        }]
+        return [db_string get_content.select {)]
     }
 
     ad_proc -public get_package_id {

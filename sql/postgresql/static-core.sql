@@ -70,7 +70,7 @@ create table static_portal_content (
     pretty_name                 varchar(100)
                                 constraint static_p_c_pretty_name_nn
                                 not null,
-    content                     varchar(4000)
+    body                        text
 );
 
 
@@ -78,6 +78,10 @@ create table static_portal_content (
 --
 -- API
 --
+
+-- content is still a varchar, even though it is being used to put content
+-- into body, a clob, because a varchar is what's being passed in from the
+-- Tcl script.
 
 create function static_portal_content_item__new (integer, varchar, varchar)
 returns integer as '
@@ -139,7 +143,7 @@ begin
 
     insert
     into static_portal_content
-    (content_id, package_id, pretty_name, content)
+    (content_id, package_id, pretty_name, body)
     values
     (v_content_id, p_package_id, p_pretty_name, p_content);
 

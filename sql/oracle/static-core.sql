@@ -37,7 +37,7 @@ create table static_portal_content (
     pretty_name                 varchar2(100) 
                                 constraint static_p_c_pretty_name_nn
                                 not null,                            
-    content                     varchar2(4000)
+    body                        clob
 );
 
 
@@ -61,12 +61,15 @@ show errors
 -- API
 -- 
 
+-- content is still a varchar, even though it is being used to put content
+-- into body, a clob, because a varchar is what's being passed in from the
+-- Tcl script.
 create or replace package static_portal_content_item 
 as
     function new (
         package_id     in static_portal_content.package_id%TYPE default null,
         pretty_name     in static_portal_content.pretty_name%TYPE default null,
-        content         in static_portal_content.content%TYPE default null,
+        content         in varchar default null,
         object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
         creation_date   in acs_objects.creation_date%TYPE default sysdate,
         creation_user   in acs_objects.creation_user%TYPE default null,
@@ -87,7 +90,7 @@ as
     function new (
         package_id     in static_portal_content.package_id%TYPE default null,
         pretty_name     in static_portal_content.pretty_name%TYPE default null,
-        content         in static_portal_content.content%TYPE default null,
+        content         in varchar default null,
         object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
         creation_date   in acs_objects.creation_date%TYPE default sysdate,
         creation_user   in acs_objects.creation_user%TYPE default null,
@@ -106,7 +109,7 @@ as
 	);
 
         insert into static_portal_content
-        (content_id, package_id, pretty_name, content)
+        (content_id, package_id, pretty_name, body)
         values
         (v_content_id, new.package_id, new.pretty_name, new.content);
 
