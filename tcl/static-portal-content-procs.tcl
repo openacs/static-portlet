@@ -62,31 +62,42 @@ namespace eval static_portal_content {
                                     $template_id \
                                     [static_portlet::get_my_name]
             ]
-            set old_content_id [portal::get_element_param $old_element_id content_id]
 
-            # clone the template's content
-            set new_content_id [static_portal_content::new \
+	    set new_content_ids [list]
+	    foreach oei $old_element_id {
+		set old_content_id [portal::get_element_param $oei content_id]
+    
+
+		# clone the template's content
+		lappend new_content_ids [static_portal_content::new \
                                     -package_id $package_id \
                                     -content [get_content -content_id $old_content_id] \
                                     -pretty_name [get_pretty_name -content_id $old_content_id]
-            ]
+				   ]
 
-            # update the new static portlet's params, and return
-            set new_element_id [portal::get_element_ids_by_ds \
-                                    $portal_id \
-                                    [static_portlet::get_my_name]
-            ]
-            portal::set_element_param $new_element_id "package_id" $package_id
-            portal::set_element_param $new_element_id "content_id" $new_content_id
+	    }
 
-            # we use the return value to create the portlet on the non-member
-            # page, which is linked to the same content as on the main comm page
-            return $new_content_id
+	    # update the new static portlet's params, and return
+	    set new_element_ids [portal::get_element_ids_by_ds \
+				     $portal_id \
+				     [static_portlet::get_my_name]
+				]
+
+	    foreach nei $new_element_ids nci $new_content_ids {
+		portal::set_element_param $nei "package_id" $package_id
+		portal::set_element_param $nei "content_id" $nci
+	    }
+
+	    # we use the return value to create the portlet on the non-member
+	    # page, which is linked to the same content as on the
+	    # main comm page
+
+	    return [lindex $new_content_ids 0]
         }
 
         db_transaction {
             # Generate the element, don't use add_element_parameters here,
-            # since it dosen't do the right thing for multiple elements with
+            # since it doesn't do the right thing for multiple elements with
             # the same datasource on a page. so we just use the more low level
             # portal::add_element
             set element_id [portal::add_element \
@@ -100,6 +111,7 @@ namespace eval static_portal_content {
 
             portal::set_element_param $element_id package_id $package_id
             portal::set_element_param $element_id content_id $content_id
+
         }
     }
 
