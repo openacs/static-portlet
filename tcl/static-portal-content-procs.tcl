@@ -19,16 +19,14 @@ ad_library {
     The procs for manipulating static portal content. This is like having
     the "bboard" included in it's own "bboard-portlet" package.
 
-    Copyright Openforce, Inc.
-    Licensed under GNU GPL v2 
+    @author arjun@openforce.net
+    @version $Id$
 
-    @author arjun@openforce.net 
-    @cvs-id $Id$
 }
 
 namespace eval static_portal_content {
 
-    ad_proc -public new { 
+    ad_proc -public new {
         {-package_id:required}
         {-content:required}
         {-pretty_name:required}
@@ -37,7 +35,7 @@ namespace eval static_portal_content {
     } {
         # Create the content item
         set content_id [db_exec_plsql new_content_item {}]
-     
+
         # Ben's style only cause he was editing here and then changed things back
         return $content_id
     }
@@ -48,15 +46,15 @@ namespace eval static_portal_content {
         {-content_id ""}
         {-template_id ""}
     } {
-        This is a bit different from other add_self_to_page procs. 
+        This is a bit different from other add_self_to_page procs.
     } {
 
         if {![empty_string_p $template_id]} {
             # we got a template_id, so we know that (1) that we are
             # being called from add_applet_to_community. That means that
-            # we have a static portlet copied from our template, 
+            # we have a static portlet copied from our template,
             # but the pointer to the _content_ of the portlet still
-            # _template's content_. Therefore we need to clone the 
+            # _template's content_. Therefore we need to clone the
             # _template's content_ and update the pointer
             # (2) that there's only one static portlet on the page.
 
@@ -72,7 +70,7 @@ namespace eval static_portal_content {
                                     -content [get_content -content_id $old_content_id] \
                                     -pretty_name [get_pretty_name -content_id $old_content_id]
             ]
-            
+
             # update the new static portlet's params, and return
             set new_element_id [portal::get_element_ids_by_ds \
                                     $portal_id \
@@ -80,14 +78,14 @@ namespace eval static_portal_content {
             ]
             portal::set_element_param $new_element_id "package_id" $package_id
             portal::set_element_param $new_element_id "content_id" $new_content_id
-            
+
             # we use the return value to create the portlet on the non-member
             # page, which is linked to the same content as on the main comm page
             return $new_content_id
         }
 
         db_transaction {
-            # Generate the element, don't use add_element_parameters here, 
+            # Generate the element, don't use add_element_parameters here,
             # since it dosen't do the right thing for multiple elements with
             # the same datasource on a page. so we just use the more low level
             # portal::add_element
@@ -99,8 +97,8 @@ namespace eval static_portal_content {
                                        -parameter "static_portal_content_force_region" \
                                        -package_key "static-portlet"]
             ]
-            
-            portal::set_element_param $element_id package_id $package_id 
+
+            portal::set_element_param $element_id package_id $package_id
             portal::set_element_param $element_id content_id $content_id
         }
     }
@@ -115,22 +113,22 @@ namespace eval static_portal_content {
     } {
         set ds_id [portal::get_datasource_id [static_portlet::get_my_name]]
 
-        set element_list [db_list get_element_list {}] 
+        set element_list [db_list get_element_list {}]
 
-      foreach element_id $element_list {
-          set old_content_id [db_string select_element_id {}]
+        foreach element_id $element_list {
+            set old_content_id [db_string select_element_id {}]
 
-          # make a new static content item from this item
-          set new_content_id [new \
-              -package_id $package_id \
-              -content [get_content -content_id $old_content_id] \
-              -pretty_name [get_pretty_name -content_id $old_content_id] 
-          ]
+            # make a new static content item from this item
+            set new_content_id [new \
+                -package_id $package_id \
+                -content [get_content -content_id $old_content_id] \
+                -pretty_name [get_pretty_name -content_id $old_content_id]
+            ]
 
-          # update the portal element's pointers
-          portal::set_element_param $element_id package_id $package_id 
-          portal::set_element_param $element_id content_id $new_content_id
-      }
+            # update the portal element's pointers
+            portal::set_element_param $element_id package_id $package_id
+            portal::set_element_param $element_id content_id $new_content_id
+        }
     }
 
     ad_proc -public remove_from_portal {
@@ -152,7 +150,7 @@ namespace eval static_portal_content {
         }
     }
 
-    ad_proc -public update { 
+    ad_proc -public update {
         {-content_id:required}
         {-content:required}
         {-pretty_name:required}
@@ -163,38 +161,38 @@ namespace eval static_portal_content {
     }
 
 
-    ad_proc -public delete { 
+    ad_proc -public delete {
         {-content_id:required}
     } {
         deletes the item
     } {
-        
+
         db_dml delete_content_item {
             delete from static_portal_content where content_id = :content_id
         }
     }
 
-    ad_proc -public get_pretty_name { 
+    ad_proc -public get_pretty_name {
         {-content_id:required}
     } {
         Get the pretty_name of the item
     } {
-        return [db_string get_pretty_name.select {}]
+        return [db_string select {}]
     }
 
-    ad_proc -public get_content { 
+    ad_proc -public get_content {
         {-content_id:required}
     } {
         Get the content of the item
     } {
         return [db_string get_content.select {
             select content
-            from static_portal_content 
+            from static_portal_content
             where content_id = :content_id
         }]
     }
 
-    ad_proc -public get_package_id { 
+    ad_proc -public get_package_id {
         {-content_id:required}
     } {
         Get the package_id of the item
