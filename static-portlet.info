@@ -7,12 +7,12 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
 
-    <version name="2.0.3d2" url="http://openacs.org/repository/download/apm/static-portlet-2.0.3d2.apm">
+    <version name="2.1.0a" url="http://openacs.org/repository/download/apm/static-portlet-2.1.0a.apm">
         <owner url="http://openacs.org">OpenACS</owner>
         <release-date>2004-03-10</release-date>
         <vendor url="http://openacs.org">OpenACS</vendor>
 
-        <provides url="static-portlet" version="2.0.3d2"/>
+        <provides url="static-portlet" version="2.1.0a"/>
         <requires url="dotlrn" version="1.0d1"/>
         <requires url="new-portal" version="0.2d1"/>
 
