@@ -34,3 +34,7 @@ set success_p [db_0or1row select_content {
   from static_portal_content
   where content_id = :content_id
 }]
+
+# The pretty_name can be a message catalog key
+set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
+set pretty_name [lang::util::localize $pretty_name]
