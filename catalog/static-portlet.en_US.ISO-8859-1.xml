@@ -1,0 +1,3 @@
+<message_catalog package_key="static-portlet" locale="en_US" charset="ISO-8859-1">
+  <msg key="admin_portlet_pretty_name">Custom Portlet Administration</msg>
+</message_catalog>
