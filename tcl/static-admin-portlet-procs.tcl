@@ -20,7 +20,8 @@ namespace eval static_admin_portlet {
     
     ad_proc -public get_pretty_name {
     } {
-	return "Static Element Administration"
+        
+	return [ad_parameter static_admin_portlet_pretty_name]
     }
 
     ad_proc -private my_package_key {

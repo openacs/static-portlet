@@ -1,5 +1,5 @@
 <if @content:rowcount@ eq 0>
-<i>No static elements</i>
+<i>No @element_pretty_plural@</i>
 </if>
 <else>
 <ul>
@@ -10,4 +10,4 @@
 </ul>
 </else>
 <p>
-<a href=./static/element-new?portal_id=@template_portal_id@>New static element</a>
+<a href=./static/element-new?portal_id=@template_portal_id@>New @element_pretty_name@</a>
