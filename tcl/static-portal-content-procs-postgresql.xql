@@ -7,8 +7,8 @@
         <querytext>
             select static_portal_content_item__new(
                 :package_id,
-                :content,
-                :pretty_name
+                :pretty_name,
+                :content
             );
         </querytext>
     </fullquery>
