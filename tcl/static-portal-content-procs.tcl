@@ -48,8 +48,6 @@ namespace eval static_portal_content {
     } {
         This is a bit different from other add_self_to_page procs.
     } {
-	ns_log notice "portal is is $portal_id. package_id is $package_id. content_id is $content_id. template_id = $template_id"
-
         if {![empty_string_p $template_id]} {
             # we got a template_id, so we know that (1) that we are
             # being called from add_applet_to_community. That means that
@@ -63,10 +61,8 @@ namespace eval static_portal_content {
                                     $template_id \
                                     [static_portlet::get_my_name]
             ]
-	    ns_log notice "old element id is $old_element_id"
             set old_content_id [portal::get_element_param $old_element_id content_id]
 
-	    ns_log notice "old content id is $old_content_id"
             # clone the template's content
             set new_content_id [static_portal_content::new \
                                     -package_id $package_id \
@@ -79,7 +75,6 @@ namespace eval static_portal_content {
                                     $portal_id \
                                     [static_portlet::get_my_name]
             ]
-	    ns_log notice "new element id is $new_element_id"
             portal::set_element_param $new_element_id "package_id" $package_id
             portal::set_element_param $new_element_id "content_id" $new_content_id
 
@@ -93,8 +88,6 @@ namespace eval static_portal_content {
             # since it dosen't do the right thing for multiple elements with
             # the same datasource on a page. so we just use the more low level
             # portal::add_element
-	    ns_log notice "before bad proc. portal id is $portal_id"
-	    ns_log notice "before bad proc. content id $content_id"
             set element_id [portal::add_element \
                     -portal_id $portal_id \
                     -portlet_name [static_portlet::get_my_name] \

@@ -51,7 +51,6 @@ if { ![string equal $package_id ""] } {
     set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
     set element_pretty_plural [ad_parameter static_admin_portlet_element_pretty_plural static-portlet "Custom Portlets"]
 
-    ns_log notice "package_id = $package_id"
     db_multirow content select_content {
         select content_id,
                pretty_name
