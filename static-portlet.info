@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
 
-    <version name="0.1a" url="http://software.openforce.net/static-portlet-0.1a.apm">
+    <version name="0.2a" url="http://software.openforce.net/static-portlet-0.2a.apm">
     <database-support>
         <database>oracle</database>
         <database>postgresql</database>
@@ -15,9 +15,9 @@
         <owner url="mailto:arjun@openforce.net">Arjun Sanyal</owner>
         <vendor url="http://openforce.net/">OpenForce, Inc.</vendor>
 
-        <provides url="static-portlet" version="0.1a"/>
-        <requires url="dotlrn" version="1.0"/>
-        <requires url="new-portal" version="0.1a"/>
+        <provides url="static-portlet" version="0.2a"/>
+        <requires url="dotlrn" version="1.0d1"/>
+        <requires url="new-portal" version="0.2d1"/>
 
         <parameters>
             <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_pretty_name"  default="#static-portlet.admin_portlet_pretty_name#" description="the name for the static admin portlet in the UI"/>
