@@ -36,16 +36,7 @@ namespace eval static_portal_content {
         Calls the pl/sql to create the new content item
     } {
         # Create the content item
-        set content_id [db_exec_plsql new_content_item "
-        declare
-        begin
-        :1 := static_portal_content_item.new(
-        package_id => :package_id,
-        content => :content,
-        pretty_name => :pretty_name
-        );
-        end;
-        "]
+        set content_id [db_exec_plsql new_content_item {}]
      
         # Ben's style only cause he was editing here and then changed things back
         return $content_id
@@ -124,21 +115,10 @@ namespace eval static_portal_content {
     } {
         set ds_id [portal::get_datasource_id [static_portlet::get_my_name]]
 
-        set element_list [db_list get_element_list {
-            select pem.element_id as element_id
-            from portal_element_map pem, portal_pages pp
-            where pp.portal_id= :portal_id 
-            and pp.page_id = pem.page_id
-            and pem.datasource_id= :ds_id
-        }] 
+        set element_list [db_list get_element_list {}] 
 
       foreach element_id $element_list {
-          set old_content_id [db_string select_element_id {
-              select value 
-              from portal_element_parameters
-              where element_id = :element_id
-              and key = 'content_id'}
-          ]
+          set old_content_id [db_string select_element_id {}]
 
           # make a new static content item from this item
           set new_content_id [new \
@@ -179,11 +159,7 @@ namespace eval static_portal_content {
     } {
         updates the content item
     } {
-        return [db_dml update_content_item {
-            update static_portal_content set 
-            content = :content, pretty_name = :pretty_name 
-            where content_id = :content_id
-        }]
+        return [db_dml update_content_item {}]
     }
 
 
@@ -203,11 +179,7 @@ namespace eval static_portal_content {
     } {
         Get the pretty_name of the item
     } {
-        return [db_string get_pretty_name.select {
-            select pretty_name
-            from static_portal_content 
-            where content_id = :content_id
-        }]
+        return [db_string get_pretty_name.select {}]
     }
 
     ad_proc -public get_content { 
@@ -227,11 +199,7 @@ namespace eval static_portal_content {
     } {
         Get the package_id of the item
     } {
-        return [db_string get_package_id.select {
-            select package_id
-            from static_portal_content 
-            where content_id = :content_id
-        }]
+        return [db_string get_package_id.select {}]
     }
 
 }
