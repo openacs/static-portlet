@@ -18,14 +18,19 @@
 
 %>
 
-<ul>
-<multiple name="content">
-  <li>
-    <a href="@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@">@content.pretty_name@</a>
-  </li>
-</multiple>
-  <br>
-  <li>
-    <a href="@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@">New @element_pretty_name@</a>
-  </li>
-</ul>
+<if @package_id@ eq "">
+  <small>No community specified</small>
+</if>
+<else>
+  <ul>
+  <multiple name="content">
+    <li>
+      <a href="@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@">@content.pretty_name@</a>
+    </li>
+  </multiple>
+    <br>
+    <li>
+      <a href="@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@">New @element_pretty_name@</a>
+    </li>
+  </ul>
+</else>
