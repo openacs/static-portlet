@@ -28,6 +28,7 @@ ad_page_contract {
     title:onevalue
 }
 
+set control_panel_text [_ "dotlrn.control_panel"]
 set element_pretty_name [parameter::get -localize -parameter static_admin_portlet_element_pretty_name]
 if { ![exists_and_not_null content_id] || [ad_form_new_p -key content_id] } {
   set title "[_ static-portlet.New] $element_pretty_name"
