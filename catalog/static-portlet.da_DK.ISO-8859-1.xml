@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="static-portlet" package_version="2.0.3" locale="da_DK" charset="ISO-8859-1">
+<message_catalog package_key="static-portlet" package_version="2.1.0b1" locale="da_DK" charset="ISO-8859-1">
 
   <msg key="admin_portlet_element_pretty_name">Speciel Portlet</msg>
   <msg key="admin_portlet_pretty_name">Administration af Tilpasset Portlet</msg>
   <msg key="Content">Indhold</msg>
   <msg key="Control_Panel">Kontrolpanel</msg>
+  <msg key="Edit">Rediger</msg>
   <msg key="Edit_content_element">Redigér indholdselement</msg>
+  <msg key="File">Fil</msg>
   <msg key="lt_Delete_element_pretty">Slet %element_pretty_name% %pretty_name%</msg>
   <msg key="lt_Editing_element_prett">Redigerer %element_pretty_name% %pretty_name%</msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Bemærk&lt;/strong&gt;: Du kan brugere ren tekst eller HTML i Indholdsområdet.</msg>
