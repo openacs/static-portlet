@@ -62,7 +62,11 @@ namespace eval static_admin_portlet {
         # unlike bboard-portlet
 
         # Tell portal to add this element to the page
-        set element_id [portal::add_element $portal_id [my_name]]
+        set element_id [portal::add_element \
+                -force_region 1 \
+                $portal_id \
+                [my_name]
+        ]
 
         # Set the instace of "static" that this PE will know
         portal::set_element_param $element_id instance_id $instance_id
