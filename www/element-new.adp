@@ -23,7 +23,7 @@
 <property name="community_id">@community_id@</property>
 <p>
 <blockquote>
-Use this form to create a new @element_pretty_name@.  The @element_pretty_name@ will be created and automatically placed on the first page of @portal_name@ portal. Goto the @control_panel_text@ and select Customize Layout to move the this @element_pretty_name@.
+Use this form to create a new @element_pretty_name@.  The @element_pretty_name@ will be created and automatically placed on the first page of @portal_name@ portal. Goto the administration page and select Customize Layout to move this @element_pretty_name@.
 
 <P>
 <strong>Note</strong>: You can use plain text or HTML in the Content area.

@@ -37,10 +37,6 @@ set community_id $package_id
 
 set portal_name [portal::get_name $portal_id]
 
-if {![info exists control_panel_text]} {
-    set control_panel_text "Control Panel"
-}
-
 form create new_static_element
 
 element create new_static_element pretty_name \
