@@ -20,7 +20,7 @@
 
 <if @config.shaded_p@ ne "t">
 <if @success_p@ eq 1>
-@content@&nbsp;
+@content;noquote@&nbsp;
 </if>
 </if>
 <else>
