@@ -20,13 +20,33 @@ ad_page_contract {
     @author arjun (arjun@openforce)
     @author Ben Adida (ben@openforce)    
     @cvs_id $Id$
-} -properties {
+} {
+    package_id:optional
+    template_portal_id:optional
+    referer:optional
+    return_url:optional
+}
+
+if {![exists_and_not_null package_id]} {
+    set package_id [dotlrn_community::get_community_id]
+}
+
+if {![exists_and_not_null template_portal_id]} {
+    set template_portal_id [dotlrn_community::get_portal_id]
+}
+
+if {[exists_and_not_null return_url]} {
+    set referer $return_url
+}
+
+if {![exists_and_not_null referer]} {
+    set referer [ad_conn url]
 }
 
 set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
 set element_pretty_plural [ad_parameter static_admin_portlet_element_pretty_plural static-portlet "Custom Portlets"]
-set package_id [dotlrn_community::get_community_id]
 
+ns_log notice "package_id = $package_id"
 db_multirow content select_content {
     select content_id,
            pretty_name
@@ -34,6 +54,9 @@ db_multirow content select_content {
     where package_id = :package_id
 }
 
-set template_portal_id [dotlrn_community::get_portal_id]
+
 set applet_url "[dotlrn_applet::get_url]/[static_portlet::my_package_key]"
-set referer [ad_conn url]
+
+
+
+
