@@ -12,5 +12,5 @@
   <msg key="lt_Use_this_form_to_crea">Mit diesem Formular kann ein neues %element_pretty_name% erstellt werden. Es wird automatisch auf der ersten Seite des Portals &quot;%portal_name%&quot; platziert. Um es zu verschieben, gehen Sie auf &quot;%control_panel_text%&quot; und dort auf &quot;Layout des Portals anpassen&quot;.</msg>
   <msg key="Name">Name</msg>
   <msg key="New">Neu</msg>
-  <msg key="new_static_admin_portlet">Neues %element_pretty_name% erstellen</msg>
+  <msg key="new_static_admin_portlet">Neues %element_pretty_name%</msg>
 </message_catalog>
