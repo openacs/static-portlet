@@ -24,9 +24,20 @@
             <file type="data_model" db_type="oracle" path="sql/oracle/static-core.sql"/>
             <file type="data_model_create" db_type="oracle" path="sql/oracle/static-portlet-create.sql"/>
             <file type="data_model" db_type="oracle" path="sql/oracle/static-portlet.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/static-admin-portlet-drop.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/static-admin-portlet.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/static-core-drop.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/static-core.sql"/>
+            <file type="data_model_create" db_type="postgresql" path="sql/postgresql/static-portlet-create.sql"/>
+            <file type="data_model_drop" db_type="postgresql" path="sql/postgresql/static-portlet-drop.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/static-portlet-portlet-drop.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/static-portlet.sql"/>
             <file type="package_spec" path="static-portlet.info"/>
             <file type="tcl_procs" path="tcl/static-admin-portlet-procs.tcl"/>
+            <file type="query_file" db_type="oracle" path="tcl/static-portal-content-procs-oracle.xql"/>
+            <file type="query_file" db_type="postgresql" path="tcl/static-portal-content-procs-postgresql.xql"/>
             <file type="tcl_procs" path="tcl/static-portal-content-procs.tcl"/>
+            <file type="query_file" path="tcl/static-portal-content-procs.xql"/>
             <file type="tcl_procs" path="tcl/static-portlet-procs.tcl"/>
             <file type="content_page" path="www/element-delete.tcl"/>
             <file type="content_page" path="www/element-new.adp"/>
