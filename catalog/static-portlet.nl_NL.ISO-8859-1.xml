@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="static-portlet" package_version="0.2a" locale="nl_NL" charset="ISO-8859-1">
+<message_catalog package_key="static-portlet" package_version="2.0.3" locale="nl_NL" charset="ISO-8859-1">
 
   <msg key="admin_portlet_element_pretty_name">Portlet op maat</msg>
   <msg key="admin_portlet_pretty_name">Portlet Op Maat administratie</msg>
   <msg key="Content">Inhoud</msg>
   <msg key="Control_Panel">Mijn instellingen</msg>
-  <msg key="Edit_content_element">Inhoud element bewerken</msg>
+  <msg key="Edit_content_element">Inhoud bewerken</msg>
   <msg key="lt_Delete_element_pretty">%element_pretty_name% %pretty_name% verwijderen</msg>
   <msg key="lt_Editing_element_prett">%element_pretty_name% %pretty_name% bewerken</msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Bericht&lt;/strong&gt;: U kunt platte tekst of HTML gebruiken bij het schrijven van uw tekst.</msg>

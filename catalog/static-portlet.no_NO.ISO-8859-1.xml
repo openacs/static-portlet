@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="static-portlet" package_version="0.2a" locale="no_NO" charset="ISO-8859-1">
+<message_catalog package_key="static-portlet" package_version="2.0.3" locale="no_NO" charset="ISO-8859-1">
 
-  <msg key="admin_portlet_element_pretty_name">Spesialtilpasset Portlet</msg>
-  <msg key="admin_portlet_pretty_name">Administrasjon av spesialtilpassede portlets</msg>
+  <msg key="admin_portlet_element_pretty_name">Spesialtilpasset modul</msg>
+  <msg key="admin_portlet_pretty_name">Administrasjon av spesialtilpasset modul</msg>
   <msg key="Content">Innhold</msg>
   <msg key="Control_Panel">Kontrollpanel</msg>
   <msg key="Edit_content_element">Rediger innholdselement</msg>
   <msg key="lt_Delete_element_pretty">Slett %element_pretty_name% %pretty_name% </msg>
   <msg key="lt_Editing_element_prett">Redigerer %element_pretty_name% %pretty_name%</msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Obs&lt;/strong&gt;: Du kan benytte enkel tekst eller eller HTML i innholdsområdet.</msg>
-  <msg key="lt_Use_this_form_to_crea">Bruk dette skjemaet for å lage et nytt %element_pretty_name%. %element_pretty_name% vil bli lagt inn og automatisk plassert på første siden av %portal_name% portalen. Gå til %control_panel_text% og velg Tilpass visning for å flytte dette %element_pretty_name%.</msg>
+  <msg key="lt_Use_this_form_to_crea">Bruk dette skjemaet for å lage et nytt %element_pretty_name%. %element_pretty_name% vil bli lagt inn og automatisk plassert på første siden av %portal_name% portalen. Gå til %control_panel_text% og velg Skreddersy portalen for å flytte dette %element_pretty_name%.</msg>
   <msg key="Name">Navn</msg>
   <msg key="New">Ny</msg>
   <msg key="new_static_admin_portlet">Ny %element_pretty_name% </msg>
