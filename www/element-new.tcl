@@ -11,7 +11,9 @@ ad_page_contract {
     title:onevalue
 }
 
-set title "New static element"
+set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
+
+set title "New $element_pretty_name"
 set instance_id [ad_conn package_id]
 
 form create new_static_element

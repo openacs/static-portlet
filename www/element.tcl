@@ -13,6 +13,8 @@ ad_page_contract {
 
 set title "Edit content element"
 
+set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet]
+
 db_1row get_content_element {
     select content, pretty_name
     from static_portal_content
