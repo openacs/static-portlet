@@ -21,6 +21,9 @@ create table static_portal_content (
                                 constraint static_p_c_instance_id_fk
                                 references apm_packages (package_id)
                                 on delete cascade,
+    pretty_name                 varchar2(100) 
+                                constraint static_p_c_pretty_name_nn
+                                not null,                            
     content                     varchar2(4000)
 );
 
@@ -45,11 +48,11 @@ show errors
 -- API
 -- 
 
-create or replace package static_portal_content 
+create or replace package static_portal_content_item 
 as
     function new (
-        content_id      in static_portal_content.content_id%TYPE default null,
         instance_id     in static_portal_content.instance_id%TYPE default null,
+        pretty_name     in static_portal_content.pretty_name%TYPE default null,
         content         in static_portal_content.content%TYPE default null,
         object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
         creation_date   in acs_objects.creation_date%TYPE default sysdate,
@@ -62,50 +65,52 @@ as
         content_id      in static_portal_content.content_id%TYPE
     );
 
-end static_portal_content;
+end static_portal_content_item;
 / 
 show errors
 
-create or replace package body static_portal_content 
+create or replace package body static_portal_content_item
 as
     function new (
-        f_instance_id     in static_portal_content.instance_id%TYPE default null,
-        f_content         in static_portal_content.content%TYPE default null,
-        f_object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
-        f_creation_date   in acs_objects.creation_date%TYPE default sysdate,
-        f_creation_user   in acs_objects.creation_user%TYPE default null,
-        f_creation_ip     in acs_objects.creation_ip%TYPE default null,
-        f_context_id      in acs_objects.context_id%TYPE default null
-    ) return acs_objects.object_id%TYPE;
+        instance_id     in static_portal_content.instance_id%TYPE default null,
+        pretty_name     in static_portal_content.pretty_name%TYPE default null,
+        content         in static_portal_content.content%TYPE default null,
+        object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
+        creation_date   in acs_objects.creation_date%TYPE default sysdate,
+        creation_user   in acs_objects.creation_user%TYPE default null,
+        creation_ip     in acs_objects.creation_ip%TYPE default null,
+        context_id      in acs_objects.context_id%TYPE default null
+    ) return acs_objects.object_id%TYPE
     is
         v_content_id static_portal_content.content_id%TYPE;
     begin
         v_content_id := acs_object.new (
-            f_object_type => object_type,
-            f_creation_date => creation_date,
-            f_creation_user => creation_user,
-            f_creation_ip => creation_ip,
-            f_context_id => context_id
+            object_type => object_type,
+            creation_date => creation_date,
+            creation_user => creation_user,
+            creation_ip => creation_ip,
+            context_id => context_id
 	);
 
         insert into static_portal_content
-        (content_id, instance_id, content)
+        (content_id, instance_id, pretty_name, content)
         values
-        (v_content_id, f_instance_id, f_content);
+        (v_content_id, new.instance_id, new.pretty_name, new.content);
 
         return v_content_id;        
     end new;
 
     procedure delete (
-        p_content_id    in static_portal_content.content_id%TYPE
+        content_id    in static_portal_content.content_id%TYPE
     )        
     is
     begin 
-        delete from static_portal_content where content_id = p_content_id;
-        acs_object.delete(p_content_id);
+        delete from static_portal_content where content_id = content_id;
+
+        acs_object.delete(content_id);
     end delete;
 
-end static_portal_content;
+end static_portal_content_item;
 /
 show errors
 

@@ -20,7 +20,7 @@ namespace eval static_portlet {
     
     ad_proc -public get_pretty_name {
     } {
-	return "FIXME maybe NULL?"
+	return ""
     }
 
     ad_proc -private my_package_key {
@@ -58,6 +58,7 @@ namespace eval static_portlet {
     } {
 	Display the PE
     } {
+        
         portal::show_proc_helper \
                 -package_key [my_package_key] \
                 -config_list $cf \

@@ -20,7 +20,7 @@ namespace eval static_admin_portlet {
     
     ad_proc -public get_pretty_name {
     } {
-	return "Static Data Administration FIXME better name?"
+	return "Static Element Administration"
     }
 
     ad_proc -private my_package_key {

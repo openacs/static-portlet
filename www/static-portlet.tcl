@@ -8,12 +8,10 @@ ad_page_contract {
 
 array set config $cf	
 
-# aks FIXME testing
+set instance_id $config(instance_id)
 
-set query  "
-select content
-from dotlrn_static_content
-where instance_id = :instance_id)"
-
-# aks - maybe a list, i forget
-set list_of_instance_ids $config(instance_id)
+db_multirow content_multi select_content {
+  select content, pretty_name
+  from static_portal_content
+  where instance_id = :instance_id
+} 

@@ -23,8 +23,8 @@ set instance_id $config(instance_id)
 #
 
 db_multirow content select_content "
-select content_id, short_name
-from dotlrn_static_content
+select content_id, pretty_name
+from static_portal_content
 where instance_id = :instance_id"
 
 # set url [dotlrn_community::get_url_from_package_id -package_id $instance_id]
