@@ -26,7 +26,7 @@ element create new_static_element content \
     -label "Content" \
     -datatype text \
     -widget textarea \
-    -html {rows 5 cols 60 wrap soft}
+    -html {rows 15 cols 80 wrap soft}
 
 element create new_static_element portal_id \
     -label "portal_id" \

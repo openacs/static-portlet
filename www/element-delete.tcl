@@ -17,10 +17,10 @@ set pretty_name [static_portal_content::get_pretty_name -content_id $content_id]
 # THIS NEEDS TO BE GENERALIZED (FIXME - ben)
 # FIXME : this might not be unique
 set element_id [db_string select_element_id "
-select element_id from portal_element_map, portal_pages
+select portal_element_map.element_id from portal_element_map, portal_pages
 where portal_pages.portal_id= :portal_id
 and portal_pages.page_id = portal_element_map.page_id
-and ds_name= :ds_name and pretty_name= :pretty_name"]
+and portal_element_map.pretty_name= :pretty_name"]
 
 db_transaction {
     # Remove element
