@@ -21,16 +21,16 @@
 <master>
 <property name="title">@title@</property>
 
-<big><strong>Editing @element_pretty_name@ @pretty_name@</strong></big>
+<big><strong>#static-portlet.lt_Editing_element_prett#</strong></big>
 
 <P>
 <P>
 
-[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>Delete @element_pretty_name@ @pretty_name@</strong></a>]
+[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>#static-portlet.lt_Delete_element_pretty#</strong></a>]
 
 <P>
 
-<strong>Note</strong>: You can use plain text or HTML in the Content area.
+#static-portlet.lt_strongNotestrong_You_#
 
 <p>
 

@@ -26,6 +26,6 @@
 </multiple>
   <br>
   <li>
-    <a href="@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@">New @element_pretty_name@</a>
+    <a href="@applet_url@/element-new?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@">#static-portlet.New# @element_pretty_name@</a>
   </li>
 </ul>

@@ -23,15 +23,11 @@
 <property name="community_id">@community_id@</property>
 <p>
 <blockquote>
-Use this form to create a new @element_pretty_name@.  The @element_pretty_name@ will be created and automatically placed on the first page of @portal_name@ portal. Goto the @control_panel_text@ and select Customize Layout to move the this @element_pretty_name@.
+#static-portlet.lt_Use_this_form_to_crea#
 
 <P>
-<strong>Note</strong>: You can use plain text or HTML in the Content area.
+#static-portlet.lt_strongNotestrong_You_#
 </blockquote>
 <P>
 
 <formtemplate id="new_static_element"></formtemplate>
-
-
-
-

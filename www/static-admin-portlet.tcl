@@ -43,8 +43,8 @@ if {![exists_and_not_null referer]} {
     set referer [ad_conn url]
 }
 
-set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
-set element_pretty_plural [ad_parameter static_admin_portlet_element_pretty_plural static-portlet "Custom Portlets"]
+set element_pretty_name [ad_parameter -localize static_admin_portlet_element_pretty_name static-portlet]
+set element_pretty_plural [ad_parameter -localize static_admin_portlet_element_pretty_plural static-portlet]
 
 ns_log notice "package_id = $package_id"
 db_multirow content select_content {
@@ -52,6 +52,8 @@ db_multirow content select_content {
            pretty_name
     from static_portal_content
     where package_id = :package_id
+} {
+    set pretty_name [lang::util::localize $pretty_name]
 }
 
 

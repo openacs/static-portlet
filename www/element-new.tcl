@@ -28,9 +28,9 @@ ad_page_contract {
     title:onevalue
 }
 
-set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
+set element_pretty_name [ad_parameter -localize static_admin_portlet_element_pretty_name static-portlet]
 
-set title "New $element_pretty_name"
+set title "[_ static-portlet.New] $element_pretty_name"
 
 #these are set for display and instructions.
 set community_id $package_id
@@ -38,19 +38,19 @@ set community_id $package_id
 set portal_name [portal::get_name $portal_id]
 
 if {![info exists control_panel_text]} {
-    set control_panel_text "Control Panel"
+    set control_panel_text "[_ static-portlet.Control_Panel]"
 }
 
 form create new_static_element
 
 element create new_static_element pretty_name \
-    -label "Name" \
+    -label "[_ static-portlet.Name]" \
     -datatype text \
     -widget text \
     -html {size 60}
 
 element create new_static_element content \
-    -label "Content" \
+    -label "[_ static-portlet.Content]" \
     -datatype text \
     -widget textarea \
     -html {rows 15 cols 80 wrap soft}
@@ -94,14 +94,3 @@ if {[form is_valid new_static_element]} {
     ad_returnredirect $referer
     ad_script_abort
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -27,8 +27,8 @@ ad_page_contract {
     title:onevalue
 }
 
-set title "Edit content element"
-set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet]
+set title "[_ static-portlet.Edit_content_element]"
+set element_pretty_name [ad_parameter -localize static_admin_portlet_element_pretty_name static-portlet]
 
 db_1row get_content_element {
     select content, pretty_name
@@ -39,14 +39,14 @@ db_1row get_content_element {
 form create static_element
 
 element create static_element pretty_name \
-    -label "Name" \
+    -label "[_ static-portlet.Name]" \
     -datatype text \
     -widget text \
     -html {size 60} \
     -value $pretty_name
 
 element create static_element content \
-    -label "Content" \
+    -label "[_ static-portlet.Content]" \
     -datatype text \
     -widget textarea \
     -html {rows 15 cols 80 wrap soft} \
