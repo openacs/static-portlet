@@ -28,13 +28,16 @@ ad_page_contract {
 }
 
 set title "[_ static-portlet.Edit_content_element]"
-set element_pretty_name [ad_parameter -localize static_admin_portlet_element_pretty_name static-portlet]
+set element_pretty_name [parameter::get -localize -parameter static_admin_portlet_element_pretty_name]
 
 db_1row get_content_element {
     select content, pretty_name
     from static_portal_content
     where content_id = :content_id
 }
+
+set org_pretty_name $pretty_name
+set pretty_name [lang::util::localize $org_pretty_name]
 
 form create static_element
 
@@ -73,6 +76,14 @@ element create static_element referer \
 if {[form is_valid static_element]} {
     form get_values static_element \
         pretty_name content content_id portal_id referer
+
+    # They didn't change the pretty-name, so use the original version
+    # The reason is that we show the pretty-name in localized form,
+    # but behind the scenes it contains a message key. We don't want to loose that message key
+    # unless we have to
+    if { [string equal $pretty_name [lang::util::localize $org_pretty_name]] } {
+        set pretty_name $org_pretty_name
+    }
     
     db_transaction {
         static_portal_content::update \
