@@ -33,9 +33,9 @@ namespace eval static_admin_portlet {
     
     ad_proc -public get_pretty_name {
     } {
-	return [ad_parameter \
-                    static_admin_portlet_pretty_name \
-                    static-portlet 
+	return [oacs_util::parameter \
+                -package_key [my_package_key] \
+                -key "static_admin_portlet_pretty_name"
         ]
     }
 
