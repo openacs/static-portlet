@@ -75,7 +75,7 @@ namespace eval static_portlet {
 
     ad_proc -public remove_self_from_page { 
 	portal_id 
-	instance_id 
+	element_id 
     } {
 	Removes static PE from the given page 
     } {
