@@ -38,9 +38,9 @@
             <file type="content_page" path="www/static-portlet.tcl"/>
         </files>
         <parameters>
-            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_pretty_name"  default="custom portlet administration" description="the name for the static admin portlet in the UI"/>
-            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_element_pretty_name"  default="custom portlet" description="the name in the UI for static element"/>
-            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_element_pretty_plural"  default="custom portlets" description="plurals"/>
+            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_pretty_name"  default="Custom Portlet Administration" description="the name for the static admin portlet in the UI"/>
+            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_element_pretty_name"  default="Custom Portlet" description="the name in the UI for static element"/>
+            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_element_pretty_plural"  default="Custom Portlets" description="plurals"/>
         </parameters>
 
     </version>

@@ -12,10 +12,9 @@ array set config $cf
 
 set instance_id $config(instance_id)
 
-set element_pretty_name \
-        [ad_parameter static_admin_portlet_element_pretty_name]
+set element_pretty_name [ad_parameter static_admin_portlet_element_pretty_name static-portlet "Custom Portlet"]
 set element_pretty_plural \
-        [ad_parameter static_admin_portlet_element_pretty_plural]
+        [ad_parameter static_admin_portlet_element_pretty_plural static-portlet "Custom Portlets"]
 
 
 db_multirow content select_content "

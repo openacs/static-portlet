@@ -1,6 +1,6 @@
 <if @config.shaded_p@ ne "t">
 <if @success_p@ eq 1>
-     @content@
+@content@&nbsp;
 </if>
 </if>
 <else>
