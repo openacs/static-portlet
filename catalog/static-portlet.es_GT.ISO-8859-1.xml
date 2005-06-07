@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="static-portlet" package_version="2.1.0b1" locale="es_GT" charset="ISO-8859-1">
+<message_catalog package_key="static-portlet" package_version="2.1.1" locale="es_GT" charset="ISO-8859-1">
 
   <msg key="admin_portlet_element_pretty_name">Portlet personalizado</msg>
   <msg key="admin_portlet_pretty_name">Administración del Portlet</msg>
   <msg key="Back_to">Regresar a</msg>
+  <msg key="Binary_file_uploaded">El archivo binario %filename% ha sido cargado, pero aca solo se aceptan archivos de texto.</msg>
   <msg key="Content">Contenido</msg>
   <msg key="Control_Panel">Panel de Control</msg>
+  <msg key="Create_a_new">Crear un nuevo %element_pretty_name%</msg>
+  <msg key="Edit">Editar</msg>
   <msg key="Edit_content_element">Editar el contenido del elemento</msg>
   <msg key="False_0">Falso</msg>
+  <msg key="File">Archivo</msg>
   <msg key="lt_Delete_element_pretty">Borrar %element_pretty_name% %pretty_name%</msg>
   <msg key="lt_Editing_element_prett">Editando %element_pretty_name% %pretty_name%</msg>
   <msg key="lt_Enforce_this_applet_t">Forzar este applet a aparecer en el portal</msg>
@@ -18,4 +22,6 @@
   <msg key="New">Nuevo</msg>
   <msg key="new_static_admin_portlet">Nuevo %element_pretty_name%</msg>
   <msg key="True">Verdadero</msg>
+  <msg key="Use_this_form">Use este formulario para crear un nuevo %element_pretty_name%. El %element_pretty_name% será creado y automáticamente será posicionado en la primer página del portal %portal_name%. Vaya a las páginas de administración y seleccione Customizar Disposición para mover este %element_pretty_name%.</msg>
+  <msg key="You_may_upload">O, Usted puede cargar un archivo de &lt;strong&gt;texto&lt;/strong&gt;, cuyos contenidos reemplazarán a los existentes del portlet actual.</msg>
 </message_catalog>
