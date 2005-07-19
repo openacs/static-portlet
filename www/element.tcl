@@ -70,16 +70,18 @@ ad_form -extend -name static_element -form {
     {package_id:text(hidden)    {value $package_id}}
     {referer:text(hidden)       {value $referer}}
 } -edit_request {
-  db_1row get_content_element ""
-  ad_set_form_values pretty_name
+    db_1row get_content_element ""
+    set content [template::util::richtext::create $body $format]
+    ad_set_form_values pretty_name
 } -new_data {
+    
     db_transaction {
         set item_id [static_portal_content::new \
                          -package_id $package_id  \
-                         -content $content \
-                         -pretty_name $pretty_name
-        ]
-
+                         -content [template::util::richtext::get_property contents $content] \
+                         -format [template::util::richtext::get_property format $content] \
+		         -pretty_name $pretty_name]
+	
         set old_element_id [static_portal_content::add_to_portal \
 				-portal_id $portal_id \
 				-package_id $package_id \
@@ -114,8 +116,9 @@ ad_form -extend -name static_element -form {
 	    # clone the template's content
 	    set new_content_id [static_portal_content::new \
 				    -package_id $community_id \
-				    -content $content \
-				    -pretty_name $pretty_name ]
+				    -content [template::util::richtext::get_property contents $content] \
+				    -format [template::util::richtext::get_property format $content] \
+                                    -pretty_name $pretty_name ]
 	}
 	
 
@@ -133,7 +136,6 @@ ad_form -extend -name static_element -form {
 
     }
 
-
     # redirect and abort
     ad_returnredirect $referer
     ad_script_abort
@@ -144,9 +146,9 @@ ad_form -extend -name static_element -form {
         static_portal_content::update \
                 -portal_id $portal_id \
                 -content_id $element_content_id \
-                -pretty_name $pretty_name \
-                -content $content
-
+	        -pretty_name $pretty_name \
+	        -content [template::util::richtext::get_property contents $content] \
+		-format [template::util::richtext::get_property format $content]
     }
 
 
@@ -189,8 +191,9 @@ ad_form -extend -name static_element -form {
 		# clone the template's content
 		set element_content_id [static_portal_content::new \
 					    -package_id $community_id \
-					    -content $content \
-					    -pretty_name $pretty_name ]
+					    -content [template::util::richtext::get_property contents $content] \
+					    -format [template::util::richtext::get_property format $content] \
+                                            -pretty_name $pretty_name ]
 	    }
 
 	    set new_element_id [ static_portal_content::add_to_portal \
@@ -209,7 +212,8 @@ ad_form -extend -name static_element -form {
 		-portal_id $target_portal_id \
 		-content_id $element_content_id \
 		-pretty_name $pretty_name \
-		-content $content
+		-content [template::util::richtext::get_property contents $content] \
+		-format [template::util::richtext::get_property format $content]
 	}
 
 	if {$enforce_portlet == 0} {
@@ -232,6 +236,9 @@ ad_form -name static_file -html {enctype multipart/form-data} -form {
     file_content_id:key
     {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
     {upload_file:file           {label "[_ static-portlet.File]"}}
+    {content_format:text(select) {label "Format"} 
+	{options { {"Enhanced Text" "text/enhanced"} {"Plain Text" "text/plain"} {"Fixed-width Text" "text/fixed-width"} { "HTML" "text/html"} }} 
+	{value "text/plain"}}
 }
 
 if {[lsearch $templates $type] >= 0} {
@@ -268,7 +275,8 @@ ad_form -extend -name static_file -form {
         set item_id [static_portal_content::new \
                          -package_id $package_id  \
                          -content $content \
-                         -pretty_name $pretty_name
+			 -format $content_format \
+		         -pretty_name $pretty_name
         ]
 
         static_portal_content::add_to_portal \
@@ -304,6 +312,7 @@ ad_form -extend -name static_file -form {
 	    set new_content_id [static_portal_content::new \
 				    -package_id $community_id \
 				    -content $content \
+				    -format $content_format \
 				    -pretty_name $pretty_name ]
 	}
 
@@ -344,7 +353,8 @@ ad_form -extend -name static_file -form {
                 -portal_id $portal_id \
                 -content_id $file_content_id \
                 -pretty_name $pretty_name \
-                -content $content
+	        -content $content \
+	        -format $content_format
     }
 
     switch $type {
@@ -388,7 +398,8 @@ ad_form -extend -name static_file -form {
 		set file_content_id [static_portal_content::new \
 					    -package_id $community_id \
 					    -content $content \
-					    -pretty_name $pretty_name ]
+					    -format $content_format \
+                                            -pretty_name $pretty_name ]
 	    }
 
 	    set new_element_id [ static_portal_content::add_to_portal \
@@ -407,7 +418,8 @@ ad_form -extend -name static_file -form {
 		-portal_id $target_portal_id \
 		-content_id $file_content_id \
 		-pretty_name $pretty_name \
-		-content $content
+		-content $content \
+		-format $content_format
 	}
 
 	if {$enforce_portlet == 0} {
