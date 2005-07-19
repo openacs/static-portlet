@@ -37,7 +37,10 @@ create table static_portal_content (
     pretty_name                 varchar2(100) 
                                 constraint static_p_c_pretty_name_nn
                                 not null,                            
-    body                        clob
+    body                        clob,
+    format                      varchar2(30)
+                                default 'text/html'
+                                constraint static_p_c_format_ck check (format in ('text/enhanced', 'text/plain', 'text/fixed-width', 'text/html'))
 );
 
 
@@ -70,6 +73,7 @@ as
         package_id     in static_portal_content.package_id%TYPE default null,
         pretty_name     in static_portal_content.pretty_name%TYPE default null,
         content         in varchar default null,
+        format          in varchar default 'text/html',
         object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
         creation_date   in acs_objects.creation_date%TYPE default sysdate,
         creation_user   in acs_objects.creation_user%TYPE default null,
@@ -91,6 +95,7 @@ as
         package_id     in static_portal_content.package_id%TYPE default null,
         pretty_name     in static_portal_content.pretty_name%TYPE default null,
         content         in varchar default null,
+        format          in varchar default 'text/html',
         object_type     in acs_objects.object_type%TYPE default 'static_portal_content',
         creation_date   in acs_objects.creation_date%TYPE default sysdate,
         creation_user   in acs_objects.creation_user%TYPE default null,
@@ -109,9 +114,9 @@ as
 	);
 
         insert into static_portal_content
-        (content_id, package_id, pretty_name, body)
+        (content_id, package_id, pretty_name, body, format)
         values
-        (v_content_id, new.package_id, new.pretty_name, new.content);
+        (v_content_id, new.package_id, new.pretty_name, new.content, new.format);
 
         return v_content_id;        
     end new;
