@@ -53,7 +53,7 @@ set templates [list user dotlrn_class_instance dotlrn_club dotlrn_community]
 ad_form -name static_element -form {
     element_content_id:key
     {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
-    {content:richtext(richtext)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80 wrap soft}} {htmlarea_p 1}}
+    {content:richtext(richtext)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80 wrap soft}}}
 }
 
 if {[lsearch $templates $type] >= 0} {
