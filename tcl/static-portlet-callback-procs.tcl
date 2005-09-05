@@ -21,7 +21,6 @@ set old_page_id [portal::get_page_id  -portal_id $old_portal_id]
 set new_portal_id [dotlrn_community::get_portal_id -community_id $selected_community]
 set new_page_id [portal::get_page_id  -portal_id $new_portal_id]
 
-
 db_dml update_static_portal_content {}
 db_dml update_portal_element_map {}
 }
