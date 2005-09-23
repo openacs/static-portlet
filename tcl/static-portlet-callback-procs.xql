@@ -18,4 +18,14 @@
 </querytext>
 </fullquery>
 
+<fullquery name="callback::datamanager::copy_static::impl::datamanager.get_static_portlet_data">
+<querytext>
+    SELECT body as content,pretty_name
+    FROM static_portal_content
+    WHERE content_id=:object_id
+</querytext>
+</fullquery>
+
+
+
 </queryset>
