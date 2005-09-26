@@ -10,6 +10,7 @@
                 :1 := static_portal_content_item.new(
                     package_id => :package_id,
                     content => :content,
+                    format => :format,
                     pretty_name => :pretty_name
                 );
             end;
