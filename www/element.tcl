@@ -74,8 +74,8 @@ ad_form -extend -name static_element -form {
     set content [template::util::richtext::create $body $format]
     ad_set_form_values pretty_name
 } -new_data {
-    
     db_transaction {
+       
         set item_id [static_portal_content::new \
                          -package_id $package_id  \
                          -content [template::util::richtext::get_property contents $content] \
@@ -86,9 +86,6 @@ ad_form -extend -name static_element -form {
 				-portal_id $portal_id \
 				-package_id $package_id \
 				-content_id $item_id]
-
-
-
     }
 
     # support for templates & already created portals for users,
@@ -126,6 +123,8 @@ ad_form -extend -name static_element -form {
 				 -portal_id $target_portal_id \
 				 -package_id $community_id \
 				 -content_id $new_content_id]
+                 
+
 
 	portal::set_element_param $new_element_id "package_id" $community_id
 	portal::set_element_param $new_element_id "content_id" $new_content_id
