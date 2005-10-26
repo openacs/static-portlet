@@ -21,10 +21,13 @@ set old_page_id [portal::get_page_id  -portal_id $old_portal_id]
 set new_portal_id [dotlrn_community::get_portal_id -community_id $selected_community]
 set new_page_id [portal::get_page_id  -portal_id $new_portal_id]
 
-db_dml update_static_portal_content {}
-db_dml update_portal_element_map {}
+    db_transaction {
+        db_dml update_static_portal_content {}
+        db_dml update_portal_element_map {}
+    } on_error {
+        ad_return_error "Error:" "The error was: $errmsg"
+    }
 }
-
 
 ad_proc -public -callback datamanager::copy_static -impl datamanager {
      -object_id:required
