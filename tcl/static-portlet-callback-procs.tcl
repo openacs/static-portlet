@@ -52,5 +52,8 @@ ad_proc -public -callback datamanager::copy_static -impl datamanager {
 				-portal_id $portal_id \
 				-package_id $selected_community \
 				-content_id $item_id]
+    } on_error {
+        ad_return_error "Error:" "The error was: $errmsg"
     }
+    return $item_id
 }
