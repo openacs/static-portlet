@@ -8,12 +8,14 @@ ad_library {
 
 ad_proc -public -callback datamanager::move_static -impl datamanager {
      -object_id:required
+     -self_community
      -selected_community:required
 } {
     Move an static portlet to another class or community
 } {
-
-set community_id [dotlrn_community::get_community_id] 
+if {[info exist self_community] == 0} { 
+    set community_id [dotlrn_community::get_community_id] 
+} else {set community_id $self_community}
 
 set old_portal_id [dotlrn_community::get_portal_id -community_id $community_id]
 set old_page_id [portal::get_page_id  -portal_id $old_portal_id]
