@@ -10,6 +10,7 @@
 -- altering static_portal_content in order to support 
 -- defining different format type for the content of the static portlet
 
+alter table static_portal_content add column body text;
 alter table static_portal_content add column format varchar(30);
 alter table static_portal_content alter column format set default 'text/html';
 
