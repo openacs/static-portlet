@@ -161,7 +161,7 @@ declare
     p_content_id alias for $1;
 begin
         delete from static_portal_content where content_id = p_content_id;
-        acs_object__delete(p_content_id);
+        perform acs_object__delete(p_content_id);
         return 0;
 end;' language 'plpgsql';
 
