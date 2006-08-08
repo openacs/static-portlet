@@ -70,7 +70,10 @@ create table static_portal_content (
     pretty_name                 varchar(100)
                                 constraint static_p_c_pretty_name_nn
                                 not null,
-    body                        text
+    body                        text,
+    format			varchar(30) default 'text/html'
+				constraint static_p_c_format_in
+				check (format in ('text/enhanced', 'text/plain', 'text/fixed-width', 'text/html'))
 );
 
 
@@ -79,17 +82,19 @@ create table static_portal_content (
 -- API
 --
 
-create function static_portal_content_item__new (integer, varchar, varchar)
+create function static_portal_content_item__new (integer, varchar, varchar, varchar)
 returns integer as '
 declare
     p_package_id                    alias for $1;
     p_pretty_name                   alias for $2;
     p_content                       alias for $3;
+    p_format                        alias for $4;
 begin
     return static_portal_content_item__new(
         p_package_id,
         p_pretty_name,
         p_content,
+        p_format,
         null,
         null,
         null,
@@ -103,6 +108,7 @@ create function static_portal_content_item__new (
     integer,                        -- package_id in static_portal_content.package_id%TYPE default null,
     varchar,                        -- pretty_name in static_portal_content.pretty_name%TYPE default null,
     varchar,                        -- content in static_portal_content.content%TYPE default null,
+    varchar,                        -- format in static_portal_content.format%TYPE default text/html,
     varchar,                        -- object_type in acs_objects.object_type%TYPE default [static_portal_content],
     timestamptz,                    -- creation_date in acs_objects.creation_date%TYPE default sysdate,
     integer,                        -- creation_user in acs_objects.creation_user%TYPE default null,
@@ -114,11 +120,12 @@ declare
     p_package_id                    alias for $1;
     p_pretty_name                   alias for $2;
     p_content                       alias for $3;
-    p_object_type                   alias for $4;
-    p_creation_date                 alias for $5;
-    p_creation_user                 alias for $6;
-    p_creation_ip                   alias for $7;
-    p_context_id                    alias for $8;
+    p_format                        alias for $4;
+    p_object_type                   alias for $5;
+    p_creation_date                 alias for $6;
+    p_creation_user                 alias for $7;
+    p_creation_ip                   alias for $8;
+    p_context_id                    alias for $9;
     v_content_id                    static_portal_content.content_id%TYPE;
     v_object_type                   varchar;
 begin
@@ -139,9 +146,9 @@ begin
 
     insert
     into static_portal_content
-    (content_id, package_id, pretty_name, body)
+    (content_id, package_id, pretty_name, body, format)
     values
-    (v_content_id, p_package_id, p_pretty_name, p_content);
+    (v_content_id, p_package_id, p_pretty_name, p_content, p_format);
 
     return v_content_id;
 end;' language 'plpgsql';
@@ -154,7 +161,7 @@ declare
     p_content_id alias for $1;
 begin
         delete from static_portal_content where content_id = p_content_id;
-        acs_object__delete(p_content_id);
+        perform acs_object__delete(p_content_id);
         return 0;
 end;' language 'plpgsql';
 

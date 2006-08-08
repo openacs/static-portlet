@@ -30,10 +30,11 @@ namespace eval static_portal_content {
         {-package_id:required}
         {-content:required}
         {-pretty_name:required}
+	{-format "text/html"}
     } {
         Calls the pl/sql to create the new content item
     } {
-        # Create the content item
+	# Create the content item
         set content_id [db_exec_plsql new_content_item {}]
 
         # Ben's style only cause he was editing here and then changed things back
@@ -72,8 +73,8 @@ namespace eval static_portal_content {
 		lappend new_content_ids [static_portal_content::new \
                                     -package_id $package_id \
                                     -content [get_content -content_id $old_content_id] \
-                                    -pretty_name [get_pretty_name -content_id $old_content_id]
-				   ]
+				    -format [get_content_format -content_id $old_content_id] \
+				    -pretty_name [get_pretty_name -content_id $old_content_id]]
 
 	    }
 
@@ -167,10 +168,12 @@ namespace eval static_portal_content {
         {-content_id:required}
         {-content:required}
         {-pretty_name:required}
+	{-format "text/html"}
     } {
         updates the content item
     } {
-        db_transaction {
+	
+	db_transaction {
             # update the content item
             db_dml update_content_item {}
             
@@ -225,5 +228,12 @@ namespace eval static_portal_content {
     } {
         return [db_string get_package_id.select {}]
     }
-
+    
+    ad_proc -public get_content_format {
+	{-content_id:required}
+    } {
+	Get the format of the content's item
+    } {
+	return [db_string get_content_format.select {} ]
+    }
 }
