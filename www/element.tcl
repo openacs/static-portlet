@@ -432,3 +432,9 @@ ad_form -extend -name static_file -form {
     ad_returnredirect $referer
     ad_script_abort
 }
+
+if { $new_p eq 0 } {
+    set editing_text [_ static-portlet.lt_Editing_element_prett [list element_pretty_name $element_pretty_name pretty_name [lang::util::localize $pretty_name]]]
+    set delete_text [_ static-portlet.lt_Delete_element_pretty [list element_pretty_name $element_pretty_name pretty_name [lang::util::localize $pretty_name]]]
+}
+

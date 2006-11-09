@@ -31,14 +31,14 @@
 <big><strong>#static-portlet.Create_a_new#</strong></big>
 </if>
 <else>
-<big><strong>#static-portlet.lt_Editing_element_prett#</strong></big>
+<big><strong>@editing_text@</strong></big>
 </else>
 
 <P>
 <P>
 
 <if @new_p@ eq 0>
-[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>#static-portlet.lt_Delete_element_pretty#</strong></a>]
+[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>@delete_text@</strong></a>]
 
 <P>
 
