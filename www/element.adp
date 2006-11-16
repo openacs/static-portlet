@@ -22,45 +22,20 @@
 <property name="title">@title@</property>
 
 <p>
-<blockquote>
 #static-portlet.Back_to# <a href=@referer@>@portal_name@</a>
-<br>
-<br>
+</p>
 
 <if @new_p@>
-<big><strong>#static-portlet.Create_a_new#</strong></big>
+<p><big><strong>#static-portlet.Create_a_new#</strong></big></p>
+<p>#static-portlet.Use_this_form#</p>
 </if>
 <else>
-<big><strong>@editing_text@</strong></big>
+<p><big><strong>@editing_text@</strong></big></p>
+<p>[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>@delete_text@</strong></a>]</p>
 </else>
 
-<P>
-<P>
-
-<if @new_p@ eq 0>
-[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>@delete_text@</strong></a>]
-
-<P>
-
-#static-portlet.lt_strongNotestrong_You_#
-
-</if>
-<else>
-#static-portlet.Use_this_form#
-
-<P>
-
-#static-portlet.lt_strongNotestrong_You_#
-<p>
-</else>
-<p>
-
+<P>#static-portlet.lt_strongNotestrong_You_#</p>
 <formtemplate id="static_element"></formtemplate>
 
-<p>
-#static-portlet.You_may_upload#
-<p>
-
+<p>#static-portlet.You_may_upload#</p>
 <formtemplate id="static_file"></formtemplate>
-
-

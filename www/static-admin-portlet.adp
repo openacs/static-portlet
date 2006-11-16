@@ -28,7 +28,8 @@
     <a href="@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@">@content.pretty_name@</a>
   </li>
 </multiple>
-  <br>
+</ul>
+<ul>
   <li>
     <a href="@applet_url@/element?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@">#static-portlet.new_static_admin_portlet#</a>
   </li>
