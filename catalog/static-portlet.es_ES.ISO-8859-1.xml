@@ -8,8 +8,10 @@
   <msg key="Content">Contenido</msg>
   <msg key="Control_Panel">Panel de Control</msg>
   <msg key="Create_a_new">Crear un nuevo %element_pretty_name%</msg>
+  <msg key="create_new_element_pretty_name">Crear un nuevo %element_pretty_name%</msg>
   <msg key="Edit">Editar</msg>
   <msg key="Edit_content_element">Editar el elemento de contenido</msg>
+  <msg key="edit_content_pretty_name">Editar %content.pretty_name%</msg>
   <msg key="False_0">Falso</msg>
   <msg key="File">Archivo</msg>
   <msg key="lt_Delete_element_pretty">Borrar %element_pretty_name% %pretty_name%</msg>
