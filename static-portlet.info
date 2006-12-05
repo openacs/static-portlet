@@ -13,8 +13,8 @@
         <vendor url="http://openacs.org">OpenACS</vendor>
 
         <provides url="static-portlet" version="2.2.1a1"/>
-        <requires url="dotlrn" version="2.2.0a1"/>
-        <requires url="new-portal" version="2.2.0a1"/>
+        <requires url="dotlrn" version="2.2.1a1"/>
+        <requires url="new-portal" version="2.2.1a1"/>
 
         <parameters>
             <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="static_admin_portlet_pretty_name"  default="#static-portlet.admin_portlet_pretty_name#" description="the name for the static admin portlet in the UI"/>
