@@ -52,7 +52,11 @@ if { ![string equal $package_id ""] } {
                                  -parameter static_admin_portlet_element_pretty_name \
                                  -default [_ static-portlet.admin_portlet_element_pretty_name]]
 
-    db_multirow content select_content {
+    set applet_url "[dotlrn_applet::get_url]/[static_portlet::my_package_key]"
+
+    set create_url [export_vars -base $applet_url/element {{portal_id $template_portal_id} package_id referer}]
+
+    db_multirow -extend edit_url content select_content {
         select content_id,
                pretty_name
         from static_portal_content
@@ -60,8 +64,8 @@ if { ![string equal $package_id ""] } {
     } {
         set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
         set pretty_name [lang::util::localize $pretty_name]
-    }
 
-    set applet_url "[dotlrn_applet::get_url]/[static_portlet::my_package_key]"
+        set edit_url [export_vars -base $applet_url/element {{portal_id $template_portal_id} {content_id $content_id} referer}]
+    }
 
 }
