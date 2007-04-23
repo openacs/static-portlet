@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<message_catalog package_key="static-portlet" package_version="2.2.0" locale="hi_IN" charset="utf-8">
+<message_catalog package_key="static-portlet" package_version="2.3.0" locale="hi_IN" charset="utf-8">
 
   <msg key="admin_portlet_element_pretty_name">प्रथा </msg>
   <msg key="admin_portlet_pretty_name">कुस्तोम पोर्तलेत का प्रबन्धन </msg>
