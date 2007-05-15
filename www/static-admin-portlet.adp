@@ -25,13 +25,13 @@
 <ul>
 <multiple name="content">
   <li>
-    <a href="@applet_url@/element?portal_id=@template_portal_id@&content_id=@content.content_id@&referer=@referer@" title="#static-portlet.edit_content_pretty_name#">@content.pretty_name@</a>
+    <a href="@content.edit_url@" title="#static-portlet.edit_content_pretty_name#">@content.pretty_name@</a>
   </li>
 </multiple>
 </ul>
 <ul>
   <li>
-    <a href="@applet_url@/element?package_id=@package_id@&portal_id=@template_portal_id@&referer=@referer@" title="#static-portlet.create_new_element_pretty_name#">#static-portlet.new_static_admin_portlet#</a>
+    <a href="@create_url@" title="#static-portlet.create_new_element_pretty_name#">#static-portlet.new_static_admin_portlet#</a>
   </li>
 </ul>
 </else>
