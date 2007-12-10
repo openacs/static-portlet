@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="static-portlet" package_version="2.3.0" locale="gl_ES" charset="ISO-8859-1">
+<message_catalog package_key="static-portlet" locale="gl_ES" charset="ISO-8859-1">
 
   <msg key="admin_portlet_element_pretty_name">Portlet Personalizado</msg>
   <msg key="admin_portlet_pretty_name">Administración de Portlet Personalizado</msg>

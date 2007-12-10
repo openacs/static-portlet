@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="static-portlet" package_version="2.3.0" locale="es_ES" charset="ISO-8859-1">
+<message_catalog package_key="static-portlet" locale="es_ES" charset="ISO-8859-1">
 
   <msg key="admin_portlet_element_pretty_name">Portlet personalizado</msg>
-  <msg key="admin_portlet_pretty_name">Administración a medida del Portlet</msg>
+  <msg key="admin_portlet_pretty_name">Administración de portlets personalizados</msg>
   <msg key="Back_to">Regresar a</msg>
   <msg key="Binary_file_uploaded"> El archivo binario %filename% ha sido subido, pero aquí solo se soportan archivos de texto.</msg>
   <msg key="Content">Contenido</msg>
