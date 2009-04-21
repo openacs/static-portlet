@@ -20,10 +20,10 @@
 
 <if @config.shaded_p@ ne "t">
 <if @success_p@ eq 1>
-@content;noquote@&nbsp;
+@content;noquote@
 </if>
 </if>
 <else>
-&nbsp;
+    #new-portal.when_portlet_shaded#
 </else>
 
