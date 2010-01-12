@@ -22,6 +22,7 @@
 								 False means that will be available to use when customizing the portal or when performing revert action</msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Note&lt;/strong&gt;: You can use plain text or HTML in the Content area.</msg>
   <msg key="lt_Use_this_form_to_crea">Use this form to create a new %element_pretty_name%.  The %element_pretty_name% will be created and automatically placed on the first page of %portal_name% portal. Goto the %control_panel_text% and select Customize Layout to move this %element_pretty_name%.</msg>
+  <msg key="must_specify">Must specify the file to upload</msg>
   <msg key="Name">Name</msg>
   <msg key="New">New</msg>
   <msg key="new_static_admin_portlet">New %element_pretty_name%</msg>

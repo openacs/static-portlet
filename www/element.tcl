@@ -252,9 +252,14 @@ ad_form -extend -name static_file -form {
     {portal_id:text(hidden)     {value $portal_id}}
     {package_id:text(hidden)    {value $package_id}}
     {referer:text(hidden)       {value $referer}}
+} -validate {
+    {upload_file
+        {[exists_and_not_null upload_file]}
+        "[_ static-portlet.must_specify]"
+    }
 } -edit_request {
-  db_1row get_content_element ""
-  ad_set_form_values pretty_name
+    db_1row get_content_element ""
+    ad_set_form_values pretty_name
 } -new_data {
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
