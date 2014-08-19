@@ -50,7 +50,7 @@ namespace eval static_portal_content {
         This is a bit different from other add_self_to_page procs.
     } {
 
-        if {![empty_string_p $template_id]} {
+        if {$template_id ne ""} {
             # we got a template_id, so we know that (1) that we are
             # being called from add_applet_to_community. That means that
             # we have a static portlet copied from our template,

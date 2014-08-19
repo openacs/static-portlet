@@ -20,7 +20,7 @@ ad_page_contract {
     @author arjun (arjun@openforce)
     @cvs_id $Id$
 } -query {
-    content_id:optional
+    {content_id:optional ""}
     referer:notnull
     portal_id:integer,notnull
     {package_id:integer ""}
@@ -30,7 +30,7 @@ ad_page_contract {
 
 set control_panel_text [_ "dotlrn.control_panel"]
 set element_pretty_name [parameter::get -localize -parameter static_admin_portlet_element_pretty_name]
-if { ![exists_and_not_null content_id] || [ad_form_new_p -key content_id] } {
+if { $content_id eq "" || [ad_form_new_p -key content_id] } {
   set title "[_ static-portlet.New] $element_pretty_name"
   set new_p 1
 } else {
@@ -41,7 +41,7 @@ if { ![exists_and_not_null content_id] || [ad_form_new_p -key content_id] } {
 set community_id $package_id
 set portal_name [portal::get_name $portal_id]
 
-if [info exist content_id] {
+if {[info exist content_id]} {
     set element_content_id $content_id
     set file_content_id $content_id
 }
@@ -109,7 +109,7 @@ ad_form -extend -name static_element -form {
    
     db_foreach dotlrn_type_portals "$query" {
 
-	if {$type != "user" } {
+	if {$type ne "user" } {
 	    # clone the template's content
 	    set new_content_id [static_portal_content::new \
 				    -package_id $community_id \
@@ -167,7 +167,7 @@ ad_form -extend -name static_element -form {
 
     db_foreach dotlrn_type_portals "$query" {
 
-	if { ($type != "user") } {
+	if { ($type ne "user") } {
 	    catch {
 		set element_content_id [db_string get_content_id {
 		    select content_id
@@ -186,7 +186,7 @@ ad_form -extend -name static_element -form {
 	    # for given portal_id, then intead of update, we'll
 	    # create it
 
-	    if {$type != "user" } {
+	    if {$type ne "user" } {
 		# clone the template's content
 		set element_content_id [static_portal_content::new \
 					    -package_id $community_id \
@@ -254,7 +254,7 @@ ad_form -extend -name static_file -form {
     {referer:text(hidden)       {value $referer}}
 } -validate {
     {upload_file
-        {[exists_and_not_null upload_file]}
+        {$upload_file ne ""}
         "[_ static-portlet.must_specify]"
     }
 } -edit_request {
@@ -264,7 +264,7 @@ ad_form -extend -name static_file -form {
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
     set mime_type [template::util::file::get_property mime_type $upload_file]
-    if { [string equal -length 4 "text" $mime_type] || [string length $mime_type] == 0 } {
+    if { [string equal -length 4 "text" $mime_type] || $mime_type eq "" } {
       # it's a text file, we can do something with this
       set fd [open $tmp_filename "r"]
       set content [read $fd]
@@ -310,7 +310,7 @@ ad_form -extend -name static_file -form {
    
     db_foreach dotlrn_type_portals "$query" {
 
-	if {$type != "user" } {
+	if {$type ne "user" } {
 	    # clone the template's content
 	    set new_content_id [static_portal_content::new \
 				    -package_id $community_id \
@@ -342,7 +342,7 @@ ad_form -extend -name static_file -form {
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
     set mime_type [template::util::file::get_property mime_type $upload_file]
-    if { [string equal -length 4 "text" $mime_type] || [string length $mime_type] == 0 } {
+    if { [string equal -length 4 "text" $mime_type] || $mime_type eq "" } {
       # it's a text file, we can do something with this
       set fd [open $tmp_filename "r"]
       set content [read $fd]
@@ -376,7 +376,7 @@ ad_form -extend -name static_file -form {
     
     db_foreach dotlrn_type_portals "$query" {
 
-	 if {$type != "user" } {
+	 if {$type ne "user" } {
 	    catch {
 		set file_content_id [db_string get_content_id {
 		    select content_id
@@ -396,7 +396,7 @@ ad_form -extend -name static_file -form {
 	    # for given portal_id, then intead of update, we'll
 	    # create it
 
-	    if {$type != "user" } {
+	    if {$type ne "user" } {
 		# clone the template's content
 		set file_content_id [static_portal_content::new \
 					    -package_id $community_id \
