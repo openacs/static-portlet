@@ -33,14 +33,20 @@
 -- PostGreSQL port samir@symphinity.com 11 July 2002
 --
 
-create function inline_0()
-returns integer as '
-declare
+
+
+--
+-- procedure inline_0/0
+--
+CREATE OR REPLACE FUNCTION inline_0(
+
+) RETURNS integer AS $$
+DECLARE
   ds_id portal_datasources.datasource_id%TYPE;
-begin
+BEGIN
   ds_id := portal_datasource__new(
-    	''static_admin_portlet'',											-- name
-    	''Displays the admin interface for the static data portlets''		-- Description
+    	'static_admin_portlet',											-- name
+    	'Displays the admin interface for the static data portlets'		-- Description
   );
 
   -- 4 defaults procs
@@ -48,46 +54,46 @@ begin
   -- shadeable_p 
   perform portal_datasource__set_def_param (
 	ds_id,				-- datasource_id
-	''t'',				-- config_required_p
-	''t'',				-- configured_p
-	''shadeable_p'',		-- key
-	''f''				-- value
+	't',				-- config_required_p
+	't',				-- configured_p
+	'shadeable_p',		-- key
+	'f'				-- value
 );	
 
   -- shaded_p 
   perform portal_datasource__set_def_param (
 	ds_id,
-	''t'',
-	''t'',
-	''shaded_p'',
-	''f''
+	't',
+	't',
+	'shaded_p',
+	'f'
 );	
 
   -- hideable_p 
   perform portal_datasource__set_def_param (
 	ds_id,
-	''t'',
-	''t'',
-	''hideable_p'',
-	''t''
+	't',
+	't',
+	'hideable_p',
+	't'
 );	
 
   -- user_editable_p 
   perform portal_datasource__set_def_param (
 	ds_id,
-	''t'',
-	''t'',
-	''user_editable_p'',
-	''f''
+	't',
+	't',
+	'user_editable_p',
+	'f'
 );	
 
   -- link_hideable_p 
   perform portal_datasource__set_def_param (
 	ds_id,
-	''t'',
-	''t'',
-	''link_hideable_p'',
-	''t''
+	't',
+	't',
+	'link_hideable_p',
+	't'
 );	
 
 
@@ -96,94 +102,95 @@ begin
   -- package_id must be configured
   perform portal_datasource__set_def_param (
 	ds_id,
-	''t'',
-	''f'',
-	''package_id'',
-	''''
+	't',
+	'f',
+	'package_id',
+	''
 );	
   return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_0();
 
 drop function inline_0();
 
 
-create function inline_1()
-returns integer as '
-begin
+CREATE OR REPLACE FUNCTION inline_1() RETURNS integer AS $$
+BEGIN
 	-- create the implementation
 	perform acs_sc_impl__new (
-		''portal_datasource'',
-		''static_admin_portlet'',
-		''static_admin_portlet''
+		'portal_datasource',
+		'static_admin_portlet',
+		'static_admin_portlet'
 	);
 
 	-- add all the hooks
 	perform acs_sc_impl_alias__new (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''GetMyName'',
-	       ''static_admin_portlet::get_my_name'',
-	       ''TCL''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'GetMyName',
+	       'static_admin_portlet::get_my_name',
+	       'TCL'
 	);
 
 	perform acs_sc_impl_alias__new (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''GetPrettyName'',
-	       ''static_admin_portlet::get_pretty_name'',
-	       ''TCL''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'GetPrettyName',
+	       'static_admin_portlet::get_pretty_name',
+	       'TCL'
 	);
 
 	perform acs_sc_impl_alias__new (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''Link'',
-	       ''static_admin_portlet::link'',
-	       ''TCL''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'Link',
+	       'static_admin_portlet::link',
+	       'TCL'
 	);
 
 	perform acs_sc_impl_alias__new (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''AddSelfToPage'',
-	       ''static_admin_portlet::add_self_to_page'',
-	       ''TCL''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'AddSelfToPage',
+	       'static_admin_portlet::add_self_to_page',
+	       'TCL'
 	);
 
 	perform acs_sc_impl_alias__new (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''Show'',
-	       ''static_admin_portlet::show'',
-	       ''TCL''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'Show',
+	       'static_admin_portlet::show',
+	       'TCL'
 	);
 
 	perform acs_sc_impl_alias__new (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''Edit'',
-	       ''static_admin_portlet::edit'',
-	       ''TCL''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'Edit',
+	       'static_admin_portlet::edit',
+	       'TCL'
 	);
 
 	perform acs_sc_impl_alias__new (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''RemoveSelfFromPage'',
-	       ''static_admin_portlet::remove_self_from_page'',
-	       ''TCL''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'RemoveSelfFromPage',
+	       'static_admin_portlet::remove_self_from_page',
+	       'TCL'
 	);
 
 	-- Add the binding
 	perform acs_sc_binding__new (
-	    ''portal_datasource'',			-- contract_name 
-	    ''static_admin_portlet''			-- impl_name
+	    'portal_datasource',			-- contract_name 
+	    'static_admin_portlet'			-- impl_name
 	);
 
   	return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_1();
 
