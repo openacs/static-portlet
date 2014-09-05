@@ -82,10 +82,6 @@ create table static_portal_content (
 -- API
 --
 
-
-
--- added
-
 --
 -- procedure static_portal_content_item__new/4
 --
@@ -160,17 +156,23 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-create  function static_portal_content_item__delete (
-    integer        -- content_id    in static_portal_content.content_id%TYPE
-)
-returns integer    as '
-declare
-    p_content_id alias for $1;
-begin
+
+
+--
+-- procedure static_portal_content_item__delete/1
+--
+select define_function_args('static_portal_content_item__delete','content_id');
+
+CREATE OR REPLACE FUNCTION static_portal_content_item__delete(
+    p_content_id integer    -- content_id    in static_portal_content.content_id%TYPE
+) RETURNS integer AS $$
+DECLARE
+BEGIN
         delete from static_portal_content where content_id = p_content_id;
         perform acs_object__delete(p_content_id);
         return 0;
-end;' language 'plpgsql';
+end;
+$$ LANGUAGE plpgsql;
 
 
 --
