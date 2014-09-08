@@ -20,7 +20,7 @@ ad_library {
     the "bboard" included in it's own "bboard-portlet" package.
 
     @author arjun@openforce.net
-    @version $Id$
+    @cvs-id $Id$
 
 }
 
