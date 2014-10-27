@@ -35,18 +35,24 @@
 
 
 
-create function inline_1()
-returns integer as '
-declare
+
+
+--
+-- procedure inline_1/0
+--
+CREATE OR REPLACE FUNCTION inline_1(
+
+) RETURNS integer AS $$
+DECLARE
   ds_id portal_datasources.datasource_id%TYPE;
-begin
+BEGIN
 
   select datasource_id into ds_id
       from portal_datasources
-     where name = ''static_admin_portlet'';
+     where name = 'static_admin_portlet';
 
    if not found then
-     RAISE EXCEPTION '' No datasource id found '', ds_id;
+     RAISE EXCEPTION ' No datasource id found ', ds_id;
      ds_id := null;
    end if;
 
@@ -56,62 +62,63 @@ begin
 
 	-- drop the hooks
 	perform acs_sc_impl_alias__delete (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''GetMyName''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'GetMyName'
 	);
 
 	perform acs_sc_impl_alias__delete (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''GetPrettyName''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'GetPrettyName'
 	);
 
 
 	perform acs_sc_impl_alias__delete (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''Link''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'Link'
 	);
 
 	perform acs_sc_impl_alias__delete (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''AddSelfToPage''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'AddSelfToPage'
 	);
 
 	perform acs_sc_impl_alias__delete (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''Show''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'Show'
 	);
 
 	perform acs_sc_impl_alias__delete (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''Edit''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'Edit'
 	);
 
 	perform acs_sc_impl_alias__delete (
-	       ''portal_datasource'',
-	       ''static_admin_portlet'',
-	       ''RemoveSelfFromPage''
+	       'portal_datasource',
+	       'static_admin_portlet',
+	       'RemoveSelfFromPage'
 	);
 
 	-- Drop the binding
 	perform acs_sc_binding__delete (
-	    ''portal_datasource'',
-	    ''static_admin_portlet''
+	    'portal_datasource',
+	    'static_admin_portlet'
 	);
 
 	-- drop the impl
 	perform acs_sc_impl__delete (
-		''portal_datasource'',
-		''static_admin_portlet''
+		'portal_datasource',
+		'static_admin_portlet'
 	);
   	
 	return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_1();
 drop function inline_1();

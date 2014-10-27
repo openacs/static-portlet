@@ -20,9 +20,9 @@ ad_page_contract {
     @author arjun (arjun@openforce)
     @cvs_id $Id$
 } -query {
-    {content_id:integer,notnull}
+    {content_id:naturalnum,notnull}
     {referer:notnull}
-    portal_id:integer,notnull
+    portal_id:naturalnum,notnull
 }  -properties {
     title:onevalue
 }

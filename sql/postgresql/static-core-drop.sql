@@ -32,18 +32,25 @@
 delete from acs_permissions where object_id in (select content_id from static_portal_content);
 
 --drop objects
-create function inline_0 ()
-returns integer as '
-declare
+
+
+--
+-- procedure inline_0/0
+--
+CREATE OR REPLACE FUNCTION inline_0(
+
+) RETURNS integer AS $$
+DECLARE
 	object_rec		record;
-begin
-	for object_rec in select object_id from acs_objects where object_type=''static_portal_content''
+BEGIN
+	for object_rec in select object_id from acs_objects where object_type='static_portal_content'
 	loop
 		perform acs_object__delete( object_rec.object_id );
 	end loop;
 
 	return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_0();
 
@@ -61,16 +68,16 @@ drop  table static_portal_content;
 --
 
 
-create function inline_1()
-returns integer as '
-begin
+CREATE OR REPLACE FUNCTION inline_1() RETURNS integer AS $$
+BEGIN
 
     perform acs_object_type__drop_type (
-         ''static_portal_content'',			-- object_type
-				 ''t''
+         'static_portal_content',			-- object_type
+				 't'
     );
 	return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_1();
 
@@ -90,35 +97,35 @@ drop  function static_portal_content_item__delete ( 	integer);
 -- perms
 --
 
-create function inline_2()
-returns integer as '
-begin
+CREATE OR REPLACE FUNCTION inline_2() RETURNS integer AS $$
+BEGIN
 
       -- unbindbind privileges to global names
 
-      perform acs_privilege__remove_child(''create'',''static_portal_create'');
-      perform acs_privilege__remove_child(''read'',''static_portal_read'');
-      perform acs_privilege__remove_child(''delete'',''static_portal_delete'');
-      perform acs_privilege__remove_child(''write'',''static_portal_modify'');
-      perform acs_privilege__remove_child(''admin'',''static_portal_admin'');
+      perform acs_privilege__remove_child('create','static_portal_create');
+      perform acs_privilege__remove_child('read','static_portal_read');
+      perform acs_privilege__remove_child('delete','static_portal_delete');
+      perform acs_privilege__remove_child('write','static_portal_modify');
+      perform acs_privilege__remove_child('admin','static_portal_admin');
 
       -- set up the admin priv
 
-      perform acs_privilege__remove_child(''static_portal_admin'', ''static_portal_create'');
-      perform acs_privilege__remove_child(''static_portal_admin'', ''static_portal_read'');
-      perform acs_privilege__remove_child(''static_portal_admin'', ''static_portal_delete'');
-      perform acs_privilege__remove_child(''static_portal_admin'', ''static_portal_modify'');
+      perform acs_privilege__remove_child('static_portal_admin', 'static_portal_create');
+      perform acs_privilege__remove_child('static_portal_admin', 'static_portal_read');
+      perform acs_privilege__remove_child('static_portal_admin', 'static_portal_delete');
+      perform acs_privilege__remove_child('static_portal_admin', 'static_portal_modify');
 
 
-      perform acs_privilege__drop_privilege(''static_portal_create'');
-      perform acs_privilege__drop_privilege(''static_portal_read'');
-      perform acs_privilege__drop_privilege(''static_portal_delete'');
-      perform acs_privilege__drop_privilege(''static_portal_modify'');
-      perform acs_privilege__drop_privilege(''static_portal_admin'');
+      perform acs_privilege__drop_privilege('static_portal_create');
+      perform acs_privilege__drop_privilege('static_portal_read');
+      perform acs_privilege__drop_privilege('static_portal_delete');
+      perform acs_privilege__drop_privilege('static_portal_modify');
+      perform acs_privilege__drop_privilege('static_portal_admin');
 
 
 	return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_2();
 

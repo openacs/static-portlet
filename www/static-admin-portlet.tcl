@@ -21,30 +21,30 @@ ad_page_contract {
     @author Ben Adida (ben@openforce)    
     @cvs_id $Id$
 } {
-    package_id:optional
-    template_portal_id:optional
-    referer:optional
-    return_url:optional
+    {package_id:naturalnum,optional ""}
+    {template_portal_id:naturalnum,optional ""}
+    {referer:optional ""}
+    {return_url:optional ""}
 }
 
-if {![exists_and_not_null package_id]} {
+if { $package_id eq "" } {
     set package_id [dotlrn_community::get_community_id]
 }
 
 # DRB: when previewing from the portals package no community is defined, we don't
 # want to portlet to bomb in this case.
 
-if { ![string equal $package_id ""] } {
+if { $package_id ne "" } {
 
-    if {![exists_and_not_null template_portal_id]} {
+    if {$template_portal_id eq ""} {
         set template_portal_id [dotlrn_community::get_portal_id]
     }
 
-    if {[exists_and_not_null return_url]} {
+    if {$return_url ne ""} {
         set referer $return_url
     }
 
-    if {![exists_and_not_null referer]} {
+    if {$referer eq ""} {
         set referer [ad_conn url]
     }
 
