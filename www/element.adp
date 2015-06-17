@@ -22,7 +22,7 @@
 <property name="title">@title@</property>
 
 <p>
-#static-portlet.Back_to# <a href=@referer@>@portal_name@</a>
+#static-portlet.Back_to# <a href="@referer@">@portal_name@</a>
 </p>
 
 <if @new_p@>
@@ -31,7 +31,7 @@
 </if>
 <else>
 <p><big><strong>@editing_text@</strong></big></p>
-<p>[<a href=element-delete?content_id=@content_id@&referer=@referer@&portal_id=@portal_id@><strong>@delete_text@</strong></a>]</p>
+<p>[<a href="element-delete?content_id=@content_id@&amp;referer=@referer@&amp;portal_id=@portal_id@"><strong>@delete_text@</strong></a>]</p>
 </else>
 
 <P>#static-portlet.lt_strongNotestrong_You_#</p>
