@@ -19,7 +19,7 @@
 %>
 
 <master>
-<property name="title">@title@</property>
+<property name="doc(title)">@title;literal@</property>
 
 <p>
 #static-portlet.Back_to# <a href="@referer@">@portal_name@</a>
