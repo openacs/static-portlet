@@ -43,3 +43,9 @@ set content_w [template::util::richtext::create $body $format]
 set content [template::util::richtext::get_property html_value $content_w]
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

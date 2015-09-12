@@ -76,3 +76,9 @@ namespace eval static_portlet {
             -template_src "static-portlet"
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

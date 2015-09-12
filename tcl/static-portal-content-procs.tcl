@@ -237,3 +237,9 @@ namespace eval static_portal_content {
 	return [db_string get_content_format.select {} ]
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
