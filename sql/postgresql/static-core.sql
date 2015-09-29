@@ -66,7 +66,7 @@ create table static_portal_content (
                                 constraint static_p_c_pk
                                 primary key,
     package_id                  integer
-                                references apm_packages(package_id) on delete cascade
+                                references acs_objects(object_id) on delete cascade
                                 not null,
     pretty_name                 varchar(100)
                                 constraint static_p_c_pretty_name_nn
