@@ -42,7 +42,7 @@ create table static_portal_content (
                                 default 'text/html'
                                 constraint static_p_c_format_ck check (format in ('text/enhanced', 'text/plain', 'text/fixed-width', 'text/html'))
 );
-
+create index static_portal_content_package_id_idx on static_portal_content(package_id);
 
 --
 -- Objects
