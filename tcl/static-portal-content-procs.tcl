@@ -148,7 +148,7 @@ namespace eval static_portal_content {
         {-portal_id:required}
         {-content_id:required}
     } {
-        ad_return_complaint 1 "static_portal_content::remove_from_portal not implimented"
+        ad_return_complaint 1 "static_portal_content::remove_from_portal not implemented"
     }
 
     ad_proc -public remove_all_from_portal {
@@ -237,3 +237,9 @@ namespace eval static_portal_content {
 	return [db_string get_content_format.select {} ]
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

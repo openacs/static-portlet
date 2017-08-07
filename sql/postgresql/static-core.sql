@@ -61,11 +61,12 @@ drop function inline_0();
 --
 create table static_portal_content (
     content_id                  integer
-                                                                constraint static_p_c_fk
+                                constraint static_p_c_fk
                                 references acs_objects(object_id)
                                 constraint static_p_c_pk
                                 primary key,
     package_id                  integer
+                                references acs_objects(object_id) on delete cascade
                                 not null,
     pretty_name                 varchar(100)
                                 constraint static_p_c_pretty_name_nn
@@ -76,6 +77,7 @@ create table static_portal_content (
 				check (format in ('text/enhanced', 'text/plain', 'text/fixed-width', 'text/html'))
 );
 
+create index static_portal_content_package_id_idx on static_portal_content(package_id);
 
 
 --

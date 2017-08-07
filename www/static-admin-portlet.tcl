@@ -24,7 +24,7 @@ ad_page_contract {
     {package_id:naturalnum,optional ""}
     {template_portal_id:naturalnum,optional ""}
     {referer:optional ""}
-    {return_url:optional ""}
+    {return_url:localurl,optional ""}
 }
 
 if { $package_id eq "" } {
@@ -69,3 +69,9 @@ if { $package_id ne "" } {
     }
 
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -25,7 +25,7 @@
 #static-portlet.Back_to# <a href="@referer@">@portal_name@</a>
 </p>
 
-<if @new_p@>
+<if @new_p;literal@ true>
 <p><big><strong>#static-portlet.Create_a_new#</strong></big></p>
 <p>#static-portlet.Use_this_form#</p>
 </if>

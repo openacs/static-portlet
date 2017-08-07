@@ -443,3 +443,9 @@ if { $new_p eq 0 } {
     set delete_text [_ static-portlet.lt_Delete_element_pretty [list element_pretty_name $element_pretty_name pretty_name [lang::util::localize $pretty_name]]]
 }
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
