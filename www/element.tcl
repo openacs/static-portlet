@@ -228,18 +228,23 @@ ad_form -extend -name static_element -form {
     ad_script_abort
 }
 
-
-
 ad_form -name static_file -html {enctype multipart/form-data} -form {
     file_content_id:key
-    {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
-    {upload_file:file           {label "[_ static-portlet.File]"}}
-    {content_format:text(select) {label "Format"} 
-	{options { {"Enhanced Text" "text/enhanced"} {"Plain Text" "text/plain"} {"Fixed-width Text" "text/fixed-width"} { "HTML" "text/html"} }} 
-	{value "text/plain"}}
+    {pretty_name:text(text)
+        {label "[_ static-portlet.Name]"}
+        {html {size 60}}
+    }
+    {upload_file:file
+        {label "[_ static-portlet.File]"}
+    }
+    {content_format:text(select)
+        {label "Format"} 
+	{options [template::util::richtext::format_options]}
+        {value "text/plain"}
+    }
 }
 
-if {[lsearch $templates $type] >= 0} {
+if {$type in $templates} {
     set elements [list \
 		      [list {enforce_portlet:text(select)} [list label [_ static-portlet.lt_Enforce_this_applet_t]] \
 			   [list help_text [_ static-portlet.lt_Enforce_True_means_th]] \
