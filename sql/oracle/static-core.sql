@@ -40,7 +40,8 @@ create table static_portal_content (
     body                        clob,
     format                      varchar2(30)
                                 default 'text/html'
-                                constraint static_p_c_format_ck check (format in ('text/enhanced', 'text/plain', 'text/fixed-width', 'text/html'))
+                                constraint static_p_c_format_ck
+				check (format in ('text/enhanced', 'text/markdown', 'text/plain', 'text/fixed-width', 'text/html'))
 );
 create index static_portal_content_package_id_idx on static_portal_content(package_id);
 
