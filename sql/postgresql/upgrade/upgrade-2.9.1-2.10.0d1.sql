@@ -8,10 +8,10 @@
 
 --- 
 
-ALTER TABLE forums_messages
+ALTER TABLE static_portal_content
      DROP constraint IF EXISTS static_p_c_format_ck;
 
-ALTER TABLE forums_messages
+ALTER TABLE static_portal_content
      ADD constraint static_p_c_format_ck
      CHECK (format in ('text/enhanced', 'text/markdown', 'text/plain', 'text/fixed-width', 'text/html'));
      
