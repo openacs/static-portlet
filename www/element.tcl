@@ -183,7 +183,7 @@ ad_form -extend -name static_element -form {
 	if { $no_portlet } {
 
 	    # if we are here, means that the portlet do not exists
-	    # for given portal_id, then intead of update, we'll
+	    # for given portal_id, then instead of update, we'll
 	    # create it
 
 	    if {$type ne "user" } {
@@ -398,7 +398,7 @@ ad_form -extend -name static_file -form {
 	if { $no_portlet } {
 
 	    # if we are here, means that the portlet do not exists
-	    # for given portal_id, then intead of update, we'll
+	    # for given portal_id, then instead of update, we'll
 	    # create it
 
 	    if {$type ne "user" } {
