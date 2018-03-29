@@ -41,7 +41,7 @@ if { $content_id eq "" || [ad_form_new_p -key content_id] } {
 set community_id $package_id
 set portal_name [portal::get_name $portal_id]
 
-if {[info exist content_id]} {
+if {[info exists content_id]} {
     set element_content_id $content_id
     set file_content_id $content_id
 }
