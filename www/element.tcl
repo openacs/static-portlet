@@ -16,7 +16,7 @@
 
 ad_page_contract {
     edit a static element
-    
+
     @author arjun (arjun@openforce)
     @cvs_id $Id$
 } -query {
@@ -41,7 +41,7 @@ if { $content_id eq "" || [ad_form_new_p -key content_id] } {
 set community_id $package_id
 set portal_name [portal::get_name $portal_id]
 
-if {[info exists content_id]} {
+if {$content_id ne ""} {
     set element_content_id $content_id
     set file_content_id $content_id
 }
@@ -56,12 +56,12 @@ ad_form -name static_element -form {
     {content:richtext(richtext)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80}}}
 }
 
-if {[lsearch $templates $type] >= 0} {
+if {$type in $templates} {
     set elements [list \
-		      [list {enforce_portlet:text(select)} [list label [_ static-portlet.lt_Enforce_this_applet_t]] \
-			   [list help_text [_ static-portlet.lt_Enforce_True_means_th]] \
-			   [list options [list [list [_ static-portlet.True] 1] [list [_ static-portlet.False_0] 0]]] \
-			   [list value 0]]]    
+        [list {enforce_portlet:text(select)} [list label [_ static-portlet.lt_Enforce_this_applet_t]] \
+            [list help_text [_ static-portlet.lt_Enforce_True_means_th]] \
+            [list options [list [list [_ static-portlet.True] 1] [list [_ static-portlet.False_0] 0]]] \
+            [list value 0]]]
     ad_form -extend -name static_element -form $elements
 }
 
@@ -75,7 +75,7 @@ ad_form -extend -name static_element -form {
     ad_set_form_values pretty_name
 } -new_data {
     db_transaction {
-       
+
         set item_id [static_portal_content::new \
                          -package_id $package_id  \
                          -content [template::util::richtext::get_property contents $content] \
@@ -92,7 +92,7 @@ ad_form -extend -name static_element -form {
     # classes, etc. (roc)
 
     switch $type {
-	user { 
+	user {
 	    set query  "select portal_id as target_portal_id from dotlrn_users" 
 	    set community_id $package_id
 	    set new_content_id $item_id
@@ -152,7 +152,7 @@ ad_form -extend -name static_element -form {
 
 
     switch $type {
-	user { 
+	user {
 	    set query  "select portal_id as target_portal_id from dotlrn_users" 
             set community_id $package_id
 	}
@@ -174,7 +174,7 @@ ad_form -extend -name static_element -form {
 		    from static_portal_content
 		    where package_id = :community_id
 		    and pretty_name = :pretty_name
-		}] 
+		}]
 	    } errmsg2
 	}
 
@@ -206,7 +206,7 @@ ad_form -extend -name static_element -form {
 
 
 	} else {
-	    
+
 	    static_portal_content::update \
 		-portal_id $target_portal_id \
 		-content_id $element_content_id \
