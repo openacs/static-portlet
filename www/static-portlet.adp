@@ -18,7 +18,7 @@
 
 %>
 
-<if @config.shaded_p;literal@ ne "t">
+<if @config.shaded_p;literal@ false>
 <if @success_p;literal@ true>
 @content;noquote@
 </if>
