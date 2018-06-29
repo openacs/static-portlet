@@ -16,10 +16,10 @@
 
 ad_page_contract {
     The display logic for the static admin portlet
-    
+
     @author arjun (arjun@openforce)
     @author Ben Adida (ben@openforce)    
-    @cvs_id $Id$
+    @cvs-id $Id$
 } {
     {package_id:naturalnum,optional ""}
     {template_portal_id:naturalnum,optional ""}

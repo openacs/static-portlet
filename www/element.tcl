@@ -18,7 +18,7 @@ ad_page_contract {
     edit a static element
 
     @author arjun (arjun@openforce)
-    @cvs_id $Id$
+    @cvs-id $Id$
 } -query {
     {content_id:naturalnum,optional ""}
     referer:notnull

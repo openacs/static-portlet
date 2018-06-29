@@ -16,11 +16,11 @@
 
 ad_page_contract {
     The display logic for the STATIC portlet
-    
+
     @author arjun (arjun@openforce)
-    @author Ben Adida (ben@openforce)    
-    @cvs_id $Id$
-} 
+    @author Ben Adida (ben@openforce)
+    @cvs-id $Id$
+}
 
 array set config $cf    
 
