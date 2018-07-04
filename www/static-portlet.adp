@@ -19,9 +19,9 @@
 %>
 
 <if @config.shaded_p;literal@ false>
-<if @success_p;literal@ true>
-@content;noquote@
-</if>
+  <if @success_p;literal@ true>
+    @content;noquote@
+  </if>
 </if>
 <else>
     #new-portal.when_portlet_shaded#

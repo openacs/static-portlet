@@ -24,23 +24,27 @@ ad_page_contract {
 
 array set config $cf    
 
-# one piece of content only per portlet
-set content_id $config(content_id)
-
 set success_p 0
 
-set success_p [db_0or1row select_content {
-  select body, pretty_name, format
-  from static_portal_content
-  where content_id = :content_id
-}]
+if {!$config(shaded_p)} {
+    # one piece of content only per portlet
+    set content_id $config(content_id)
+    
+    set success_p [db_0or1row select_content {
+        select body, pretty_name, format
+        from static_portal_content
+        where content_id = :content_id
+    }]
 
-# The pretty_name can be a message catalog key
-set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
-set pretty_name [lang::util::localize $pretty_name]
-
-set content_w [template::util::richtext::create $body $format]
-set content [template::util::richtext::get_property html_value $content_w]
+    if {$success_p} {
+        # The pretty_name can be a message catalog key
+        set class_instances_pretty_name [_ dotlrn.class_instances_pretty_name]
+        set pretty_name [lang::util::localize $pretty_name]
+        
+        set content_w [template::util::richtext::create $body $format]
+        set content [template::util::richtext::get_property html_value $content_w]
+    }
+}
 
 
 
