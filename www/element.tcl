@@ -167,7 +167,7 @@ ad_form -extend -name static_element -form {
 
     db_foreach dotlrn_type_portals "$query" {
 
-	if { ($type ne "user") } {
+	if { $type ne "user" } {
 	    catch {
 		set element_content_id [db_string get_content_id {
 		    select content_id
