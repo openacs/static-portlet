@@ -33,6 +33,8 @@ namespace eval static_portlet {
 
     ad_proc -public get_pretty_name {
     } {
+        Get pretty name. This is currently empty.
+    } {
 	return ""
     }
 
@@ -43,6 +45,8 @@ namespace eval static_portlet {
 
     ad_proc -public link {
     } {
+        Get link. This is currently empty.
+    } {
 	return ""
     }
 
@@ -50,7 +54,7 @@ namespace eval static_portlet {
 	{-portal_id:required}
 	{-package_id:required}
     } {
-	Adds a static PE to the given page
+	Adds a static PE to the given page.
     } {
         ns_log notice "static_portlet::add_self_to_page - Don't call me. Use static_portal_content:: instead"
         error
@@ -60,7 +64,7 @@ namespace eval static_portlet {
 	portal_id
 	element_id
     } {
-	Removes static PE from the given page
+	Removes static PE from the given page.
     } {
         # This is easy since there's one and only one instace_id
         portal::remove_element $element_id
@@ -69,6 +73,7 @@ namespace eval static_portlet {
     ad_proc -public show {
 	cf
     } {
+        Show the static portlet.
     } {
         portal::show_proc_helper \
             -package_key [my_package_key] \

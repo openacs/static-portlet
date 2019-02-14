@@ -16,9 +16,9 @@
 
 ad_page_contract {
     delete a static element
-    
+
     @author arjun (arjun@openforce)
-    @cvs_id $Id$
+    @cvs-id $Id$
 } -query {
     {content_id:naturalnum,notnull}
     {referer:notnull}

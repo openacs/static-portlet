@@ -32,7 +32,7 @@ namespace eval static_portal_content {
         {-pretty_name:required}
         {-format "text/html"}
     } {
-        Calls the pl/sql to create the new content item
+        Calls the pl/sql to create the new content item.
     } {
         # Create the content item
         set content_id [db_exec_plsql new_content_item {}]
@@ -120,7 +120,7 @@ namespace eval static_portal_content {
     } {
         A helper proc for cloning. There could be multiple static portlets
         that need to be cloned. Make a deep copy of all the static portal
-        content and update the all the corresponding element's pointers
+        content and update the all the corresponding element's pointers.
     } {
         set ds_id [portal::get_datasource_id [static_portlet::get_my_name]]
 
@@ -145,12 +145,17 @@ namespace eval static_portal_content {
     ad_proc -public remove_from_portal {
         {-portal_id:required}
         {-content_id:required}
+    } {        
+        Remove content from the portal. This is currently not
+        implemented and will return an error to the user.
     } {
         ad_return_complaint 1 "static_portal_content::remove_from_portal not implemented"
     }
 
     ad_proc -public remove_all_from_portal {
         {-portal_id:required}
+    } {
+        Remove all static portlets from the portal.
     } {
         db_transaction {
             # should remove all of 'em
@@ -168,7 +173,7 @@ namespace eval static_portal_content {
         {-pretty_name:required}
         {-format "text/html"}
     } {
-        updates the content item
+        Updates the content item.
     } {
         db_transaction {
             # update the content item
@@ -190,7 +195,7 @@ namespace eval static_portal_content {
     ad_proc -public delete {
         {-content_id:required}
     } {
-        deletes the item
+        Deletes the item.
     } {
         db_dml delete_content_item {
             delete from static_portal_content where content_id = :content_id
@@ -200,7 +205,7 @@ namespace eval static_portal_content {
     ad_proc -public get_pretty_name {
         {-content_id:required}
     } {
-        Get the pretty_name of the item
+        Get the pretty_name of the item.
     } {
         return [db_string select {}]
     }
@@ -208,7 +213,7 @@ namespace eval static_portal_content {
     ad_proc -public get_content {
         {-content_id:required}
     } {
-        Get the content of the item
+        Get the content of the item.
     } {
         return [db_string get_content.select {
             select content
@@ -220,7 +225,7 @@ namespace eval static_portal_content {
     ad_proc -public get_package_id {
         {-content_id:required}
     } {
-        Get the package_id of the item
+        Get the package_id of the item.
     } {
         return [db_string get_package_id.select {}]
     }
@@ -228,7 +233,7 @@ namespace eval static_portal_content {
     ad_proc -public get_content_format {
         {-content_id:required}
     } {
-        Get the format of the content's item
+        Get the format of the content's item.
     } {
         return [db_string get_content_format.select {} ]
     }

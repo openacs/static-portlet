@@ -18,10 +18,10 @@
 
 %>
 
-<if @config.shaded_p@ ne "t">
-<if @success_p;literal@ true>
-@content;noquote@
-</if>
+<if @config.shaded_p;literal@ false>
+  <if @success_p;literal@ true>
+    @content;noquote@
+  </if>
 </if>
 <else>
     #new-portal.when_portlet_shaded#
