@@ -54,7 +54,7 @@ namespace eval static_portal_content {
             # being called from add_applet_to_community. That means that
             # we have a static portlet copied from our template,
             # but the pointer to the _content_ of the portlet still
-            # _template's content_. Therefore we need to clone the
+            # _template's content_. Therefore, we need to clone the
             # _template's content_ and update the pointer
             # (2) that there's only one static portlet on the page.
 
@@ -97,7 +97,7 @@ namespace eval static_portal_content {
         db_transaction {
             # Generate the element, don't use add_element_parameters here,
             # since it doesn't do the right thing for multiple elements with
-            # the same datasource on a page. so we just use the more low level
+            # the same datasource on a page. Therefore, we just use the more low-level
             # portal::add_element
             set element_id [portal::add_element \
                     -portal_id $portal_id \
