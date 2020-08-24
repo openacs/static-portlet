@@ -227,7 +227,7 @@ namespace eval static_portal_content {
     } {
         Get the package_id of the item.
     } {
-        return [db_string get_package_id.select {}]
+        return [db_string select {}]
     }
 
     ad_proc -public get_content_format {
