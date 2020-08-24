@@ -28,6 +28,9 @@ aa_register_case -procs {
         static_portal_content::get_pretty_name
         static_portal_content::get_package_id
         static_portal_content::get_content_format
+        static_portal_content::add_to_portal
+        static_portal_content::update
+        static_portal_content::remove_all_from_portal
         static_portal_content::delete
     } -cats {
         api
@@ -74,6 +77,64 @@ aa_register_case -procs {
             # Check the content format
             #
             aa_equals "Check content format" "[static_portal_content::get_content_format -content_id $content_id]" "$content_format"
+            #
+            # Create test user
+            #
+            set portal_user_id [db_nextval acs_object_id_seq]
+            set user_info [acs::test::user::create -user_id $portal_user_id]
+            #
+            # Create portal
+            #
+            set portal_id [portal::create $portal_user_id]
+            set portal_exists_p [db_0or1row foo {
+                select * from portals where portal_id=:portal_id
+            }]
+            if {$portal_exists_p} {
+                aa_log "Portal created (portal_id: $portal_id)"
+                #
+                # Add to portal
+                #
+                set element_id [static_portal_content::add_to_portal \
+                                    -portal_id $portal_id \
+                                    -package_id $content_package_id \
+                                    -content_id $content_id]
+                set element_pretty_name [db_string element {
+                    select pretty_name
+                      from portal_element_map
+                     where element_id=:element_id
+                }]
+                aa_equals "Element added to portal" "$element_pretty_name" "$content_pretty_name"
+                #
+                # Update
+                #
+                set new_content "Just a test"
+                set new_content_pretty_name "bar"
+                set new_content_format "text/plain"
+                static_portal_content::update \
+                                -portal_id $portal_id \
+                                -content_id $content_id\
+                                -content $new_content \
+                                -pretty_name $new_content_pretty_name\
+                                -format $new_content_format
+                aa_log "Element updated"
+                aa_equals "Check new content" "[static_portal_content::get_content -content_id $content_id]" "$new_content"
+                aa_equals "Check new pretty name" "[static_portal_content::get_pretty_name -content_id $content_id]" "$new_content_pretty_name"
+                aa_equals "Check new content format" "[static_portal_content::get_content_format -content_id $content_id]" "$new_content_format"
+                #
+                # Removal from portal
+                #
+                static_portal_content::remove_all_from_portal -portal_id $portal_id
+                set portal_elements [db_string elements {
+                    select count(1)
+                    from portal_element_map pem,
+                         portal_pages pp
+                   where pp.portal_id = :portal_id
+                     and pp.page_id = pem.page_id
+                }]
+                aa_equals "Number of portal elements after removal" "$portal_elements" "0"
+            } else {
+                aa_error "Portal creation failed"
+            }
             #
             # Delete
             #
