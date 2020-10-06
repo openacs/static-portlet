@@ -146,6 +146,101 @@ aa_register_case -procs {
     }
 }
 
+aa_register_case -procs {
+        static_portlet::add_self_to_page
+        static_portlet::remove_self_from_page
+        static_admin_portlet::add_self_to_page
+        static_admin_portlet::remove_self_from_page
+    } -cats {
+        api
+    } static_portlet_add_remove_from_page {
+        Test add/remove portlet procs.
+} {
+    #
+    # Helper proc to check portal elements
+    #
+    proc portlet_exists_p {portal_id portlet_name} {
+        return [db_0or1row portlet_in_portal {
+            select 1 from dual where exists (
+              select 1
+                from portal_element_map pem,
+                     portal_pages pp
+               where pp.portal_id = :portal_id
+                 and pp.page_id = pem.page_id
+                 and pem.name = :portlet_name
+            )
+        }]
+    }
+    #
+    # Start the tests
+    #
+    aa_run_with_teardown -rollback -test_code {
+        #
+        # Create a community.
+        #
+        # As this is running in a transaction, it should be cleaned up
+        # automatically.
+        #
+        set community_id [dotlrn_community::new -community_type dotlrn_community -pretty_name foo]
+        if {$community_id ne ""} {
+            aa_log "Community created: $community_id"
+            set portal_id [dotlrn_community::get_admin_portal_id -community_id $community_id]
+            set package_id [dotlrn::instantiate_and_mount $community_id [static_portlet::my_package_key]]
+            set content "Just a test"
+            set content_pretty_name "foo"
+            set content_format "text/html"
+            set content_id [static_portal_content::new \
+                                -package_id $package_id \
+                                -content $content \
+                                -pretty_name $content_pretty_name \
+                                -format $content_format]
+            #
+            # static_portlet
+            #
+            set portlet_name [static_portlet::get_my_name]
+            #
+            # Add portlet.
+            #
+            aa_true "static_portlet::add_self_to_page should return an error" "[catch {
+                static_portlet::add_self_to_page -portal_id $portal_id -package_id $package_id
+            }]"
+            set element_id [static_portal_content::add_to_portal -portal_id $portal_id -package_id $package_id -content_id $content_id]
+            aa_true "Portlet is in community portal after addition" "[portlet_exists_p $portal_id $portlet_name]"
+            #
+            # Remove portlet.
+            #
+            static_portlet::remove_self_from_page $portal_id $element_id
+            aa_false "Portlet is in community portal after removal" "[portlet_exists_p $portal_id $portlet_name]"
+            #
+            # Add portlet.
+            #
+            static_portal_content::add_to_portal -portal_id $portal_id -package_id $package_id -content_id $content_id
+            aa_true "Portlet is in community portal after addition" "[portlet_exists_p $portal_id $portlet_name]"
+            #
+            # admin_portlet
+            #
+            set portlet_name [static_admin_portlet::get_my_name]
+            #
+            # Add portlet.
+            #
+            static_admin_portlet::add_self_to_page -portal_id $portal_id -package_id $package_id
+            aa_true "Admin portlet is in community portal after addition" "[portlet_exists_p $portal_id $portlet_name]"
+            #
+            # Remove portlet.
+            #
+            static_admin_portlet::remove_self_from_page -portal_id $portal_id
+            aa_false "Admin portlet is in community portal after removal" "[portlet_exists_p $portal_id $portlet_name]"
+            #
+            # Add portlet.
+            #
+            static_admin_portlet::add_self_to_page -portal_id $portal_id -package_id $package_id
+            aa_true "Admin portlet is in community portal after addition" "[portlet_exists_p $portal_id $portlet_name]"
+        } else {
+            aa_error "Community creation failed"
+        }
+    }
+}
+
 
 # Local variables:
 #    mode: tcl
