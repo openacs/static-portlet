@@ -67,7 +67,7 @@ namespace eval static_portlet {
 	Removes static PE from the given page.
     } {
         # This is easy since there's one and only one instace_id
-        portal::remove_element $element_id
+        portal::remove_element -element_id $element_id
     }
 
     ad_proc -public show {
