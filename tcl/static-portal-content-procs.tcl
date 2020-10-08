@@ -145,7 +145,7 @@ namespace eval static_portal_content {
     ad_proc -public remove_from_portal {
         {-portal_id:required}
         {-content_id:required}
-    } {        
+    } {
         Remove content from the portal. This is currently not
         implemented and will return an error to the user.
     } {
