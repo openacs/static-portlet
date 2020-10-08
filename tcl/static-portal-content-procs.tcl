@@ -120,7 +120,7 @@ namespace eval static_portal_content {
     } {
         A helper proc for cloning. There could be multiple static portlets
         that need to be cloned. Make a deep copy of all the static portal
-        content and update the all the corresponding element's pointers.
+        content and update all the corresponding element's pointers.
     } {
         set ds_id [portal::get_datasource_id [static_portlet::get_my_name]]
 
