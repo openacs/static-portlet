@@ -32,6 +32,7 @@ aa_register_case -procs {
         static_portal_content::update
         static_portal_content::remove_all_from_portal
         static_portal_content::delete
+        portal::exists_p
     } -cats {
         api
     } static_portal_content__procs {
@@ -86,10 +87,7 @@ aa_register_case -procs {
             # Create portal
             #
             set portal_id [portal::create $portal_user_id]
-            set portal_exists_p [db_0or1row foo {
-                select * from portals where portal_id=:portal_id
-            }]
-            if {$portal_exists_p} {
+            if {[portal::exists_p $portal_id]} {
                 aa_log "Portal created (portal_id: $portal_id)"
                 #
                 # Add to portal
