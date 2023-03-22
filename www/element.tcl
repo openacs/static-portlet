@@ -15,7 +15,16 @@
 #
 
 ad_page_contract {
-    edit a static element
+
+    Create/Edit a custom Portlet.
+
+    This page implements the UI to create or edit a custom
+    Portlet. This can be specified either providing the content in a
+    textarea, or by uploading a text or HTML file from which the
+    content will be read.
+
+    Note that two forms with intersecting fields are rendered on the
+    page. The user is supposed to submit only one of them.
 
     @author arjun (arjun@openforce)
     @cvs-id $Id$
@@ -64,6 +73,30 @@ if {$type in $templates} {
             [list value 0]]]
     ad_form -extend -name static_element -form $elements
 }
+
+
+#
+# This validation block will be used by both forms to check that we
+# are not creating a Portlet with an existing name on the same
+# page. This is not allowed and would throw an error down the line.
+#
+set portal_page_id [portal::get_page_id -portal_id $portal_id -sort_key 0]
+set unique_name_validation {
+    {pretty_name
+        {![db_0or1row check_unique_name_on_page {
+                select 1 from portal_element_map
+                where page_id     = :portal_page_id
+                and   pretty_name = :pretty_name
+                and   element_id <> :element_content_id
+        }]}
+        "#static-portlet.portlet_title_exists_error#"
+    }
+}
+
+ad_form -extend \
+    -name static_element \
+    -form {} \
+    -validate $unique_name_validation
 
 ad_form -extend -name static_element -form {
     {portal_id:text(hidden)     {value $portal_id}}
@@ -251,15 +284,23 @@ if {$type in $templates} {
     ad_form -extend -name static_file -form $elements
 }
 
-ad_form -extend -name static_file -form {
-    {portal_id:text(hidden)     {value $portal_id}}
-    {package_id:text(hidden)    {value $package_id}}
-    {referer:text(hidden)       {value $referer}}
-} -validate {
+set validate {
     {upload_file
         {$upload_file ne ""}
         "[_ static-portlet.must_specify]"
     }
+}
+append validate $unique_name_validation
+
+ad_form -extend \
+    -name static_file \
+    -form {} \
+    -validate $unique_name_validation
+
+ad_form -extend -name static_file -form {
+    {portal_id:text(hidden)     {value $portal_id}}
+    {package_id:text(hidden)    {value $package_id}}
+    {referer:text(hidden)       {value $referer}}
 } -edit_request {
     db_1row get_content_element ""
     ad_set_form_values pretty_name

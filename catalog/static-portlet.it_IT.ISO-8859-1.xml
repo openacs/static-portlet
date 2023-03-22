@@ -25,6 +25,7 @@ Il nuovo %element_pretty_name% sarà creato e posto automaticamente sulla prima p
   <msg key="Name">Nome</msg>
   <msg key="New">Nuovo</msg>
   <msg key="new_static_admin_portlet">Nuovo %element_pretty_name%</msg>
+  <msg key="portlet_title_exists_error">Esiste già un portlet con questo nome in questo portale e sulla stessa pagina.</msg>
   <msg key="True">Vero</msg>
   <msg key="Use_this_form">Usa questa form per creare un nuovo %element_pretty_name%. Il %element_pretty_name% sarà creato e posto automaticamente sulla prima pagina del portale %portal_name%. Vai alla pagina di amministrazione e seleziona &amp;quot;Personalizza l&#39;Impaginazione&amp;quot; per disporre questo %element_pretty_name%.</msg>
   <msg key="You_may_upload">Oppure, puoi caricare un file di &lt;strong&gt;testo&lt;/strong&gt;, il contenuto del quale sostituirà il contenuto attuale del portlet.</msg>
