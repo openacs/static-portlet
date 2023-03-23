@@ -61,7 +61,10 @@ set templates [list user dotlrn_class_instance dotlrn_club dotlrn_community]
 
 ad_form -name static_element -form {
     element_content_id:key
-    {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
+    {pretty_name:nomarkup(text)
+        {label "[_ static-portlet.Name]"}
+        {html {size 60}}
+    }
     {content:richtext(richtext)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80}}}
 }
 
@@ -261,7 +264,7 @@ ad_form -extend -name static_element -form {
 
 ad_form -name static_file -html {enctype multipart/form-data} -form {
     file_content_id:key
-    {pretty_name:text(text)
+    {pretty_name:nomarkup(text)
         {label "[_ static-portlet.Name]"}
         {html {size 60}}
     }
