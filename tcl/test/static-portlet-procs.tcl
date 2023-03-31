@@ -77,18 +77,26 @@ aa_register_case -procs {
 
 
 aa_register_case -procs {
-        static_admin_portlet::link
-        static_portlet::link
-        static_portlet::get_pretty_name
-    } -cats {
-        api
-        production_safe
-    } static_portlet_links_names {
-        Test diverse link and name procs.
+    static_portlet::link
+    static_portlet::get_pretty_name
+    static_admin_portlet::link
+    static_admin_portlet::get_pretty_name
+    static_admin_portlet::my_package_key
+} -cats {
+    api
+    production_safe
+} static_portlet_links_names {
+    Test diverse link and name procs.
 } {
-    aa_equals "Static admin portlet link"   "[static_admin_portlet::link]" ""
-    aa_equals "Static portlet link"         "[static_portlet::link]" ""
-    aa_equals "Static portlet pretty name"  "[static_portlet::get_pretty_name]" ""
+    aa_equals "Static portlet link"         [static_portlet::link] ""
+    aa_equals "Static portlet pretty name"  [static_portlet::get_pretty_name] ""
+
+    aa_equals "Static admin portlet link"   [static_admin_portlet::link] ""
+    aa_equals "Static admin portlet pretty name" \
+        [static_admin_portlet::get_pretty_name] \
+        [parameter::get_from_package_key \
+             -package_key [static_admin_portlet::my_package_key] \
+             -parameter static_admin_portlet_pretty_name]
 }
 
 
