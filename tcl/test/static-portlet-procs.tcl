@@ -7,6 +7,76 @@ ad_library {
 }
 
 aa_register_case -procs {
+    static_portlet::show
+    static_admin_portlet::show
+} -cats {
+    api
+} render_portlet {
+    Test portlet rendering
+} {
+    set user_info [acs::test::user::create]
+    set portal_user_id [dict get $user_info user_id]
+
+    aa_run_with_teardown -rollback -test_code {
+
+        set content "<div>My name Jeff</div>"
+        set content_package_id 0
+        set content_pretty_name "foo"
+        set content_format "text/html"
+        set content_id [static_portal_content::new \
+                            -package_id $content_package_id \
+                            -content $content \
+                            -pretty_name $content_pretty_name \
+                            -format $content_format]
+
+        set cf [list \
+                    content_id $content_id \
+                    shaded_p false \
+                   ]
+
+            aa_section static_admin_portlet
+
+            set portlet [acs_sc::invoke \
+                             -contract portal_datasource \
+                             -operation Show \
+                             -impl static_admin_portlet \
+                             -call_args [list $cf]]
+
+        aa_log "Portlet returns: [ns_quotehtml $portlet]"
+
+        aa_false "No error was returned" {
+            [string first "Error in include template" $portlet] >= 0
+        }
+
+        aa_true "Portlet looks like HTML" [ad_looks_like_html_p $portlet]
+
+        aa_section static_portlet
+
+        set portlet [acs_sc::invoke \
+                         -contract portal_datasource \
+                         -operation Show \
+                         -impl static_portlet \
+                         -call_args [list $cf]]
+
+        aa_log "Portlet returns: [ns_quotehtml $portlet]"
+
+        aa_false "No error was returned" {
+            [string first "Error in include template" $portlet] >= 0
+        }
+
+        aa_true "Portlet contains our text" {
+            [string first $content $portlet] >= 0
+        }
+
+    } -teardown_code {
+        if {[info exists portal_user_id]} {
+            acs::test::user::delete -user_id $portal_user_id
+        }
+    }
+}
+
+
+aa_register_case -procs {
         static_admin_portlet::link
         static_portlet::link
         static_portlet::get_pretty_name
