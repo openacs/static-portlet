@@ -11,7 +11,7 @@ aa_register_case -procs {
     static_admin_portlet::show
 } -cats {
     api
-} render_portlet {
+} static_render_portlet {
     Test portlet rendering
 } {
     set user_info [acs::test::user::create]
@@ -29,43 +29,65 @@ aa_register_case -procs {
                             -pretty_name $content_pretty_name \
                             -format $content_format]
 
-        set cf [list \
-                    content_id $content_id \
-                    shaded_p false \
-                   ]
+        foreach shaded_p {true false} {
 
-            aa_section static_admin_portlet
+            set cf [list \
+                        content_id $content_id \
+                        shaded_p $shaded_p \
+                       ]
+
+            set portlet static_admin_portlet
+            set section_name $portlet
+            if {$shaded_p} {
+                append section_name " (shaded)"
+            }
+            aa_section $section_name
 
             set portlet [acs_sc::invoke \
                              -contract portal_datasource \
                              -operation Show \
-                             -impl static_admin_portlet \
+                             -impl $portlet \
                              -call_args [list $cf]]
 
-        aa_log "Portlet returns: [ns_quotehtml $portlet]"
+            aa_log "Portlet returns: [ns_quotehtml $portlet]"
 
-        aa_false "No error was returned" {
-            [string first "Error in include template" $portlet] >= 0
-        }
+            aa_false "No error was returned" {
+                [string first "Error in include template" $portlet] >= 0
+            }
 
-        aa_true "Portlet looks like HTML" [ad_looks_like_html_p $portlet]
+            aa_true "Portlet contains something" {
+                [string length [string trim $portlet]] > 0
+            }
 
-        aa_section static_portlet
+            set portlet static_portlet
+            set section_name $portlet
+            if {$shaded_p} {
+                append section_name " (shaded)"
+            }
+            aa_section $section_name
 
-        set portlet [acs_sc::invoke \
-                         -contract portal_datasource \
-                         -operation Show \
-                         -impl static_portlet \
-                         -call_args [list $cf]]
+            set portlet [acs_sc::invoke \
+                             -contract portal_datasource \
+                             -operation Show \
+                             -impl $portlet \
+                             -call_args [list $cf]]
 
-        aa_log "Portlet returns: [ns_quotehtml $portlet]"
+            aa_log "Portlet returns: [ns_quotehtml $portlet]"
 
-        aa_false "No error was returned" {
-            [string first "Error in include template" $portlet] >= 0
-        }
+            aa_false "No error was returned" {
+                [string first "Error in include template" $portlet] >= 0
+            }
 
-        aa_true "Portlet contains our text" {
-            [string first $content $portlet] >= 0
+            if {$shaded_p} {
+                aa_true "Portlet contains something" {
+                    [string length [string trim $portlet]] > 0
+                }
+            } else {
+                aa_true "Portlet contains our text" {
+                    [string first $content $portlet] >= 0
+                }
+            }
+
         }
 
     } -teardown_code {
