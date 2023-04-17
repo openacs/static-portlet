@@ -87,10 +87,13 @@ set portal_page_id [portal::get_page_id -portal_id $portal_id -sort_key 0]
 set unique_name_validation {
     {pretty_name
         {![db_0or1row check_unique_name_on_page {
-                select 1 from portal_element_map
-                where page_id     = :portal_page_id
-                and   pretty_name = :pretty_name
-                and   element_id <> :element_content_id
+		select 1 from portal_element_map e,
+                              portal_element_parameters p
+                where e.page_id     = :portal_page_id
+                and   e.pretty_name = :pretty_name
+                and   e.element_id = p.element_id
+                and   p.key = 'content_id'
+                and   p.value <> :element_content_id
         }]}
         "#static-portlet.portlet_title_exists_error#"
     }
