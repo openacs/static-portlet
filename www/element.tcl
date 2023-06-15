@@ -55,7 +55,6 @@ if {$content_id ne ""} {
     set file_content_id $content_id
 }
 
-
 set type [db_string get_type { select type from dotlrn_portal_types_map where portal_id = :portal_id } -default ""]
 set templates [list user dotlrn_class_instance dotlrn_club dotlrn_community]
 
@@ -78,13 +77,17 @@ if {$type in $templates} {
 }
 
 
-#
-# This validation block will be used by both forms to check that we
-# are not creating a Portlet with an existing name on the same
-# page. This is not allowed and would throw an error down the line.
-#
 set portal_page_id [portal::get_page_id -portal_id $portal_id -sort_key 0]
-set unique_name_validation {
+
+#
+# Check that we are not creating a Portlet with an existing name on
+# the same page. This is not allowed and would throw an error down the
+# line.
+#
+ad_form -extend \
+    -name static_element \
+    -form {} \
+    -validate {
     {pretty_name
         {![db_0or1row check_unique_name_on_page {
 		select 1 from portal_element_map e,
@@ -98,11 +101,6 @@ set unique_name_validation {
         "#static-portlet.portlet_title_exists_error#"
     }
 }
-
-ad_form -extend \
-    -name static_element \
-    -form {} \
-    -validate $unique_name_validation
 
 ad_form -extend -name static_element -form {
     {portal_id:text(hidden)     {value $portal_id}}
@@ -296,12 +294,30 @@ set validate {
         "[_ static-portlet.must_specify]"
     }
 }
-append validate $unique_name_validation
+#
+# Check that we are not creating a Portlet with an existing name on
+# the same page. This is not allowed and would throw an error down the
+# line.
+#
+append validate {
+    {pretty_name
+        {![db_0or1row check_unique_name_on_page {
+                select 1 from portal_element_map e,
+                              portal_element_parameters p
+                where e.page_id     = :portal_page_id
+                and   e.pretty_name = :pretty_name
+                and   e.element_id = p.element_id
+                and   p.key = 'content_id'
+                and   p.value <> :file_content_id
+        }]}
+        "#static-portlet.portlet_title_exists_error#"
+    }
+}
 
 ad_form -extend \
     -name static_file \
     -form {} \
-    -validate $unique_name_validation
+    -validate $validate
 
 ad_form -extend -name static_file -form {
     {portal_id:text(hidden)     {value $portal_id}}
@@ -311,6 +327,7 @@ ad_form -extend -name static_file -form {
     db_1row get_content_element ""
     ad_set_form_values pretty_name
 } -new_data {
+
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
     set mime_type [template::util::file::get_property mime_type $upload_file]
