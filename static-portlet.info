@@ -12,13 +12,13 @@
     <version name="2.11.0" url="http://openacs.org/repository/download/apm/static-portlet-2.11.0.apm">
         <owner url="http://openacs.org">OpenACS</owner>
         <summary>Portlet for the &quot;new-portal&quot; system for static pages</summary>
-        <release-date>2021-09-15</release-date>
+        <release-date>2023-05-09</release-date>
         <vendor url="http://dotlrn.org">DotLRN Consortium</vendor>
         <maturity>2</maturity>
 
         <provides url="static-portlet" version="2.11.0"/>
-        <requires url="dotlrn" version="2.10.0"/>
-        <requires url="new-portal" version="2.10.0"/>
+        <requires url="dotlrn" version="2.10.1b1"/>
+        <requires url="new-portal" version="2.10.1b1"/>
 
         <callbacks>
         </callbacks>
