@@ -54,7 +54,7 @@ namespace eval static_portal_content {
             # being called from add_applet_to_community. That means that
             # we have a static portlet copied from our template,
             # but the pointer to the _content_ of the portlet still
-            # _template's content_. Therefore we need to clone the
+            # _template's content_. Therefore, we need to clone the
             # _template's content_ and update the pointer
             # (2) that there's only one static portlet on the page.
 
@@ -97,7 +97,7 @@ namespace eval static_portal_content {
         db_transaction {
             # Generate the element, don't use add_element_parameters here,
             # since it doesn't do the right thing for multiple elements with
-            # the same datasource on a page. so we just use the more low level
+            # the same datasource on a page. Therefore, we just use the more low-level
             # portal::add_element
             set element_id [portal::add_element \
                     -portal_id $portal_id \
@@ -120,7 +120,7 @@ namespace eval static_portal_content {
     } {
         A helper proc for cloning. There could be multiple static portlets
         that need to be cloned. Make a deep copy of all the static portal
-        content and update the all the corresponding element's pointers.
+        content and update all the corresponding element's pointers.
     } {
         set ds_id [portal::get_datasource_id [static_portlet::get_my_name]]
 
@@ -145,7 +145,7 @@ namespace eval static_portal_content {
     ad_proc -public remove_from_portal {
         {-portal_id:required}
         {-content_id:required}
-    } {        
+    } {
         Remove content from the portal. This is currently not
         implemented and will return an error to the user.
     } {
@@ -215,11 +215,7 @@ namespace eval static_portal_content {
     } {
         Get the content of the item.
     } {
-        return [db_string get_content.select {
-            select content
-            from static_portal_content
-            where content_id = :content_id
-        }]
+        return [db_string get_content.select {}]
     }
 
     ad_proc -public get_package_id {
@@ -227,7 +223,7 @@ namespace eval static_portal_content {
     } {
         Get the package_id of the item.
     } {
-        return [db_string get_package_id.select {}]
+        return [db_string select {}]
     }
 
     ad_proc -public get_content_format {

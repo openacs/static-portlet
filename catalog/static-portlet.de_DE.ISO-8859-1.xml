@@ -12,17 +12,18 @@
   <msg key="Edit_content_element">Inhalt bearbeiten</msg>
   <msg key="False_0">Falsch</msg>
   <msg key="File">Datei</msg>
-  <msg key="lt_Delete_element_pretty">%element_pretty_name% &quot;%pretty_name%&quot; löschen</msg>
-  <msg key="lt_Editing_element_prett">%element_pretty_name% &quot;%pretty_name%&quot; bearbeiten</msg>
+  <msg key="lt_Delete_element_pretty">%element_pretty_name% &#34;%pretty_name%&#34; löschen</msg>
+  <msg key="lt_Editing_element_prett">%element_pretty_name% &#34;%pretty_name%&#34; bearbeiten</msg>
   <msg key="lt_Enforce_this_applet_t">Erzwingen dass diese Anwendung im Portal erscheint</msg>
   <msg key="lt_Enforce_True_means_th">Erzwingen Wahr bedeutet, dass das statische Portlet \ sofort in die schon erstellten Ziel-Portale einbezogen wird; \ Falsch bedeutet, dass es zur Verfügung steht, wenn das Portal angepasst wird oder wenn die Aktion Zurücksetzen durchgeführt wird.
 </msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Hinweis&lt;/strong&gt;: Sie können für den Inhalt einfaches Textformat oder HTML verwenden.</msg>
-  <msg key="lt_Use_this_form_to_crea">Mit diesem Formular kann ein neues %element_pretty_name% erstellt werden. Es wird automatisch auf der ersten Seite des Portals &quot;%portal_name%&quot; platziert. Um es zu verschieben, gehen Sie unter '%control_panel_text%' auf 'Layout des Gruppenportals anpassen'.</msg>
+  <msg key="lt_Use_this_form_to_crea">Mit diesem Formular kann ein neues %element_pretty_name% erstellt werden. Es wird automatisch auf der ersten Seite des Portals &#34;%portal_name%&#34; platziert. Um es zu verschieben, gehen Sie unter &#39;%control_panel_text%&#39; auf &#39;Layout des Gruppenportals anpassen&#39;.</msg>
   <msg key="Name">Name</msg>
   <msg key="New">Neu</msg>
   <msg key="new_static_admin_portlet">Neues %element_pretty_name% erstellen</msg>
+  <msg key="portlet_title_exists_error">Ein Portlet mit diesem Namen existiert bereits in diesem Portal auf derselben Seite.</msg>
   <msg key="True">Wahr</msg>
-  <msg key="Use_this_form">Mit diesem Formular kann ein neues %element_pretty_name% erstellt werden. Es wird automatisch auf der ersten Seite des Portals &quot;%portal_name%&quot; platziert. Um es zu verschieben, gehen Sie auf der Verwaltungsseite auf 'Layout des Gruppenportals anpassen'</msg>
+  <msg key="Use_this_form">Mit diesem Formular kann ein neues %element_pretty_name% erstellt werden. Es wird automatisch auf der ersten Seite des Portals &#34;%portal_name%&#34; platziert. Um es zu verschieben, gehen Sie auf der Verwaltungsseite auf &#39;Layout des Gruppenportals anpassen&#39;</msg>
   <msg key="You_may_upload">Alternativ können Sie auch eine &lt;strong&gt;Text&lt;/strong&gt;datei hier hochladen und damit den derzeitigen Inhalt des Portlets ersetzen.</msg>
 </message_catalog>

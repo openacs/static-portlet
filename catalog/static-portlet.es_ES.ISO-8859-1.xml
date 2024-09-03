@@ -20,10 +20,11 @@
   <msg key="lt_Enforce_True_means_th">Forzar Verdadero significa que el portlet estático será agregado inmediatamente en los portales indicados que ya han sido creados. Forzar Falso significa que estará disponible cuando se customize el portal o cuando se haga el proceso de reversión.</msg>
   <msg key="lt_strongNotestrong_You_">&lt;strong&gt;Nota&lt;/strong&gt;: Puede usar texto plano o HTML en este cuadro de contenido</msg>
   <msg key="lt_Use_this_form_to_crea">Use este formulario para crear un nuevo %element_pretty_name%. El %element_pretty_name% va a ser creado automáticamente y puesto en la primera página del portal  %portal_name%. Vaya al %control_panel_text% y seleccione personalizar forma para mover este %element_pretty_name%.</msg>
+  <msg key="must_specify">Debe especificar el archivo a subir</msg>
   <msg key="Name">Nombre</msg>
   <msg key="New">Nuevo</msg>
   <msg key="new_static_admin_portlet">%element_pretty_name% nuevo</msg>
   <msg key="True">Verdadero</msg>
-  <msg key="Use_this_form">Use este formulario para crear un nuevo %element_pretty_name%. El %element_pretty_name% va a ser creado automáticamente y puesto en la primera página del portal %portal_name%. Vaya al %control_panel_text% y seleccione personalizar para mover este %element_pretty_name%.</msg>
+  <msg key="Use_this_form">Use este formulario para crear un nuevo %element_pretty_name%. El %element_pretty_name% va a ser creado automáticamente y puesto en la primera página del portal %portal_name%. Vaya a la página de administración y seleccione personalizar para mover este %element_pretty_name%.</msg>
   <msg key="You_may_upload">O, Puede subir un archivo de &lt; strong&gt;texto&lt;/strong &gt; aquí, cuyo contenido sustituirá el contenido actual del portlet.</msg>
 </message_catalog>

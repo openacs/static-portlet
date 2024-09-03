@@ -15,15 +15,24 @@
 #
 
 ad_page_contract {
-    edit a static element
+
+    Create/Edit a custom Portlet.
+
+    This page implements the UI to create or edit a custom
+    Portlet. This can be specified either providing the content in a
+    textarea, or by uploading a text or HTML file from which the
+    content will be read.
+
+    Note that two forms with intersecting fields are rendered on the
+    page. The user is supposed to submit only one of them.
 
     @author arjun (arjun@openforce)
     @cvs-id $Id$
 } -query {
-    {content_id:naturalnum,optional ""}
-    referer:notnull
-    portal_id:naturalnum,notnull
-    {package_id:integer ""}
+    {content_id:object_type(static_portal_content),optional ""}
+    referer:localurl,notnull
+    portal_id:object_type(portal),notnull
+    {package_id:object_id ""}
 }  -properties {
     title:onevalue
 }
@@ -46,13 +55,15 @@ if {$content_id ne ""} {
     set file_content_id $content_id
 }
 
-
 set type [db_string get_type { select type from dotlrn_portal_types_map where portal_id = :portal_id } -default ""]
 set templates [list user dotlrn_class_instance dotlrn_club dotlrn_community]
 
 ad_form -name static_element -form {
     element_content_id:key
-    {pretty_name:text(text)     {label "[_ static-portlet.Name]"} {html {size 60}}}
+    {pretty_name:nomarkup(text)
+        {label "[_ static-portlet.Name]"}
+        {html {size 60}}
+    }
     {content:richtext(richtext)     {label "[_ static-portlet.Content]"} {html {rows 15 cols 80}}}
 }
 
@@ -63,6 +74,32 @@ if {$type in $templates} {
             [list options [list [list [_ static-portlet.True] 1] [list [_ static-portlet.False_0] 0]]] \
             [list value 0]]]
     ad_form -extend -name static_element -form $elements
+}
+
+
+set portal_page_id [portal::get_page_id -portal_id $portal_id -sort_key 0]
+
+#
+# Check that we are not creating a Portlet with an existing name on
+# the same page. This is not allowed and would throw an error down the
+# line.
+#
+ad_form -extend \
+    -name static_element \
+    -form {} \
+    -validate {
+    {pretty_name
+        {![db_0or1row check_unique_name_on_page {
+		select 1 from portal_element_map e,
+                              portal_element_parameters p
+                where e.page_id     = :portal_page_id
+                and   e.pretty_name = :pretty_name
+                and   e.element_id = p.element_id
+                and   p.key = 'content_id'
+                and   p.value <> :element_content_id
+        }]}
+        "#static-portlet.portlet_title_exists_error#"
+    }
 }
 
 ad_form -extend -name static_element -form {
@@ -228,7 +265,7 @@ ad_form -extend -name static_element -form {
 
 ad_form -name static_file -html {enctype multipart/form-data} -form {
     file_content_id:key
-    {pretty_name:text(text)
+    {pretty_name:nomarkup(text)
         {label "[_ static-portlet.Name]"}
         {html {size 60}}
     }
@@ -251,19 +288,46 @@ if {$type in $templates} {
     ad_form -extend -name static_file -form $elements
 }
 
-ad_form -extend -name static_file -form {
-    {portal_id:text(hidden)     {value $portal_id}}
-    {package_id:text(hidden)    {value $package_id}}
-    {referer:text(hidden)       {value $referer}}
-} -validate {
+set validate {
     {upload_file
         {$upload_file ne ""}
         "[_ static-portlet.must_specify]"
     }
+}
+#
+# Check that we are not creating a Portlet with an existing name on
+# the same page. This is not allowed and would throw an error down the
+# line.
+#
+append validate {
+    {pretty_name
+        {![db_0or1row check_unique_name_on_page {
+                select 1 from portal_element_map e,
+                              portal_element_parameters p
+                where e.page_id     = :portal_page_id
+                and   e.pretty_name = :pretty_name
+                and   e.element_id = p.element_id
+                and   p.key = 'content_id'
+                and   p.value <> :file_content_id
+        }]}
+        "#static-portlet.portlet_title_exists_error#"
+    }
+}
+
+ad_form -extend \
+    -name static_file \
+    -form {} \
+    -validate $validate
+
+ad_form -extend -name static_file -form {
+    {portal_id:text(hidden)     {value $portal_id}}
+    {package_id:text(hidden)    {value $package_id}}
+    {referer:text(hidden)       {value $referer}}
 } -edit_request {
     db_1row get_content_element ""
     ad_set_form_values pretty_name
 } -new_data {
+
     set filename [template::util::file::get_property filename $upload_file]
     set tmp_filename [template::util::file::get_property tmp_filename $upload_file]
     set mime_type [template::util::file::get_property mime_type $upload_file]

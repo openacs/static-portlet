@@ -26,6 +26,7 @@
   <msg key="Name">Name</msg>
   <msg key="New">New</msg>
   <msg key="new_static_admin_portlet">New %element_pretty_name%</msg>
+  <msg key="portlet_title_exists_error">A portlet with this name already exists in this portal on the same page.</msg>
   <msg key="True">True</msg>
   <msg key="Use_this_form">Use this form to create a new %element_pretty_name%.  The %element_pretty_name%
 will be created and automatically placed on the first page of %portal_name% portal. Go to the administration page and select Customize Layout to move this %element_pretty_name%.</msg>
